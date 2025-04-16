@@ -2,9 +2,9 @@ import React from 'react';
 
 const LandingPage = () => {
   return (
-    <div className="p-6 text-center">
-      <h1 className="text-3xl font-bold">Welcome to Dealcross</h1>
-      <p className="mt-2 text-gray-600">Secure your online transactions with ease.</p>
+    <div className="text-center py-10">
+      <h1 className="text-4xl font-bold mb-4">Welcome to Dealcross</h1>
+      <p className="text-gray-600 dark:text-gray-300">Secure your deals and trade confidently.</p>
     </div>
   );
 };
