@@ -1,24 +1,29 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import Navbar from './components/Navbar.jsx';
-import Footer from './components/Footer.jsx';
-import AppRoutes from './AppRoutes.jsx';
-import ThemeToggle from './ThemeToggle.jsx';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import ThemeToggle from './components/ThemeToggle';
+import Footer from './components/Footer';
+
+import LandingPage from './pages/LandingPage';
+import LoginPage from './pages/LoginPage';
+import SignupPage from './pages/SignupPage';
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <div className="min-h-screen flex flex-col bg-white dark:bg-gray-900 text-black dark:text-white">
+    <Router>
+      <div className="min-h-screen flex flex-col bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
         <Navbar />
-        <main className="flex-grow p-4">
-          <AppRoutes />
-        </main>
-        <Footer />
-        <div className="fixed bottom-4 right-4">
-          <ThemeToggle />
+        <div className="flex-grow px-4 py-10">
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignupPage />} />
+          </Routes>
         </div>
+        <ThemeToggle />
+        <Footer />
       </div>
-    </BrowserRouter>
+    </Router>
   );
 };
 
