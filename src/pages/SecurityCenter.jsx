@@ -1,31 +1,25 @@
+// src/pages/SecurityCenter.jsx
 import React from 'react';
 
 const SecurityCenter = () => {
-  const securityStatus = {
-    lastLogin: 'April 15, 2025',
-    location: 'Aba, Nigeria',
-    activeSessions: 3,
-    twoFactorAuth: true,
-  };
-
   return (
-    <div className="min-h-screen p-6 bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-white">
-      <h1 className="text-2xl font-bold mb-6">Security Center</h1>
+    <div className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-800 text-white p-6">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-4xl font-bold mb-6 text-center">Security Center</h1>
+        <p className="mb-4 text-lg leading-relaxed">
+          At Dealcross, your safety is our priority. Our platform is equipped with industry-grade security measures to ensure safe transactions, identity protection, and zero tolerance for fraud.
+        </p>
 
-      <div className="space-y-4">
-        <div className="bg-white dark:bg-gray-800 p-4 rounded shadow">
-          <h2 className="text-lg font-semibold">Last Login</h2>
-          <p>{securityStatus.lastLogin} from {securityStatus.location}</p>
-        </div>
+        <ul className="list-disc ml-6 space-y-3 text-base">
+          <li><strong>Escrow Protocol:</strong> All transactions are held securely until both parties confirm satisfaction.</li>
+          <li><strong>Two-Factor Authentication:</strong> Added layer of security for account logins and wallet actions.</li>
+          <li><strong>End-to-End Encryption:</strong> Your data and communication are always private and secure.</li>
+          <li><strong>Fraud Monitoring:</strong> Our AI fraud detection engine scans all deals in real time.</li>
+          <li><strong>Audit Logs:</strong> Complete activity tracking to ensure accountability.</li>
+        </ul>
 
-        <div className="bg-white dark:bg-gray-800 p-4 rounded shadow">
-          <h2 className="text-lg font-semibold">Active Sessions</h2>
-          <p>{securityStatus.activeSessions} device(s)</p>
-        </div>
-
-        <div className="bg-white dark:bg-gray-800 p-4 rounded shadow">
-          <h2 className="text-lg font-semibold">Two-Factor Authentication</h2>
-          <p>{securityStatus.twoFactorAuth ? 'Enabled' : 'Disabled'}</p>
+        <div className="mt-10 text-center">
+          <p className="text-sm text-slate-300">Need help? Visit our <a href="/support" className="text-blue-400 underline">Support Center</a> or contact us.</p>
         </div>
       </div>
     </div>
