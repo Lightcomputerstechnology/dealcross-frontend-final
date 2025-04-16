@@ -1,19 +1,23 @@
+// src/pages/PitchDeckViewer.jsx
 import React from 'react';
 
 const PitchDeckViewer = () => {
-  const pptxUrl = encodeURIComponent('https://d-final.onrender.com/pitchdeck.pptx');
+  const handleDownload = () => {
+    window.open('/Dealcross_Pitch_Deck_Styled.pptx', '_blank');
+  };
 
   return (
-    <div className="w-full h-screen p-4">
-      <h1 className="text-2xl font-bold mb-4 text-center">Dealcross Pitch Deck</h1>
-      <iframe
-        src={`https://view.officeapps.live.com/op/embed.aspx?src=${pptxUrl}`}
-        width="100%"
-        height="100%"
-        frameBorder="0"
-        title="Dealcross Pitch Deck"
-        className="rounded-lg shadow"
-      />
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-white p-6">
+      <h1 className="text-3xl font-bold mb-4">Pitch Deck Viewer</h1>
+      <p className="text-center max-w-xl mb-6">
+        Click below to view or download our pitch deck presentation. This document gives an overview of Dealcross, our value proposition, and our business model.
+      </p>
+      <button
+        onClick={handleDownload}
+        className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg shadow-md transition"
+      >
+        Download Pitch Deck (PPTX)
+      </button>
     </div>
   );
 };
