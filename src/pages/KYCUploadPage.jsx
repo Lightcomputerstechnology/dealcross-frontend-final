@@ -8,3 +8,4 @@ const KYCUploadPage = () => {
     </div>
   );
 };
+export default KYCUploadPage;
