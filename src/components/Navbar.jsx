@@ -6,3 +6,4 @@
     <LanguageSwitcher />   // ✅ Keep this
   </div>
 </header>
+export default Navbar;
