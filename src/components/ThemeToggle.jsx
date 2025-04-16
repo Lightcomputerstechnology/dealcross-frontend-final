@@ -1,18 +1,33 @@
-import React, { useEffect, useState } from "react";
+// src/components/ThemeToggle.jsx
+
+import React, { useEffect, useState } from 'react';
+import { Moon, Sun } from 'lucide-react';
 
 const ThemeToggle = () => {
-  const [dark, setDark] = useState(false);
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
 
   useEffect(() => {
-    document.documentElement.classList.toggle("dark", dark);
-  }, [dark]);
+    const root = window.document.documentElement;
+    if (theme === 'dark') {
+      root.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      root.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(theme === 'dark' ? 'light' : 'dark');
+  };
 
   return (
     <button
-      onClick={() => setDark(!dark)}
-      className="fixed bottom-4 right-4 bg-gray-800 text-white px-4 py-2 rounded"
+      onClick={toggleTheme}
+      className="ml-2 p-2 rounded-full bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-white hover:shadow transition duration-300"
+      title="Toggle Theme"
     >
-      {dark ? "Light Mode" : "Dark Mode"}
+      {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
     </button>
   );
 };
