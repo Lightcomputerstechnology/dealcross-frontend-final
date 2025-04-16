@@ -1,27 +1,25 @@
+// src/App.jsx
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
+import AppRoutes from './AppRoutes';
 import Navbar from './components/Navbar';
-import ThemeToggle from './components/ThemeToggle';
 import Footer from './components/Footer';
-
-import LandingPage from './pages/LandingPage';
-import LoginPage from './pages/LoginPage';
-import SignupPage from './pages/SignupPage';
+import ThemeToggle from './components/ThemeToggle';
+import NotificationToast from './components/NotificationToast';
 
 const App = () => {
   return (
     <Router>
       <div className="min-h-screen flex flex-col bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
         <Navbar />
-        <div className="flex-grow px-4 py-10">
-          <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/signup" element={<SignupPage />} />
-          </Routes>
-        </div>
-        <ThemeToggle />
+        <main className="flex-grow p-4">
+          <AppRoutes />
+        </main>
         <Footer />
+        <div className="fixed bottom-4 right-4">
+          <ThemeToggle />
+        </div>
+        <NotificationToast />
       </div>
     </Router>
   );
