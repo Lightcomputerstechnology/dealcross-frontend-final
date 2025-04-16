@@ -1,42 +1,57 @@
 import React from 'react';
 
 const DisputeResolutionPage = () => {
+  const disputes = [
+    {
+      id: 'D001',
+      parties: 'UserA vs UserB',
+      reason: 'Non-delivery of digital goods',
+      status: 'Resolved',
+      resolution: 'Refund issued to buyer',
+      date: '2025-05-03',
+    },
+    {
+      id: 'D002',
+      parties: 'UserC vs UserD',
+      reason: 'Disputed payment confirmation',
+      status: 'Pending',
+      resolution: 'Awaiting admin review',
+      date: '2025-05-07',
+    },
+  ];
+
   return (
-    <div className="min-h-screen px-4 py-8 bg-gray-100 dark:bg-black text-gray-900 dark:text-white">
-      <h1 className="text-3xl font-bold mb-6 text-center">Dispute Resolution</h1>
-
-      <div className="max-w-4xl mx-auto bg-white dark:bg-gray-900 p-6 rounded-lg shadow">
-        <p className="text-lg mb-4 text-gray-700 dark:text-gray-300">
-          This panel shows all open and resolved disputes. Our support team reviews every case and works toward a fair resolution.
-        </p>
-
-        <div className="overflow-x-auto">
-          <table className="w-full border dark:border-gray-700">
-            <thead className="bg-gray-200 dark:bg-gray-800">
-              <tr>
-                <th className="px-4 py-2 text-left">Dispute ID</th>
-                <th className="px-4 py-2 text-left">Deal Reference</th>
-                <th className="px-4 py-2 text-left">Status</th>
-                <th className="px-4 py-2 text-left">Date</th>
+    <div className="min-h-screen p-6 text-white bg-gray-900">
+      <h2 className="text-3xl font-bold mb-6">Dispute Resolution Log</h2>
+      <div className="overflow-x-auto">
+        <table className="min-w-full bg-gray-800 rounded-lg shadow">
+          <thead className="bg-gray-700">
+            <tr>
+              <th className="py-3 px-4 text-left">Dispute ID</th>
+              <th className="py-3 px-4 text-left">Parties</th>
+              <th className="py-3 px-4 text-left">Reason</th>
+              <th className="py-3 px-4 text-left">Status</th>
+              <th className="py-3 px-4 text-left">Resolution</th>
+              <th className="py-3 px-4 text-left">Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {disputes.map((dispute) => (
+              <tr key={dispute.id} className="border-t border-gray-600">
+                <td className="py-2 px-4">{dispute.id}</td>
+                <td className="py-2 px-4">{dispute.parties}</td>
+                <td className="py-2 px-4">{dispute.reason}</td>
+                <td className="py-2 px-4">
+                  <span className={`px-2 py-1 rounded text-xs font-semibold ${dispute.status === 'Resolved' ? 'bg-green-600' : 'bg-yellow-500'}`}>
+                    {dispute.status}
+                  </span>
+                </td>
+                <td className="py-2 px-4">{dispute.resolution}</td>
+                <td className="py-2 px-4">{dispute.date}</td>
               </tr>
-            </thead>
-            <tbody>
-              <tr className="border-t dark:border-gray-700">
-                <td className="px-4 py-2">DPT-1001</td>
-                <td className="px-4 py-2">#A0345</td>
-                <td className="px-4 py-2 text-yellow-600">Pending</td>
-                <td className="px-4 py-2">2025-04-20</td>
-              </tr>
-              <tr className="border-t dark:border-gray-700">
-                <td className="px-4 py-2">DPT-1002</td>
-                <td className="px-4 py-2">#A0346</td>
-                <td className="px-4 py-2 text-green-600">Resolved</td>
-                <td className="px-4 py-2">2025-04-18</td>
-              </tr>
-              {/* Add more rows dynamically in future */}
-            </tbody>
-          </table>
-        </div>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
