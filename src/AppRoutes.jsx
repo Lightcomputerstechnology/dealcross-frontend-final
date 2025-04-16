@@ -1,5 +1,8 @@
 // src/AppRoutes.jsx
+
+import React from 'react';
 import { Routes, Route } from 'react-router-dom';
+
 import MainLayout from './components/MainLayout';
 
 import LandingPage from './pages/LandingPage';
@@ -31,12 +34,6 @@ import TransactionHistory from './pages/TransactionHistory';
 import EscrowDashboard from './pages/EscrowDashboard';
 import DocsPage from './pages/DocsPage';
 import NotFoundPage from './pages/404Page';
-import AIInsightCenter from './pages/AIInsightCenter';
-import InvestorReports from './pages/InvestorReports';
-import DealAnalytics from './pages/DealAnalytics';
-import SecurityCenter from './pages/SecurityCenter';
-import ReferralProgram from './pages/ReferralProgram';
-import InvestorMessages from './pages/InvestorMessages';
 
 const AppRoutes = () => {
   return (
@@ -69,15 +66,7 @@ const AppRoutes = () => {
       <Route path="/transactions" element={<MainLayout><TransactionHistory /></MainLayout>} />
       <Route path="/escrow-dashboard" element={<MainLayout><EscrowDashboard /></MainLayout>} />
       <Route path="/docs" element={<MainLayout><DocsPage /></MainLayout>} />
-      <Route path="/ai-insights" element={<MainLayout><AIInsightCenter /></MainLayout>} />
-      <Route path="/investor-reports" element={<MainLayout><InvestorReports /></MainLayout>} />
-      <Route path="/deal-analytics" element={<MainLayout><DealAnalytics /></MainLayout>} />
-      <Route path="/security-center" element={<MainLayout><SecurityCenter /></MainLayout>} />
-      <Route path="/referrals" element={<MainLayout><ReferralProgram /></MainLayout>} />
-      <Route path="/messages" element={<MainLayout><InvestorMessages /></MainLayout>} />
-
-      {/* NotFoundPage is left unwrapped */}
-      <Route path="*" element={<NotFoundPage />} />
+      <Route path="*" element={<MainLayout><NotFoundPage /></MainLayout>} />
     </Routes>
   );
 };
