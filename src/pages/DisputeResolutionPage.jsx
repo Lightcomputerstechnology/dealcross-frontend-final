@@ -1,89 +1,43 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 const DisputeResolutionPage = () => {
-  const [form, setForm] = useState({
-    dealId: '',
-    reason: '',
-    description: '',
-  });
-
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Simulate submission
-    alert('Dispute submitted successfully!');
-    setForm({ dealId: '', reason: '', description: '' });
-  };
-
   return (
     <div className="min-h-screen px-4 py-8 bg-gray-100 dark:bg-black text-gray-900 dark:text-white">
-      <h1 className="text-3xl font-bold mb-6 text-center">Dispute Resolution Center</h1>
+      <h1 className="text-3xl font-bold mb-6 text-center">Dispute Resolution</h1>
 
-      <form
-        onSubmit={handleSubmit}
-        className="max-w-3xl mx-auto bg-white dark:bg-gray-900 p-6 rounded-lg shadow-md space-y-6"
-      >
-        <div>
-          <label className="block mb-2 font-semibold" htmlFor="dealId">
-            Deal ID
-          </label>
-          <input
-            type="text"
-            name="dealId"
-            id="dealId"
-            value={form.dealId}
-            onChange={handleChange}
-            className="w-full p-2 border border-gray-300 dark:border-gray-700 rounded bg-gray-50 dark:bg-gray-800"
-            required
-          />
+      <div className="max-w-4xl mx-auto bg-white dark:bg-gray-900 p-6 rounded-lg shadow">
+        <p className="text-lg mb-4 text-gray-700 dark:text-gray-300">
+          This panel shows all open and resolved disputes. Our support team reviews every case and works toward a fair resolution.
+        </p>
+
+        <div className="overflow-x-auto">
+          <table className="w-full border dark:border-gray-700">
+            <thead className="bg-gray-200 dark:bg-gray-800">
+              <tr>
+                <th className="px-4 py-2 text-left">Dispute ID</th>
+                <th className="px-4 py-2 text-left">Deal Reference</th>
+                <th className="px-4 py-2 text-left">Status</th>
+                <th className="px-4 py-2 text-left">Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-t dark:border-gray-700">
+                <td className="px-4 py-2">DPT-1001</td>
+                <td className="px-4 py-2">#A0345</td>
+                <td className="px-4 py-2 text-yellow-600">Pending</td>
+                <td className="px-4 py-2">2025-04-20</td>
+              </tr>
+              <tr className="border-t dark:border-gray-700">
+                <td className="px-4 py-2">DPT-1002</td>
+                <td className="px-4 py-2">#A0346</td>
+                <td className="px-4 py-2 text-green-600">Resolved</td>
+                <td className="px-4 py-2">2025-04-18</td>
+              </tr>
+              {/* Add more rows dynamically in future */}
+            </tbody>
+          </table>
         </div>
-
-        <div>
-          <label className="block mb-2 font-semibold" htmlFor="reason">
-            Reason for Dispute
-          </label>
-          <select
-            name="reason"
-            id="reason"
-            value={form.reason}
-            onChange={handleChange}
-            className="w-full p-2 border border-gray-300 dark:border-gray-700 rounded bg-gray-50 dark:bg-gray-800"
-            required
-          >
-            <option value="">-- Select Reason --</option>
-            <option value="Non-delivery">Non-delivery</option>
-            <option value="Fraudulent Activity">Fraudulent Activity</option>
-            <option value="Poor Quality">Poor Quality</option>
-            <option value="Other">Other</option>
-          </select>
-        </div>
-
-        <div>
-          <label className="block mb-2 font-semibold" htmlFor="description">
-            Description
-          </label>
-          <textarea
-            name="description"
-            id="description"
-            value={form.description}
-            onChange={handleChange}
-            rows="5"
-            className="w-full p-2 border border-gray-300 dark:border-gray-700 rounded bg-gray-50 dark:bg-gray-800"
-            placeholder="Explain the issue in detail..."
-            required
-          ></textarea>
-        </div>
-
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
-        >
-          Submit Dispute
-        </button>
-      </form>
+      </div>
     </div>
   );
 };
