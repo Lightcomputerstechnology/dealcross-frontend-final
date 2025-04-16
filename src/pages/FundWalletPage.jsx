@@ -3,58 +3,40 @@ import { toast } from 'react-hot-toast';
 
 const FundWalletPage = () => {
   const [amount, setAmount] = useState('');
-  const [method, setMethod] = useState('card');
 
   const handleFund = (e) => {
     e.preventDefault();
-    if (!amount || isNaN(amount)) {
-      toast.error('Enter a valid amount');
+    if (!amount || isNaN(amount) || Number(amount) <= 0) {
+      toast.error('Please enter a valid amount.');
       return;
     }
 
-    // Simulate funding
-    toast.success(`Wallet funded with $${amount} via ${method}`);
+    toast.success(`$${amount} added to your wallet!`);
     setAmount('');
-    setMethod('card');
   };
 
   return (
-    <div className="min-h-screen px-4 py-8 bg-gradient-to-b from-gray-100 to-white dark:from-gray-900 dark:to-black text-gray-800 dark:text-white">
-      <h1 className="text-3xl font-bold mb-6">Fund Wallet</h1>
+    <div className="min-h-screen px-4 py-8 bg-gray-100 dark:bg-black text-gray-900 dark:text-white">
+      <div className="max-w-md mx-auto bg-white dark:bg-gray-900 p-6 rounded shadow-md">
+        <h2 className="text-2xl font-bold mb-4 text-center">Fund Your Wallet</h2>
 
-      <form onSubmit={handleFund} className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg max-w-md">
-        <div className="mb-4">
-          <label className="block text-sm mb-1">Amount (USD)</label>
+        <form onSubmit={handleFund} className="flex flex-col gap-4">
           <input
             type="number"
+            placeholder="Enter amount"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
-            placeholder="Enter amount"
-            className="w-full px-4 py-2 rounded border dark:bg-gray-700 dark:border-gray-600"
+            className="px-4 py-2 border border-gray-300 rounded dark:bg-gray-800 dark:border-gray-600 dark:text-white"
           />
-        </div>
 
-        <div className="mb-4">
-          <label className="block text-sm mb-1">Payment Method</label>
-          <select
-            value={method}
-            onChange={(e) => setMethod(e.target.value)}
-            className="w-full px-4 py-2 rounded border dark:bg-gray-700 dark:border-gray-600"
+          <button
+            type="submit"
+            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
           >
-            <option value="card">Card</option>
-            <option value="bank">Bank</option>
-            <option value="bitcoin">Bitcoin</option>
-            <option value="usdt">USDT</option>
-          </select>
-        </div>
-
-        <button
-          type="submit"
-          className="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded transition"
-        >
-          Fund Now
-        </button>
-      </form>
+            Fund Wallet
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
