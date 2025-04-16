@@ -1,21 +1,31 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+import ThemeToggle from './components/ThemeToggle';
+import NotificationToast from './components/NotificationToast';
 
 import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
-import WalletPage from './pages/WalletPage';
-import UserDashboard from './pages/UserDashboard';
 
 const AppRoutes = () => {
   return (
-    <Routes>
-      <Route path="/" element={<LandingPage />} />
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/signup" element={<SignupPage />} />
-      <Route path="/wallet" element={<WalletPage />} />
-      <Route path="/dashboard" element={<UserDashboard />} />
-    </Routes>
+    <Router>
+      <div className="min-h-screen flex flex-col bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
+        <Navbar />
+        <main className="flex-grow">
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignupPage />} />
+          </Routes>
+        </main>
+        <Footer />
+        <ThemeToggle />
+        <NotificationToast />
+      </div>
+    </Router>
   );
 };
 
