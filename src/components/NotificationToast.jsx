@@ -5,19 +5,17 @@ const NotificationToast = () => {
     <Toaster
       position="top-right"
       toastOptions={{
+        duration: 4000,
         style: {
           background: '#333',
           color: '#fff',
+          fontSize: '14px',
         },
         success: {
-          style: {
-            background: '#4BB543',
-          },
+          icon: '✅',
         },
         error: {
-          style: {
-            background: '#FF4C4C',
-          },
+          icon: '❌',
         },
       }}
     />
