@@ -1,24 +1,24 @@
 // src/components/MainLayout.jsx
+
 import React from 'react';
 import Navbar from './Navbar';
-import LanguageSwitcher from './LanguageSwitcher';
-import ThemeToggle from './ThemeToggle';
 import Footer from './Footer';
+import ThemeToggle from './ThemeToggle';
 
 const MainLayout = ({ children }) => {
   return (
-    <div>
+    <div className="min-h-screen flex flex-col bg-white dark:bg-[#0f172a] text-gray-900 dark:text-white">
       <Navbar />
-      <main className="px-4 py-2">
+
+      <main className="flex-grow p-4">
         {children}
       </main>
-      <div className="fixed bottom-4 left-4">
-        <LanguageSwitcher />
-      </div>
+
+      <Footer />
+
       <div className="fixed bottom-4 right-4">
         <ThemeToggle />
       </div>
-      <Footer />
     </div>
   );
 };
