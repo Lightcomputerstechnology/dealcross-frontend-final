@@ -1,5 +1,3 @@
-export default PitchDeckViewer;
-
 import React from 'react';
 
 const PitchDeckViewer = () => {
