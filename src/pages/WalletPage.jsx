@@ -2,29 +2,30 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const WalletPage = () => {
-  return (
-    <div className="min-h-screen px-4 py-8 bg-gradient-to-b from-gray-100 to-white dark:from-gray-900 dark:to-black text-gray-800 dark:text-white">
-      <h1 className="text-3xl font-bold mb-6">My Wallet</h1>
+  const balance = 1250.75;
 
-      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <p className="text-gray-500 dark:text-gray-400 text-sm">Available Balance</p>
-            <h2 className="text-4xl font-bold text-green-600">$0.00</h2>
-          </div>
+  return (
+    <div className="min-h-screen px-4 py-8 bg-gray-100 dark:bg-black text-gray-900 dark:text-white">
+      <div className="max-w-2xl mx-auto bg-white dark:bg-gray-900 p-6 rounded shadow-md">
+        <h2 className="text-2xl font-bold mb-4 text-center">My Wallet</h2>
+
+        <div className="text-center mb-6">
+          <p className="text-lg">Current Balance:</p>
+          <p className="text-3xl font-bold text-green-600">${balance.toFixed(2)}</p>
+        </div>
+
+        <div className="flex justify-center gap-4">
           <Link
             to="/fund-wallet"
-            className="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition"
+            className="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
           >
             Fund Wallet
           </Link>
-        </div>
-
-        <div className="mt-4">
-          <h3 className="text-xl font-semibold mb-3">Recent Wallet Activity</h3>
-          <p className="text-sm text-gray-500 dark:text-gray-400">No transactions yet.</p>
-          <Link to="/transactions" className="text-blue-500 hover:underline text-sm mt-2 block">
-            View All Transactions
+          <Link
+            to="/transactions"
+            className="px-6 py-2 bg-gray-700 text-white rounded hover:bg-gray-800 transition"
+          >
+            View History
           </Link>
         </div>
       </div>
