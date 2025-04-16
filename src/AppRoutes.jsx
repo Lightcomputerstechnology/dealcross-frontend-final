@@ -8,7 +8,7 @@ import SignupPage from './pages/SignupPage';
 import WalletPage from './pages/WalletPage';
 import FundWalletPage from './pages/FundWalletPage';
 import StartDealPage from './pages/StartDealPage';
-import DealConfirmation from './pages/DealConfirmationPage';
+import DealConfirmation from './pages/DealConfirmation';
 import DealTrackerPage from './pages/DealTrackerPage';
 import ShareTradingPage from './pages/ShareTradingPage';
 import TradingChartPage from './pages/TradingChartPage';
