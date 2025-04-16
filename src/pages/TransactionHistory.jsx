@@ -1,60 +1,82 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+
+const mockTransactions = [
+  {
+    id: 'TXN001',
+    type: 'Credit',
+    amount: 150.0,
+    date: '2024-04-15',
+    status: 'Completed',
+  },
+  {
+    id: 'TXN002',
+    type: 'Debit',
+    amount: 75.5,
+    date: '2024-04-13',
+    status: 'Pending',
+  },
+  {
+    id: 'TXN003',
+    type: 'Credit',
+    amount: 200.0,
+    date: '2024-04-10',
+    status: 'Failed',
+  },
+];
 
 const TransactionHistory = () => {
-  const transactions = [
-    {
-      id: 'TXN001',
-      type: 'Investment',
-      amount: 2500,
-      status: 'Success',
-      date: '2024-11-01',
-    },
-    {
-      id: 'TXN002',
-      type: 'Deal Funding',
-      amount: 1000,
-      status: 'Pending',
-      date: '2024-11-03',
-    },
-    {
-      id: 'TXN003',
-      type: 'Withdrawal',
-      amount: 1200,
-      status: 'Failed',
-      date: '2024-11-05',
-    },
-  ];
+  const [transactions, setTransactions] = useState([]);
+
+  useEffect(() => {
+    // Replace with actual API call later
+    setTransactions(mockTransactions);
+  }, []);
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 p-6 text-gray-800 dark:text-white">
-      <h1 className="text-3xl font-bold mb-6">Transaction History</h1>
-      <div className="overflow-x-auto">
-        <table className="min-w-full bg-white dark:bg-gray-800 rounded shadow-md">
-          <thead className="bg-gray-200 dark:bg-gray-700 text-left">
+    <div className="min-h-screen px-4 py-8 bg-gray-100 dark:bg-black text-gray-900 dark:text-white">
+      <h1 className="text-3xl font-bold mb-6 text-center">Transaction History</h1>
+
+      <div className="overflow-x-auto max-w-5xl mx-auto">
+        <table className="w-full bg-white dark:bg-gray-900 border-collapse shadow-md rounded-lg">
+          <thead className="bg-blue-600 text-white">
             <tr>
-              <th className="p-4">Transaction ID</th>
-              <th className="p-4">Type</th>
-              <th className="p-4">Amount</th>
-              <th className="p-4">Status</th>
-              <th className="p-4">Date</th>
+              <th className="py-3 px-4 text-left">Transaction ID</th>
+              <th className="py-3 px-4 text-left">Type</th>
+              <th className="py-3 px-4 text-left">Amount ($)</th>
+              <th className="py-3 px-4 text-left">Date</th>
+              <th className="py-3 px-4 text-left">Status</th>
             </tr>
           </thead>
           <tbody>
             {transactions.map((txn) => (
               <tr key={txn.id} className="border-t border-gray-300 dark:border-gray-700">
-                <td className="p-4 font-medium">{txn.id}</td>
-                <td className="p-4">{txn.type}</td>
-                <td className="p-4">${txn.amount.toLocaleString()}</td>
-                <td className={`p-4 font-semibold ${
-                  txn.status === 'Success'
-                    ? 'text-green-500'
-                    : txn.status === 'Pending'
-                    ? 'text-yellow-500'
-                    : 'text-red-500'
-                }`}>{txn.status}</td>
-                <td className="p-4">{txn.date}</td>
+                <td className="py-2 px-4">{txn.id}</td>
+                <td className="py-2 px-4">{txn.type}</td>
+                <td className="py-2 px-4">${txn.amount.toFixed(2)}</td>
+                <td className="py-2 px-4">{txn.date}</td>
+                <td className="py-2 px-4">
+                  <span
+                    className={`px-2 py-1 rounded-full text-xs font-semibold ${
+                      txn.status === 'Completed'
+                        ? 'bg-green-100 text-green-700'
+                        : txn.status === 'Pending'
+                        ? 'bg-yellow-100 text-yellow-700'
+                        : 'bg-red-100 text-red-700'
+                    }`}
+                  >
+                    {txn.status}
+                  </span>
+                </td>
               </tr>
             ))}
+
+            {transactions.length === 0 && (
+              <tr>
+                <td colSpan="5" className="py-4 text-center text-gray-500 dark:text-gray-400">
+                  No transactions found.
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
