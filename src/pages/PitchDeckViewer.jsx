@@ -2,7 +2,7 @@ import React from 'react';
 
 const PitchDeckViewer = () => {
   const pptxUrl = encodeURIComponent(
-    'https://d-final.onrender.com/Dealcross_Pitch_Deck_Styled.pptx'
+    'https://d-final.onrender.com/pitchdeck.pptx'
   );
 
   return (
