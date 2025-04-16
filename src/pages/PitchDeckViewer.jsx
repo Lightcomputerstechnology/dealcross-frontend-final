@@ -1,9 +1,9 @@
+export default PitchDeckViewer;
+
 import React from 'react';
 
 const PitchDeckViewer = () => {
-  const pptxUrl = encodeURIComponent(
-    'https://d-final.onrender.com/pitchdeck.pptx'
-  );
+  const pptxUrl = encodeURIComponent('https://d-final.onrender.com/pitchdeck.pptx');
 
   return (
     <div className="w-full h-screen p-4">
