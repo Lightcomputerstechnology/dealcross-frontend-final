@@ -1,19 +1,24 @@
 import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import Navbar from './components/Navbar.jsx';
+import Footer from './components/Footer.jsx';
+import AppRoutes from './AppRoutes.jsx';
 import ThemeToggle from './ThemeToggle.jsx';
 
 const App = () => {
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 text-black dark:text-white p-4">
-      <header className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Welcome to Dealcross</h1>
-        <ThemeToggle />
-      </header>
-
-      <main>
-        <p>This is the main landing page of Dealcross.</p>
-        {/* Add your route outlet or content here */}
-      </main>
-    </div>
+    <BrowserRouter>
+      <div className="min-h-screen flex flex-col bg-white dark:bg-gray-900 text-black dark:text-white">
+        <Navbar />
+        <main className="flex-grow p-4">
+          <AppRoutes />
+        </main>
+        <Footer />
+        <div className="fixed bottom-4 right-4">
+          <ThemeToggle />
+        </div>
+      </div>
+    </BrowserRouter>
   );
 };
 
