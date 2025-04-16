@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import LanguageSwitcher from './LanguageSwitcher';
 
 const Navbar = () => {
   return (
@@ -16,7 +15,6 @@ const Navbar = () => {
           <Link to="/signup" className="text-gray-600 dark:text-gray-300 hover:text-blue-500">
             Signup
           </Link>
-          <LanguageSwitcher />
         </div>
       </div>
     </header>
