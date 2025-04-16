@@ -23,3 +23,4 @@ Builds the frontend for production
 Previews the production build locally
 
 ## Folder Structure
+dealcross-frontend/ ├── public/ │   └── index.html ├── src/ │   ├── App.jsx │   ├── AppRoutes.jsx │   ├── main.jsx │   ├── index.css │   ├── ThemeToggle.jsx │   ├── api.js │   ├── components/ │   │   ├── Navbar.jsx │   │   └── Footer.jsx │   └── pages/ │       ├── LandingPage.jsx │       ├── LoginPage.jsx │       └── SignupPage.jsx ├── vite.config.js ├── tailwind.config.js ├── postcss.config.js ├── package.json
