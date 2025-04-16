@@ -1,84 +1,40 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 const mockTransactions = [
-  {
-    id: 'TXN001',
-    type: 'Credit',
-    amount: 150.0,
-    date: '2024-04-15',
-    status: 'Completed',
-  },
-  {
-    id: 'TXN002',
-    type: 'Debit',
-    amount: 75.5,
-    date: '2024-04-13',
-    status: 'Pending',
-  },
-  {
-    id: 'TXN003',
-    type: 'Credit',
-    amount: 200.0,
-    date: '2024-04-10',
-    status: 'Failed',
-  },
+  { id: 1, type: 'Deposit', amount: 1200, status: 'Success', date: '2025-04-01' },
+  { id: 2, type: 'Withdrawal', amount: 500, status: 'Pending', date: '2025-04-03' },
+  { id: 3, type: 'Share Purchase', amount: 300, status: 'Success', date: '2025-04-05' },
 ];
 
 const TransactionHistory = () => {
-  const [transactions, setTransactions] = useState([]);
-
-  useEffect(() => {
-    // Replace with actual API call later
-    setTransactions(mockTransactions);
-  }, []);
-
   return (
     <div className="min-h-screen px-4 py-8 bg-gray-100 dark:bg-black text-gray-900 dark:text-white">
-      <h1 className="text-3xl font-bold mb-6 text-center">Transaction History</h1>
-
-      <div className="overflow-x-auto max-w-5xl mx-auto">
-        <table className="w-full bg-white dark:bg-gray-900 border-collapse shadow-md rounded-lg">
-          <thead className="bg-blue-600 text-white">
-            <tr>
-              <th className="py-3 px-4 text-left">Transaction ID</th>
-              <th className="py-3 px-4 text-left">Type</th>
-              <th className="py-3 px-4 text-left">Amount ($)</th>
-              <th className="py-3 px-4 text-left">Date</th>
-              <th className="py-3 px-4 text-left">Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {transactions.map((txn) => (
-              <tr key={txn.id} className="border-t border-gray-300 dark:border-gray-700">
-                <td className="py-2 px-4">{txn.id}</td>
-                <td className="py-2 px-4">{txn.type}</td>
-                <td className="py-2 px-4">${txn.amount.toFixed(2)}</td>
-                <td className="py-2 px-4">{txn.date}</td>
-                <td className="py-2 px-4">
-                  <span
-                    className={`px-2 py-1 rounded-full text-xs font-semibold ${
-                      txn.status === 'Completed'
-                        ? 'bg-green-100 text-green-700'
-                        : txn.status === 'Pending'
-                        ? 'bg-yellow-100 text-yellow-700'
-                        : 'bg-red-100 text-red-700'
-                    }`}
-                  >
-                    {txn.status}
-                  </span>
-                </td>
-              </tr>
-            ))}
-
-            {transactions.length === 0 && (
+      <div className="max-w-4xl mx-auto bg-white dark:bg-gray-900 p-6 rounded shadow-md">
+        <h2 className="text-2xl font-bold mb-6 text-center">Transaction History</h2>
+        <div className="overflow-x-auto">
+          <table className="min-w-full divide-y divide-gray-300 dark:divide-gray-700">
+            <thead>
               <tr>
-                <td colSpan="5" className="py-4 text-center text-gray-500 dark:text-gray-400">
-                  No transactions found.
-                </td>
+                <th className="text-left py-2 px-4">Date</th>
+                <th className="text-left py-2 px-4">Type</th>
+                <th className="text-left py-2 px-4">Amount</th>
+                <th className="text-left py-2 px-4">Status</th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+              {mockTransactions.map(tx => (
+                <tr key={tx.id}>
+                  <td className="py-2 px-4">{tx.date}</td>
+                  <td className="py-2 px-4">{tx.type}</td>
+                  <td className="py-2 px-4">${tx.amount}</td>
+                  <td className={`py-2 px-4 font-semibold ${tx.status === 'Success' ? 'text-green-600' : 'text-yellow-500'}`}>
+                    {tx.status}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
