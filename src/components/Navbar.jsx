@@ -1,25 +1,31 @@
+// src/components/Navbar.jsx
 import React from 'react';
-import { Link } from 'react-router-dom';
-import LanguageSwitcher from './LanguageSwitcher';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('token'); // or however you're storing the auth token
+    navigate('/login');
+  };
+
   return (
-    <header className="bg-white dark:bg-gray-900 shadow">
-      <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-        <Link to="/" className="text-2xl font-bold text-gray-800 dark:text-white">
-          Dealcross
-        </Link>
-        <div className="flex items-center space-x-4">
-          <Link to="/login" className="text-gray-600 dark:text-gray-300 hover:text-blue-500">
-            Login
-          </Link>
-          <Link to="/signup" className="text-gray-600 dark:text-gray-300 hover:text-blue-500">
-            Signup
-          </Link>
-          <LanguageSwitcher />
-        </div>
+    <nav className="bg-primary text-white p-4 flex items-center justify-between">
+      <div className="text-xl font-bold">
+        <Link to="/">Dealcross</Link>
       </div>
-    </header>
+      <div className="flex items-center gap-4">
+        <Link to="/login">Login</Link>
+        <Link to="/signup">Sign Up</Link>
+        <button
+          onClick={handleLogout}
+          className="bg-white text-primary font-medium px-3 py-1 rounded hover:bg-gray-100"
+        >
+          Logout
+        </button>
+      </div>
+    </nav>
   );
 };
 
