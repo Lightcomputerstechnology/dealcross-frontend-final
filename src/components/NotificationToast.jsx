@@ -6,9 +6,18 @@ const NotificationToast = () => {
       position="top-right"
       toastOptions={{
         style: {
-          background: '#1f2937',
+          background: '#333',
           color: '#fff',
-          borderRadius: '0.5rem',
+        },
+        success: {
+          style: {
+            background: '#4BB543',
+          },
+        },
+        error: {
+          style: {
+            background: '#FF4C4C',
+          },
         },
       }}
     />
