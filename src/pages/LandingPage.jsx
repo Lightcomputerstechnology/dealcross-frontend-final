@@ -5,35 +5,39 @@ import Logo from '../assets/dealcross-logo.png'
 
 export default function LandingPage() {
   return (
-    <>
+    <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 flex flex-col">
+      {/* Header */}
+      <header className="flex items-center justify-between px-6 py-4 bg-gray-100 dark:bg-gray-800">
+        <img src={Logo} alt="Dealcross logo" className="h-8 w-auto" />
+        <nav className="space-x-4">
+          <Link to="/login" className="hover:underline">Login</Link>
+          <Link to="/signup" className="hover:underline">Sign Up</Link>
+        </nav>
+      </header>
+
       {/* Hero */}
-      <section className="bg-gray-50 dark:bg-gray-800 text-center py-20 px-6">
-        <img
-          src={Logo}
-          alt="Dealcross logo"
-          className="mx-auto h-24 w-auto mb-8"
-        />
-        <h1 className="text-4xl md:text-5xl font-extrabold mb-4 text-gray-900 dark:text-white">
-          Secure&nbsp;
-          <span className="text-blue-600 dark:text-blue-400">
-            Transactions
-          </span>
-          <br className="hidden sm:block" />
-          with Escrow
+      <main className="flex-grow flex flex-col items-center justify-center px-4 text-center">
+        <img src={Logo} alt="Dealcross logo" className="h-24 w-auto mb-8" />
+
+        <h1 className="text-4xl font-extrabold mb-4">
+          Secure Transactions <span className="text-blue-600">with Escrow</span>
         </h1>
-        <p className="max-w-xl mx-auto text-lg mb-8 text-gray-600 dark:text-gray-300">
+        <p className="text-lg mb-8 max-w-md">
           Trust, protect and save time with Dealcross escrow services.
         </p>
+
         <Link
           to="/start-deal"
-          className="inline-block px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg shadow"
+          className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
         >
           Start a deal
         </Link>
-      </section>
+      </main>
 
-      {/* …then the rest of your landing‑page sections (features, deals, CTA, contact, etc.) */}
-      {/* I gave you the full code in my last message; just paste it in below this Hero block */}
-    </>
+      {/* Footer */}
+      <footer className="py-4 bg-gray-100 dark:bg-gray-800 text-center text-sm">
+        © {new Date().getFullYear()} Dealcross. All rights reserved.
+      </footer>
+    </div>
   )
 }
