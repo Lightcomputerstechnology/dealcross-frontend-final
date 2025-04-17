@@ -1,15 +1,37 @@
-import React from 'react';
+// File: src/pages/WalletPage.jsx
+
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 const WalletPage = () => {
-  const balance = 4625.23;
-  const currency = 'USD';
+  const [balance, setBalance] = useState(null);
+  const [status, setStatus] = useState(null);
 
-  const recentTransactions = [
-    { type: 'Funding', amount: '+$500', status: 'Successful', date: 'April 15, 2025' },
-    { type: 'Deal Payment', amount: '-$2300', status: 'Released', date: 'April 14, 2025' },
-    { type: 'Funding', amount: '+$300', status: 'Pending', date: 'April 13, 2025' },
-  ];
+  useEffect(() => {
+    const fetchWallet = async () => {
+      const token = localStorage.getItem('token');
+
+      if (!token) {
+        setStatus('Login required.');
+        return;
+      }
+
+      try {
+        const response = await axios.get('https://d-final.onrender.com/wallet/balance', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        setBalance(response.data.balance);
+      } catch (error) {
+        setStatus(error.response?.data?.detail || 'Unable to fetch wallet balance.');
+      }
+    };
+
+    fetchWallet();
+  }, []);
 
   return (
     <div className="min-h-screen bg-[#0f172a] text-white px-6 py-10">
@@ -17,8 +39,14 @@ const WalletPage = () => {
 
       {/* Wallet Balance */}
       <div className="bg-[#1e293b] p-6 rounded-lg shadow mb-10">
-        <p className="text-sm text-gray-400">Available Balance</p>
-        <h1 className="text-3xl font-bold mt-2">{currency} {balance.toLocaleString()}</h1>
+        {balance !== null ? (
+          <>
+            <p className="text-sm text-gray-400">Available Balance</p>
+            <h1 className="text-3xl font-bold mt-2">USD {balance.toFixed(2)}</h1>
+          </>
+        ) : (
+          <p className="text-yellow-400">{status || 'Loading balance...'}</p>
+        )}
 
         <div className="mt-6 flex flex-wrap gap-4">
           <Link to="/fund-wallet">
@@ -34,27 +62,6 @@ const WalletPage = () => {
           <button className="border border-red-500 hover:bg-red-700 px-5 py-2 rounded-md font-medium">
             Withdraw
           </button>
-        </div>
-      </div>
-
-      {/* Recent Transactions */}
-      <div>
-        <h3 className="text-lg font-semibold mb-4">Recent Transactions</h3>
-        <div className="bg-gray-800 rounded-lg divide-y divide-gray-700">
-          {recentTransactions.map((txn, index) => (
-            <div key={index} className="flex justify-between items-center p-4">
-              <div>
-                <p className="font-medium">{txn.type}</p>
-                <p className="text-xs text-gray-400">{txn.date}</p>
-              </div>
-              <div className="text-right">
-                <p className={`font-semibold ${txn.amount.startsWith('-') ? 'text-red-400' : 'text-green-400'}`}>
-                  {txn.amount}
-                </p>
-                <p className="text-xs text-gray-400">{txn.status}</p>
-              </div>
-            </div>
-          ))}
         </div>
       </div>
     </div>
