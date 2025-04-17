@@ -1,42 +1,65 @@
 import React, { useState } from 'react';
-import { toast } from 'react-hot-toast';
+import axios from 'axios';
 
 const FundWalletPage = () => {
   const [amount, setAmount] = useState('');
+  const [status, setStatus] = useState(null);
 
-  const handleFund = (e) => {
+  const handleFund = async (e) => {
     e.preventDefault();
-    if (!amount || isNaN(amount) || Number(amount) <= 0) {
-      toast.error('Please enter a valid amount.');
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      setStatus('You must be logged in.');
       return;
     }
 
-    toast.success(`$${amount} added to your wallet!`);
-    setAmount('');
+    try {
+      const response = await axios.post(
+        'https://d-final.onrender.com/wallet/fund',
+        { amount: parseFloat(amount) },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        setStatus('Wallet funded successfully!');
+      } else {
+        setStatus('Funding failed. Please try again.');
+      }
+    } catch (error) {
+      setStatus(
+        error.response?.data?.detail || 'Something went wrong. Please try again.'
+      );
+    }
   };
 
   return (
-    <div className="min-h-screen px-4 py-8 bg-gray-100 dark:bg-black text-gray-900 dark:text-white">
-      <div className="max-w-md mx-auto bg-white dark:bg-gray-900 p-6 rounded shadow-md">
-        <h2 className="text-2xl font-bold mb-4 text-center">Fund Your Wallet</h2>
-
-        <form onSubmit={handleFund} className="flex flex-col gap-4">
-          <input
-            type="number"
-            placeholder="Enter amount"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded dark:bg-gray-800 dark:border-gray-600 dark:text-white"
-          />
-
-          <button
-            type="submit"
-            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
-          >
-            Fund Wallet
-          </button>
-        </form>
-      </div>
+    <div className="min-h-screen bg-[#0f172a] text-white flex justify-center items-center px-4 py-12">
+      <form
+        onSubmit={handleFund}
+        className="w-full max-w-sm bg-[#1e293b] p-6 rounded-lg shadow"
+      >
+        <h2 className="text-xl font-semibold mb-4 text-center">Fund Wallet</h2>
+        <input
+          type="number"
+          placeholder="Enter amount (USD)"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+          className="w-full mb-4 px-4 py-2 rounded bg-gray-800 text-white"
+          required
+        />
+        <button
+          type="submit"
+          className="w-full bg-blue-600 hover:bg-blue-700 py-2 rounded font-semibold"
+        >
+          Fund Wallet
+        </button>
+        {status && <p className="text-yellow-400 text-sm mt-4 text-center">{status}</p>}
+      </form>
     </div>
   );
 };
