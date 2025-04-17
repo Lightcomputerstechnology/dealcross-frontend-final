@@ -1,68 +1,62 @@
 // src/pages/StartDealPairing.jsx
+
 import React, { useState } from 'react';
 
 const StartDealPairing = () => {
-  const [buyerEmail, setBuyerEmail] = useState('');
-  const [sellerEmail, setSellerEmail] = useState('');
-  const [message, setMessage] = useState('');
+  const [email, setEmail] = useState('');
+  const [dealId, setDealId] = useState('');
+  const [status, setStatus] = useState('');
 
-  const handlePairingSubmit = (e) => {
+  const handlePairDeal = (e) => {
     e.preventDefault();
-    if (!buyerEmail || !sellerEmail) {
-      setMessage('Both emails are required to pair users.');
+
+    if (!email || !dealId) {
+      setStatus('Please fill in both fields.');
       return;
     }
 
-    // Simulate pairing confirmation
-    setMessage(`Deal pairing request sent to:\nBuyer: ${buyerEmail}\nSeller: ${sellerEmail}`);
+    // Simulate API call
+    setTimeout(() => {
+      setStatus(`Pairing request sent for Deal ID ${dealId} to ${email}`);
+    }, 1000);
   };
 
   return (
-    <div className="max-w-xl mx-auto p-6 bg-white dark:bg-gray-900 rounded-lg shadow">
-      <h1 className="text-2xl font-bold mb-4 text-gray-800 dark:text-white">Start Deal Pairing</h1>
-
-      <form onSubmit={handlePairingSubmit} className="space-y-4">
+    <div className="max-w-md mx-auto mt-12 p-6 bg-white dark:bg-gray-800 rounded shadow-md">
+      <h2 className="text-2xl font-bold mb-4 text-center text-gray-900 dark:text-white">Start Deal Pairing</h2>
+      <form onSubmit={handlePairDeal} className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-            Buyer Email
-          </label>
+          <label htmlFor="email" className="block text-gray-700 dark:text-gray-300 mb-1">Counterparty Email</label>
           <input
+            id="email"
             type="email"
-            value={buyerEmail}
-            onChange={(e) => setBuyerEmail(e.target.value)}
-            className="w-full mt-1 px-3 py-2 border border-gray-300 dark:border-gray-700 rounded bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white"
-            placeholder="Enter buyer email"
+            className="w-full px-4 py-2 rounded border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Enter user email"
             required
           />
         </div>
-
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-            Seller Email
-          </label>
+          <label htmlFor="dealId" className="block text-gray-700 dark:text-gray-300 mb-1">Deal ID</label>
           <input
-            type="email"
-            value={sellerEmail}
-            onChange={(e) => setSellerEmail(e.target.value)}
-            className="w-full mt-1 px-3 py-2 border border-gray-300 dark:border-gray-700 rounded bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white"
-            placeholder="Enter seller email"
+            id="dealId"
+            type="text"
+            className="w-full px-4 py-2 rounded border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white"
+            value={dealId}
+            onChange={(e) => setDealId(e.target.value)}
+            placeholder="Enter deal ID"
             required
           />
         </div>
-
         <button
           type="submit"
           className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded transition"
         >
-          Send Pairing Request
+          Pair Deal
         </button>
       </form>
-
-      {message && (
-        <div className="mt-4 text-sm text-green-600 dark:text-green-400 whitespace-pre-line">
-          {message}
-        </div>
-      )}
+      {status && <p className="mt-4 text-center text-sm text-green-500 dark:text-green-400">{status}</p>}
     </div>
   );
 };
