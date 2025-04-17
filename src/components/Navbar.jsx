@@ -1,62 +1,60 @@
 // src/components/Navbar.jsx
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Menu, X } from 'react-feather';
-import Logo from '@/assets/logo.svg';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { Menu } from "lucide-react";
 
-const links = [
-  { to: '/',              name: 'Home'        },
-  { to: '/deals',         name: 'Deals'       },
-  { to: '/share-trading', name: 'Share'       },
-  { to: '/contact',       name: 'Contact'     },
-];
+// 👉  import the image that sits in src/assets
+import logo from "../assets/dealcross-logo.png";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-20 bg-panel/90 backdrop-blur supports-[backdrop-filter]:bg-panel/60 border-b border-white/10">
-      <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex h-14 items-center justify-between">
-        {/* logo */}
-        <Link to="/" className="flex items-center gap-2 font-semibold text-xl">
-          <img src={Logo} alt="Dealcross logo" className="h-8 w-8" />
-          <span className="hidden sm:inline">Dealcross</span>
+    <header className="bg-[#0f172a] text-white">
+      <nav className="mx-auto flex max-w-6xl items-center justify-between p-4">
+        {/* Brand ----------------------------------------------------------- */}
+        <Link to="/" className="flex items-center gap-2">
+          <img src={logo} alt="Dealcross" className="h-8 w-8" />
+          <span className="text-lg font-semibold">Dealcross</span>
         </Link>
 
-        {/* desktop links */}
-        <ul className="hidden md:flex gap-6">
-          {links.map(l => (
-            <li key={l.to}>
-              <Link to={l.to} className="hover:text-primary-400 transition-colors">
-                {l.name}
+        {/* Desktop links --------------------------------------------------- */}
+        <ul className="hidden items-center gap-8 md:flex">
+          <li><Link to="/"         className="hover:text-blue-400">Home</Link></li>
+          <li><Link to="/deals"    className="hover:text-blue-400">Deals</Link></li>
+          <li><Link to="/share"    className="hover:text-blue-400">Share</Link></li>
+          <li><Link to="/contact"  className="hover:text-blue-400">Contact</Link></li>
+          <li><Link to="/signup"   className="rounded bg-blue-600 px-4 py-2 text-sm font-medium hover:bg-blue-700">
+                Sign Up
               </Link>
-            </li>
-          ))}
+          </li>
         </ul>
 
-        {/* auth buttons */}
-        <div className="hidden md:flex gap-3">
-          <Link to="/login" className="btn-secondary-sm">Login</Link>
-          <Link to="/signup" className="btn-primary-sm">Sign Up</Link>
-        </div>
-
-        {/* mobile burger */}
-        <button onClick={() => setOpen(!open)} className="md:hidden p-2">
-          {open ? <X size={24}/> : <Menu size={24}/>}
+        {/* Mobile hamburger ---------------------------------------------- */}
+        <button
+          onClick={() => setOpen(!open)}
+          className="md:hidden"
+          aria-label="Toggle menu"
+        >
+          <Menu size={28} />
         </button>
       </nav>
 
-      {/* mobile menu */}
+      {/* Mobile drawer ---------------------------------------------------- */}
       {open && (
-        <div className="md:hidden border-t border-white/10 bg-panel">
-          {links.map(l => (
-            <Link key={l.to} to={l.to} onClick={() => setOpen(false)}
-                  className="block px-4 py-3 hover:bg-white/5">{l.name}</Link>
-          ))}
-          <Link to="/login"   onClick={() => setOpen(false)} className="block px-4 py-3">Login</Link>
-          <Link to="/signup"  onClick={() => setOpen(false)} className="block px-4 py-3">Sign Up</Link>
-        </div>
+        <ul className="space-y-4 bg-[#0f172a] p-4 md:hidden">
+          <li><Link to="/"        onClick={() => setOpen(false)}>Home</Link></li>
+          <li><Link to="/deals"   onClick={() => setOpen(false)}>Deals</Link></li>
+          <li><Link to="/share"   onClick={() => setOpen(false)}>Share</Link></li>
+          <li><Link to="/contact" onClick={() => setOpen(false)}>Contact</Link></li>
+          <li><Link to="/signup"
+                  className="block rounded bg-blue-600 px-4 py-2 text-center font-medium"
+                  onClick={() => setOpen(false)}>
+                 Sign Up
+              </Link>
+          </li>
+        </ul>
       )}
     </header>
   );
-        }
+      }
