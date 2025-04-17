@@ -1,30 +1,45 @@
 import React from 'react';
 
-const mockShares = [
-  { id: 1, name: 'Bitcoin', symbol: 'BTC', price: '$45,200', change: '+2.5%' },
-  { id: 2, name: 'Ethereum', symbol: 'ETH', price: '$3,200', change: '+1.8%' },
-  { id: 3, name: 'Apple Inc.', symbol: 'AAPL', price: '$175.50', change: '-0.4%' },
-  { id: 4, name: 'Tesla', symbol: 'TSLA', price: '$710.10', change: '+4.2%' },
+const shares = [
+  { name: 'Tesla', symbol: 'TSLA', price: 781.23, change: '+1.2%' },
+  { name: 'Apple', symbol: 'AAPL', price: 142.81, change: '-0.8%' },
+  { name: 'Alphabet', symbol: 'GOOGL', price: 2_412.36, change: '+0.3%' },
+  { name: 'Amazon', symbol: 'AMZN', price: 98.25, change: '+2.1%' },
 ];
 
-const ShareTrading = () => {
+const ShareTradingPage = () => {
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 p-6 text-gray-800 dark:text-white">
-      <h1 className="text-3xl font-bold mb-6">Share Trading</h1>
-      <p className="text-lg mb-4">Explore current trading options. Prices update in real-time.</p>
+    <div className="min-h-screen bg-[#0f172a] text-white px-6 py-10">
+      <h2 className="text-2xl font-bold mb-6">Share Trading</h2>
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {shares.map((stock, index) => (
+          <div key={index} className="bg-[#1e293b] p-6 rounded-lg shadow">
+            <h3 className="text-xl font-semibold mb-1">{stock.name}</h3>
+            <p className="text-gray-400 text-sm mb-4">{stock.symbol}</p>
 
-      <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-        {mockShares.map((share) => (
-          <div key={share.id} className="bg-white dark:bg-gray-800 p-5 rounded-xl shadow-md">
-            <h2 className="text-xl font-semibold">{share.name} <span className="text-sm text-gray-500">({share.symbol})</span></h2>
-            <p className="text-lg font-medium mt-2">Current Price: <span className="text-blue-600 dark:text-blue-400">{share.price}</span></p>
-            <p className={`mt-1 font-medium ${share.change.startsWith('-') ? 'text-red-500' : 'text-green-500'}`}>
-              Change: {share.change}
-            </p>
+            <div className="flex justify-between items-center mb-4">
+              <div>
+                <p className="text-sm text-gray-400">Current Price</p>
+                <p className="text-lg font-bold">${stock.price.toLocaleString()}</p>
+              </div>
+              <span
+                className={`text-sm px-2 py-1 rounded font-medium ${
+                  stock.change.startsWith('+')
+                    ? 'bg-green-700 text-green-300'
+                    : 'bg-red-700 text-red-300'
+                }`}
+              >
+                {stock.change}
+              </span>
+            </div>
 
-            <div className="mt-4 flex gap-2">
-              <button className="flex-1 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg">Buy</button>
-              <button className="flex-1 bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg">Sell</button>
+            <div className="flex gap-4">
+              <button className="flex-1 bg-blue-600 hover:bg-blue-700 py-2 rounded font-semibold">
+                Buy
+              </button>
+              <button className="flex-1 border border-white hover:bg-white hover:text-black py-2 rounded font-semibold">
+                Sell
+              </button>
             </div>
           </div>
         ))}
@@ -33,5 +48,4 @@ const ShareTrading = () => {
   );
 };
 
-export default ShareTrading;
-            
+export default ShareTradingPage;
