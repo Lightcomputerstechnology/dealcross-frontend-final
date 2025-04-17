@@ -1,21 +1,19 @@
-import React from "react";
-import AppRoutes from "./AppRoutes";
+import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
 
-import Navbar            from "./components/Navbar";
-import Footer            from "./components/Footer";
-import ThemeToggle       from "./components/ThemeToggle";
-import LanguageSwitcher  from "./components/LanguageSwitcher";
-import NotificationToast from "./components/NotificationToast";
+import Navbar from '@/components/Navbar';
+import AppRoutes from './AppRoutes';
+import './index.css';      // tailwind directives
 
-export default function App () {
+export default function App() {
   return (
-    <>
-      <Navbar />
-      <AppRoutes />
-      <LanguageSwitcher />
-      <ThemeToggle />
-      <NotificationToast />
-      <Footer />
-    </>
+    <BrowserRouter>
+      <div className="min-h-screen bg-gradient-to-br from-surface via-surface to-surface/90 text-white">
+        <Navbar />
+        <main className="mx-auto max-w-7xl px-4 py-10">
+          <AppRoutes />
+        </main>
+      </div>
+    </BrowserRouter>
   );
 }
