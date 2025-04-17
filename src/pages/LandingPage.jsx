@@ -1,34 +1,49 @@
 // src/pages/LandingPage.jsx
-import React from 'react';
-import { Link } from 'react-router-dom';
-import Logo from '../assets/dealcross-logo.png';
+import React from 'react'
+import { Link } from 'react-router-dom'
+import Logo from '../assets/dealcross-logo.png'   // ← your transparent PNG
 
-const LandingPage = () => {
+export default function LandingPage() {
   return (
-    <div className="flex flex-col items-center justify-center text-center px-4 py-12 bg-white dark:bg-gray-900">
-      {/* Logo */}
-      <img src={Logo} alt="Dealcross Logo" className="w-24 h-24 mb-6" />
+    <div className="min-h-screen flex flex-col bg-white">
+      {/* --- Header / Navbar --- */}
+      <header className="bg-gray-900 text-white">
+        <div className="max-w-4xl mx-auto flex items-center justify-between p-4">
+          <img src={Logo} alt="Dealcross logo" className="h-8 w-auto" />
+          <nav className="space-x-4 text-sm">
+            <Link to="/" className="hover:text-blue-400">Home</Link>
+            <Link to="/deals" className="hover:text-blue-400">Deals</Link>
+            <Link to="/share-trading" className="hover:text-blue-400">Share Trading</Link>
+            <Link to="/contact" className="hover:text-blue-400">Contact</Link>
+            <Link to="/login" className="bg-blue-600 hover:bg-blue-500 px-3 py-1 rounded">Login</Link>
+            <Link to="/signup" className="bg-gray-800 hover:bg-gray-700 px-3 py-1 rounded">Sign Up</Link>
+          </nav>
+        </div>
+      </header>
 
-      {/* Heading */}
-      <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 dark:text-white leading-tight">
-        Secure Transactions <br />
-        <span className="text-blue-600">with Escrow</span>
-      </h1>
+      {/* --- Hero Section --- */}
+      <main className="flex-grow flex flex-col items-center justify-center text-center px-4">
+        <img src={Logo} alt="Dealcross logo" className="mb-8 w-32 h-32" />
+        <h1 className="text-4xl font-bold mb-4">
+          Secure Transactions <span className="text-blue-600">with Escrow</span>
+        </h1>
+        <p className="text-gray-600 mb-8 max-w-md">
+          Trust, protect and save time with Dealcross escrow services.
+        </p>
+        <Link
+          to="/share-trading"
+          className="bg-blue-600 hover:bg-blue-500 text-white px-6 py-3 rounded-lg"
+        >
+          Start a deal
+        </Link>
+      </main>
 
-      {/* Subtext */}
-      <p className="mt-4 text-gray-700 dark:text-gray-300 text-base sm:text-lg max-w-md">
-        Trust, protect and save time with Dealcross escrow services.
-      </p>
-
-      {/* Call to action */}
-      <Link
-        to="/pair-deal"
-        className="mt-6 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition"
-      >
-        Start a deal
-      </Link>
+      {/* --- Footer --- */}
+      <footer className="bg-gray-100 text-gray-600 py-6">
+        <div className="max-w-4xl mx-auto text-center text-sm">
+          © 2025 Dealcross. All rights reserved.
+        </div>
+      </footer>
     </div>
-  );
-};
-
-export default LandingPage;
+  )
+          }
