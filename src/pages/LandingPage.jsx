@@ -3,7 +3,7 @@ import { useNavigate }           from 'react-router-dom';
 import { motion }                from 'framer-motion';
 import { Briefcase, Shield, DollarSign } from 'lucide-react';
 
-import Logo from '@/assets/dealcross‑mark.svg';   // ✅  already added earlier
+import Logo from 'import Logo from '../assets/dealcross‑mark.svg';   // ✅  already added earlier
 
 const features = [
   {
