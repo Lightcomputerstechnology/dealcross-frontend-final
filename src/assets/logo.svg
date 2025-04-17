@@ -1,0 +1,21 @@
+<!-- src/assets/logo.svg -->
+<svg viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad" x1="0" y1="0" x2="180" y2="180" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0a63ff"/>
+      <stop offset="1" stop-color="#e4a127"/>
+    </linearGradient>
+  </defs>
+
+  <!-- hex‑shield -->
+  <path d="M90 10 160 50v80l-70 40-70-40V50Z"
+        stroke="url(#grad)" stroke-width="10" stroke-linejoin="round" fill="none"/>
+
+  <!-- handshake (simplified) -->
+  <path d="M60 90h15l15 12 15-12h15" stroke="url(#grad)" stroke-width="10"
+        stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+  <!-- big tick -->
+  <circle cx="90" cy="50" r="20" stroke="url(#grad)" stroke-width="10" fill="none"/>
+  <path d="M82 50l6 6 12-12" stroke="url(#grad)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
