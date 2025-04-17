@@ -1,89 +1,70 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+// src/pages/LoginPage.jsx
+import { useState } from "react";
+import axios from "axios";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { motion } from "framer-motion";
 
-const LandingPage = () => {
+export default function LoginPage() {
+  const [form, setForm] = useState({ email: "", password: "" });
+  const [error, setError] = useState("");
+
+  /** Handle <input> changes */
+  const onChange = (e) =>
+    setForm({ ...form, [e.target.name]: e.target.value });
+
+  /** POST to /auth/login */
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    try {
+      const res = await axios.post("/auth/login", form);
+      // TODO: persist token, redirect, etc.
+      console.log(res.data);
+    } catch (err) {
+      setError(err.response?.data?.detail ?? "Login failed");
+    }
+  };
+
   return (
-    <div className="bg-[#0f172a] text-white min-h-screen px-6 pt-20 pb-10">
-      {/* Hero Section */}
-      <div className="text-center max-w-3xl mx-auto mb-16">
-        <h1 className="text-4xl font-bold mb-4">
-          Secure Transactions with Escrow
-        </h1>
-        <p className="text-gray-300 mb-6">
-          Trust, Protect, and Save Time with Dealcross Escrow Services
-        </p>
-        <div className="flex justify-center gap-4">
-          <Link to="/start-deal">
-            <button className="bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-md font-medium">
-              Start a deal
-            </button>
-          </Link>
-          <Link to="/learn-more">
-            <button className="border border-gray-400 hover:bg-white hover:text-black px-6 py-2 rounded-md font-medium">
-              Learn More
-            </button>
-          </Link>
-        </div>
-      </div>
+    <motion.div
+      className="min-h-screen grid place-items-center bg-gray-50 p-4"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+    >
+      <Card className="w-full max-w-md shadow-xl">
+        <CardContent className="space-y-6 p-8">
+          <h1 className="text-2xl font-semibold text-center">Sign in</h1>
 
-      {/* Features */}
-      <div className="grid md:grid-cols-3 gap-6 text-center mb-16">
-        <div className="bg-gray-800 rounded-lg p-6 shadow">
-          <h3 className="font-semibold text-lg mb-2">How It Works</h3>
-          <p className="text-gray-400 text-sm">
-            Simple and secure process from start to finish.
-          </p>
-        </div>
-        <div className="bg-gray-800 rounded-lg p-6 shadow">
-          <h3 className="font-semibold text-lg mb-2">Trust Levels</h3>
-          <p className="text-gray-400 text-sm">
-            Build your reputation with verified business accounts.
-          </p>
-        </div>
-        <div className="bg-gray-800 rounded-lg p-6 shadow">
-          <h3 className="font-semibold text-lg mb-2">Fast Payouts</h3>
-          <p className="text-gray-400 text-sm">
-            Receive your funds within 0-5 business days.
-          </p>
-        </div>
-      </div>
+          {error && (
+            <p className="text-sm text-red-600 text-center">{error}</p>
+          )}
 
-      {/* Deals in Progress */}
-      <div className="mb-12">
-        <h2 className="text-2xl font-semibold mb-4">Deals in Progress</h2>
-        <div className="grid md:grid-cols-3 gap-4">
-          <div className="bg-gray-900 p-4 rounded-lg shadow">
-            <h4 className="font-medium mb-1">Laptop Sale</h4>
-            <p className="text-sm text-gray-400">Alice Bowen & Joshua White</p>
-            <p className="mt-2 font-bold text-blue-400">$800</p>
-          </div>
-          <div className="bg-gray-900 p-4 rounded-lg shadow">
-            <h4 className="font-medium mb-1">Web Development</h4>
-            <p className="text-sm text-gray-400">Kevin Singh & Emma Carter</p>
-            <p className="mt-2 font-bold text-blue-400">$1,500</p>
-          </div>
-          <div className="bg-gray-900 p-4 rounded-lg shadow">
-            <h4 className="font-medium mb-1">Car Purchase</h4>
-            <p className="text-sm text-gray-400">Victoria Shaw & Brian Walsh</p>
-            <p className="mt-2 font-bold text-blue-400">$12,000</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Share Trading CTA */}
-      <div className="bg-blue-900 rounded-lg p-6 text-center">
-        <h2 className="text-2xl font-semibold mb-2">Buy and Sell Company Shares</h2>
-        <p className="text-gray-300 mb-4">
-          Trade company shares securely and efficiently.
-        </p>
-        <Link to="/share-trading">
-          <button className="bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-md font-medium">
-            Start Trading
-          </button>
-        </Link>
-      </div>
-    </div>
+          <form onSubmit={onSubmit} className="space-y-4">
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              required
+              value={form.email}
+              onChange={onChange}
+              className="w-full px-3 py-2 border rounded-md focus:outline-none"
+            />
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              required
+              value={form.password}
+              onChange={onChange}
+              className="w-full px-3 py-2 border rounded-md focus:outline-none"
+            />
+            <Button type="submit" className="w-full">
+              Log in
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
+    </motion.div>
   );
-};
-
-export default LandingPage;
+}
