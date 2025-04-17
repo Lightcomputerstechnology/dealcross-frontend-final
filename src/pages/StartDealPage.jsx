@@ -1,89 +1,96 @@
 import React, { useState } from 'react';
-import { toast } from 'react-hot-toast';
 
 const StartDealPage = () => {
-  const [form, setForm] = useState({
-    title: '',
-    amount: '',
-    counterparty: '',
-    description: '',
-  });
-
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  const [role, setRole] = useState('buyer');
+  const [title, setTitle] = useState('');
+  const [email, setEmail] = useState('');
+  const [amount, setAmount] = useState('');
+  const [escrowType, setEscrowType] = useState('standard');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { title, amount, counterparty } = form;
-
-    if (!title || !amount || !counterparty) {
-      toast.error('Please fill all required fields');
-      return;
-    }
-
-    toast.success('Deal initialized successfully!');
-    setForm({ title: '', amount: '', counterparty: '', description: '' });
+    console.log({ role, title, email, amount, escrowType });
+    // TODO: Connect this form to your backend API
   };
 
   return (
-    <div className="min-h-screen px-4 py-8 bg-gray-50 dark:bg-black text-gray-900 dark:text-white">
-      <h1 className="text-3xl font-bold mb-6">Start a New Deal</h1>
+    <div className="min-h-screen bg-[#0f172a] text-white flex justify-center items-center px-4 py-12">
+      <form
+        onSubmit={handleSubmit}
+        className="w-full max-w-md bg-[#1e293b] p-6 rounded-lg shadow-lg"
+      >
+        <h2 className="text-xl font-semibold mb-6 text-center">
+          Start a Deal
+        </h2>
 
-      <form onSubmit={handleSubmit} className="max-w-xl bg-white dark:bg-gray-800 p-6 rounded-xl shadow space-y-4">
-        <div>
-          <label className="block text-sm mb-1">Deal Title</label>
-          <input
-            type="text"
-            name="title"
-            value={form.title}
-            onChange={handleChange}
-            placeholder="E.g. Web design payment"
-            className="w-full px-4 py-2 rounded border dark:bg-gray-700 dark:border-gray-600"
-          />
+        {/* Role Selector */}
+        <div className="mb-4 flex justify-center gap-4">
+          <label className="flex items-center gap-2 cursor-pointer">
+            <input
+              type="radio"
+              value="buyer"
+              checked={role === 'buyer'}
+              onChange={() => setRole('buyer')}
+              className="accent-blue-500"
+            />
+            I'm a Buyer
+          </label>
+          <label className="flex items-center gap-2 cursor-pointer">
+            <input
+              type="radio"
+              value="seller"
+              checked={role === 'seller'}
+              onChange={() => setRole('seller')}
+              className="accent-blue-500"
+            />
+            I'm a Seller
+          </label>
         </div>
 
-        <div>
-          <label className="block text-sm mb-1">Amount (USD)</label>
+        {/* Deal Inputs */}
+        <input
+          type="text"
+          placeholder="Deal Title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required
+          className="w-full mb-3 px-4 py-2 rounded bg-gray-800 text-white"
+        />
+        <input
+          type="email"
+          placeholder="Counterparty Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          className="w-full mb-3 px-4 py-2 rounded bg-gray-800 text-white"
+        />
+        <div className="flex items-center gap-2 mb-4">
           <input
             type="number"
-            name="amount"
-            value={form.amount}
-            onChange={handleChange}
-            placeholder="Enter deal amount"
-            className="w-full px-4 py-2 rounded border dark:bg-gray-700 dark:border-gray-600"
+            placeholder="Amount"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+            required
+            className="w-full px-4 py-2 rounded bg-gray-800 text-white"
           />
+          <span className="text-sm text-gray-400">USD</span>
         </div>
 
-        <div>
-          <label className="block text-sm mb-1">Counterparty Email or ID</label>
-          <input
-            type="text"
-            name="counterparty"
-            value={form.counterparty}
-            onChange={handleChange}
-            placeholder="Enter counterparty email or ID"
-            className="w-full px-4 py-2 rounded border dark:bg-gray-700 dark:border-gray-600"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm mb-1">Deal Description</label>
-          <textarea
-            name="description"
-            value={form.description}
-            onChange={handleChange}
-            placeholder="Write a short description..."
-            rows={4}
-            className="w-full px-4 py-2 rounded border dark:bg-gray-700 dark:border-gray-600"
-          />
-        </div>
+        {/* Escrow Type */}
+        <select
+          value={escrowType}
+          onChange={(e) => setEscrowType(e.target.value)}
+          className="w-full mb-6 px-4 py-2 rounded bg-gray-800 text-white"
+        >
+          <option value="standard">Standard</option>
+          <option value="milestone">Milestone</option>
+        </select>
 
         <button
           type="submit"
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded transition"
+          className="w-full bg-blue-600 hover:bg-blue-700 py-2 rounded font-semibold"
         >
-          Start Deal
+          Create Deal
         </button>
       </form>
     </div>
