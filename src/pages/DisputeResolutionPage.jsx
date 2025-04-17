@@ -1,58 +1,96 @@
-import React from 'react';
+// File: src/pages/DisputeResolutionPage.jsx
+
+import React, { useState } from 'react';
+import axios from 'axios';
 
 const DisputeResolutionPage = () => {
-  const disputes = [
-    {
-      id: 'D001',
-      parties: 'UserA vs UserB',
-      reason: 'Non-delivery of digital goods',
-      status: 'Resolved',
-      resolution: 'Refund issued to buyer',
-      date: '2025-05-03',
-    },
-    {
-      id: 'D002',
-      parties: 'UserC vs UserD',
-      reason: 'Disputed payment confirmation',
-      status: 'Pending',
-      resolution: 'Awaiting admin review',
-      date: '2025-05-07',
-    },
-  ];
+  const [dealId, setDealId] = useState('');
+  const [reason, setReason] = useState('');
+  const [details, setDetails] = useState('');
+  const [status, setStatus] = useState(null);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      setStatus('Please log in to submit a dispute.');
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        'https://d-final.onrender.com/disputes/submit',
+        {
+          deal_id: dealId,
+          reason,
+          details,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.status === 200 || response.status === 201) {
+        setStatus('Dispute submitted successfully!');
+        setDealId('');
+        setReason('');
+        setDetails('');
+      } else {
+        setStatus('Failed to submit dispute.');
+      }
+    } catch (error) {
+      setStatus(error.response?.data?.detail || 'Something went wrong.');
+    }
+  };
 
   return (
-    <div className="min-h-screen p-6 text-white bg-gray-900">
-      <h2 className="text-3xl font-bold mb-6">Dispute Resolution Log</h2>
-      <div className="overflow-x-auto">
-        <table className="min-w-full bg-gray-800 rounded-lg shadow">
-          <thead className="bg-gray-700">
-            <tr>
-              <th className="py-3 px-4 text-left">Dispute ID</th>
-              <th className="py-3 px-4 text-left">Parties</th>
-              <th className="py-3 px-4 text-left">Reason</th>
-              <th className="py-3 px-4 text-left">Status</th>
-              <th className="py-3 px-4 text-left">Resolution</th>
-              <th className="py-3 px-4 text-left">Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            {disputes.map((dispute) => (
-              <tr key={dispute.id} className="border-t border-gray-600">
-                <td className="py-2 px-4">{dispute.id}</td>
-                <td className="py-2 px-4">{dispute.parties}</td>
-                <td className="py-2 px-4">{dispute.reason}</td>
-                <td className="py-2 px-4">
-                  <span className={`px-2 py-1 rounded text-xs font-semibold ${dispute.status === 'Resolved' ? 'bg-green-600' : 'bg-yellow-500'}`}>
-                    {dispute.status}
-                  </span>
-                </td>
-                <td className="py-2 px-4">{dispute.resolution}</td>
-                <td className="py-2 px-4">{dispute.date}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+    <div className="min-h-screen bg-[#0f172a] text-white flex justify-center items-center px-4 py-10">
+      <form
+        onSubmit={handleSubmit}
+        className="w-full max-w-lg bg-[#1e293b] p-6 rounded-lg shadow-md"
+      >
+        <h2 className="text-xl font-semibold mb-6 text-center">Submit a Dispute</h2>
+
+        <input
+          type="text"
+          placeholder="Deal ID"
+          value={dealId}
+          onChange={(e) => setDealId(e.target.value)}
+          required
+          className="w-full mb-4 px-4 py-2 rounded bg-gray-800 text-white"
+        />
+
+        <input
+          type="text"
+          placeholder="Dispute Reason"
+          value={reason}
+          onChange={(e) => setReason(e.target.value)}
+          required
+          className="w-full mb-4 px-4 py-2 rounded bg-gray-800 text-white"
+        />
+
+        <textarea
+          placeholder="Additional Details (optional)"
+          value={details}
+          onChange={(e) => setDetails(e.target.value)}
+          className="w-full mb-6 px-4 py-2 rounded bg-gray-800 text-white"
+          rows="4"
+        />
+
+        <button
+          type="submit"
+          className="w-full bg-red-600 hover:bg-red-700 py-2 rounded font-semibold"
+        >
+          Submit Dispute
+        </button>
+
+        {status && (
+          <p className="text-yellow-400 text-sm text-center mt-4">{status}</p>
+        )}
+      </form>
     </div>
   );
 };
