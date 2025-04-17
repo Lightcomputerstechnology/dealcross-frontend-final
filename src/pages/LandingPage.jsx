@@ -1,43 +1,34 @@
 // src/pages/LandingPage.jsx
-import React from 'react'
-import { Link } from 'react-router-dom'
-import Logo from '../assets/dealcross-logo.png'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import Logo from '../assets/dealcross-logo.png';
 
-export default function LandingPage() {
+const LandingPage = () => {
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 flex flex-col">
-      {/* Header */}
-      <header className="flex items-center justify-between px-6 py-4 bg-gray-100 dark:bg-gray-800">
-        <img src={Logo} alt="Dealcross logo" className="h-8 w-auto" />
-        <nav className="space-x-4">
-          <Link to="/login" className="hover:underline">Login</Link>
-          <Link to="/signup" className="hover:underline">Sign Up</Link>
-        </nav>
-      </header>
+    <div className="flex flex-col items-center justify-center text-center px-4 py-12 bg-white dark:bg-gray-900">
+      {/* Logo */}
+      <img src={Logo} alt="Dealcross Logo" className="w-24 h-24 mb-6" />
 
-      {/* Hero */}
-      <main className="flex-grow flex flex-col items-center justify-center px-4 text-center">
-        <img src={Logo} alt="Dealcross logo" className="h-24 w-auto mb-8" />
+      {/* Heading */}
+      <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 dark:text-white leading-tight">
+        Secure Transactions <br />
+        <span className="text-blue-600">with Escrow</span>
+      </h1>
 
-        <h1 className="text-4xl font-extrabold mb-4">
-          Secure Transactions <span className="text-blue-600">with Escrow</span>
-        </h1>
-        <p className="text-lg mb-8 max-w-md">
-          Trust, protect and save time with Dealcross escrow services.
-        </p>
+      {/* Subtext */}
+      <p className="mt-4 text-gray-700 dark:text-gray-300 text-base sm:text-lg max-w-md">
+        Trust, protect and save time with Dealcross escrow services.
+      </p>
 
-        <Link
-          to="/start-deal"
-          className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-        >
-          Start a deal
-        </Link>
-      </main>
-
-      {/* Footer */}
-      <footer className="py-4 bg-gray-100 dark:bg-gray-800 text-center text-sm">
-        © {new Date().getFullYear()} Dealcross. All rights reserved.
-      </footer>
+      {/* Call to action */}
+      <Link
+        to="/pair-deal"
+        className="mt-6 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition"
+      >
+        Start a deal
+      </Link>
     </div>
-  )
-}
+  );
+};
+
+export default LandingPage;
