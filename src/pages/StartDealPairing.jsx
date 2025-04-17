@@ -1,62 +1,39 @@
-// src/pages/StartDealPairing.jsx
-
 import React, { useState } from 'react';
 
 const StartDealPairing = () => {
   const [email, setEmail] = useState('');
-  const [dealId, setDealId] = useState('');
-  const [status, setStatus] = useState('');
+  const [confirmed, setConfirmed] = useState(false);
 
-  const handlePairDeal = (e) => {
-    e.preventDefault();
-
-    if (!email || !dealId) {
-      setStatus('Please fill in both fields.');
-      return;
+  const handleConfirm = () => {
+    if (email.trim()) {
+      setConfirmed(true);
     }
-
-    // Simulate API call
-    setTimeout(() => {
-      setStatus(`Pairing request sent for Deal ID ${dealId} to ${email}`);
-    }, 1000);
   };
 
   return (
-    <div className="max-w-md mx-auto mt-12 p-6 bg-white dark:bg-gray-800 rounded shadow-md">
-      <h2 className="text-2xl font-bold mb-4 text-center text-gray-900 dark:text-white">Start Deal Pairing</h2>
-      <form onSubmit={handlePairDeal} className="space-y-4">
-        <div>
-          <label htmlFor="email" className="block text-gray-700 dark:text-gray-300 mb-1">Counterparty Email</label>
-          <input
-            id="email"
-            type="email"
-            className="w-full px-4 py-2 rounded border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter user email"
-            required
-          />
+    <div className="max-w-xl mx-auto mt-10 bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md">
+      <h2 className="text-2xl font-bold text-center mb-4 text-gray-800 dark:text-white">Start Deal Pairing</h2>
+      <p className="text-sm text-gray-600 dark:text-gray-300 mb-4 text-center">
+        Enter the email of the person you want to pair with. Both parties must confirm before starting the deal.
+      </p>
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Enter counterparty email"
+        className="w-full px-4 py-2 border rounded-md mb-4 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-white"
+      />
+      <button
+        onClick={handleConfirm}
+        className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded transition"
+      >
+        Confirm Pairing
+      </button>
+      {confirmed && (
+        <div className="mt-4 p-3 bg-green-100 text-green-800 rounded-md text-center">
+          Deal pairing request sent to <strong>{email}</strong>.
         </div>
-        <div>
-          <label htmlFor="dealId" className="block text-gray-700 dark:text-gray-300 mb-1">Deal ID</label>
-          <input
-            id="dealId"
-            type="text"
-            className="w-full px-4 py-2 rounded border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white"
-            value={dealId}
-            onChange={(e) => setDealId(e.target.value)}
-            placeholder="Enter deal ID"
-            required
-          />
-        </div>
-        <button
-          type="submit"
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded transition"
-        >
-          Pair Deal
-        </button>
-      </form>
-      {status && <p className="mt-4 text-center text-sm text-green-500 dark:text-green-400">{status}</p>}
+      )}
     </div>
   );
 };
