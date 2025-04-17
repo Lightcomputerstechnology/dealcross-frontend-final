@@ -1,9 +1,4 @@
-// src/AppRoutes.jsx
-
-import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-
-import MainLayout from './components/MainLayout';
 
 import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
@@ -33,43 +28,71 @@ import UserProfile from './pages/UserProfile';
 import TransactionHistory from './pages/TransactionHistory';
 import EscrowDashboard from './pages/EscrowDashboard';
 import DocsPage from './pages/DocsPage';
-import NotFoundPage from './pages/404Page';
+import AIInsightCenter from './pages/AIInsightCenter';
+import InvestorReports from './pages/InvestorReports';
+import DealAnalytics from './pages/DealAnalytics';
+import SecurityCenter from './pages/SecurityCenter';
+import ReferralProgram from './pages/ReferralProgram';
+import StartDealPairing from './pages/StartDealPairing';
+import DisputeLogViewer from './pages/DisputeLogViewer';
+import ChatSupport from './pages/ChatSupport';
+import NotFoundPage from './pages/NotFoundPage';
+
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+import ThemeToggle from './components/ThemeToggle';
+import LanguageSwitcher from './components/LanguageSwitcher';
+import NotificationToast from './components/NotificationToast';
 
 const AppRoutes = () => {
   return (
-    <Routes>
-      <Route path="/" element={<MainLayout><LandingPage /></MainLayout>} />
-      <Route path="/login" element={<MainLayout><LoginPage /></MainLayout>} />
-      <Route path="/signup" element={<MainLayout><SignupPage /></MainLayout>} />
-      <Route path="/wallet" element={<MainLayout><WalletPage /></MainLayout>} />
-      <Route path="/fund-wallet" element={<MainLayout><FundWalletPage /></MainLayout>} />
-      <Route path="/start-deal" element={<MainLayout><StartDealPage /></MainLayout>} />
-      <Route path="/deal-confirmation" element={<MainLayout><DealConfirmation /></MainLayout>} />
-      <Route path="/deal-tracker" element={<MainLayout><DealTrackerPage /></MainLayout>} />
-      <Route path="/share-trading" element={<MainLayout><ShareTradingPage /></MainLayout>} />
-      <Route path="/trading-chart" element={<MainLayout><TradingChartPage /></MainLayout>} />
-      <Route path="/kyc-upload" element={<MainLayout><KYCUploadPage /></MainLayout>} />
-      <Route path="/dispute-resolution" element={<MainLayout><DisputeResolutionPage /></MainLayout>} />
-      <Route path="/admin" element={<MainLayout><AdminDashboard /></MainLayout>} />
-      <Route path="/investor" element={<MainLayout><InvestorPanel /></MainLayout>} />
-      <Route path="/investor-profile" element={<MainLayout><InvestorProfile /></MainLayout>} />
-      <Route path="/pitch-deck" element={<MainLayout><PitchDeckViewer /></MainLayout>} />
-      <Route path="/fraud-log" element={<MainLayout><FraudDetectionLog /></MainLayout>} />
-      <Route path="/escrow-tracker" element={<MainLayout><EscrowTracker /></MainLayout>} />
-      <Route path="/live-chart" element={<MainLayout><LiveTradingChart /></MainLayout>} />
-      <Route path="/mobile-app" element={<MainLayout><MobileAppPromo /></MainLayout>} />
-      <Route path="/users" element={<MainLayout><UserManagement /></MainLayout>} />
-      <Route path="/analytics" element={<MainLayout><AnalyticsDashboard /></MainLayout>} />
-      <Route path="/reports" element={<MainLayout><ReportCenter /></MainLayout>} />
-      <Route path="/settings" element={<MainLayout><Settings /></MainLayout>} />
-      <Route path="/profile" element={<MainLayout><UserProfile /></MainLayout>} />
-      <Route path="/transactions" element={<MainLayout><TransactionHistory /></MainLayout>} />
-      <Route path="/escrow-dashboard" element={<MainLayout><EscrowDashboard /></MainLayout>} />
-      <Route path="/docs" element={<MainLayout><DocsPage /></MainLayout>} />
-      <Route path="*" element={<MainLayout><NotFoundPage /></MainLayout>} />
-    </Routes>
+    <>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignupPage />} />
+        <Route path="/wallet" element={<WalletPage />} />
+        <Route path="/fund-wallet" element={<FundWalletPage />} />
+        <Route path="/start-deal" element={<StartDealPage />} />
+        <Route path="/deal-confirmation" element={<DealConfirmation />} />
+        <Route path="/deal-tracker" element={<DealTrackerPage />} />
+        <Route path="/share-trading" element={<ShareTradingPage />} />
+        <Route path="/trading-chart" element={<TradingChartPage />} />
+        <Route path="/kyc-upload" element={<KYCUploadPage />} />
+        <Route path="/dispute-resolution" element={<DisputeResolutionPage />} />
+        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/investor" element={<InvestorPanel />} />
+        <Route path="/investor-profile" element={<InvestorProfile />} />
+        <Route path="/pitch-deck" element={<PitchDeckViewer />} />
+        <Route path="/fraud-log" element={<FraudDetectionLog />} />
+        <Route path="/escrow-tracker" element={<EscrowTracker />} />
+        <Route path="/live-chart" element={<LiveTradingChart />} />
+        <Route path="/mobile-app" element={<MobileAppPromo />} />
+        <Route path="/users" element={<UserManagement />} />
+        <Route path="/analytics" element={<AnalyticsDashboard />} />
+        <Route path="/reports" element={<ReportCenter />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/profile" element={<UserProfile />} />
+        <Route path="/transactions" element={<TransactionHistory />} />
+        <Route path="/escrow-dashboard" element={<EscrowDashboard />} />
+        <Route path="/docs" element={<DocsPage />} />
+        <Route path="/ai-insights" element={<AIInsightCenter />} />
+        <Route path="/investor-reports" element={<InvestorReports />} />
+        <Route path="/deal-analytics" element={<DealAnalytics />} />
+        <Route path="/security-center" element={<SecurityCenter />} />
+        <Route path="/referral" element={<ReferralProgram />} />
+        <Route path="/pair-deal" element={<StartDealPairing />} />
+        <Route path="/dispute-log" element={<DisputeLogViewer />} />
+        <Route path="/chat" element={<ChatSupport />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+      <LanguageSwitcher />
+      <ThemeToggle />
+      <NotificationToast />
+      <Footer />
+    </>
   );
 };
 
 export default AppRoutes;
-        
