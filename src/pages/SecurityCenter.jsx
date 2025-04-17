@@ -1,44 +1,44 @@
-// src/pages/SecurityCenter.jsx
 import React from 'react';
 
 const SecurityCenter = () => {
+  const loginActivity = [
+    { location: 'Aba, Nigeria', device: 'Chrome - Windows', time: 'Today, 09:23 AM' },
+    { location: 'Lagos, Nigeria', device: 'Mobile Safari - iPhone', time: 'Yesterday, 06:45 PM' },
+    { location: 'Unknown IP', device: 'Suspicious VPN', time: '2 days ago, 11:12 AM' },
+  ];
+
   return (
-    <div className="min-h-screen bg-slate-900 text-white p-6">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold mb-6 text-center">Security Center</h1>
-        <p className="text-lg text-slate-300 mb-6 text-center">
-          At Dealcross, your security is our top priority. We employ cutting-edge technology and practices to safeguard your assets.
+    <div className="min-h-screen bg-[#0f172a] text-white px-6 py-10">
+      <h2 className="text-2xl font-bold mb-6">Security Center</h2>
+
+      {/* 2FA Section */}
+      <div className="bg-[#1e293b] p-6 rounded-lg shadow-md mb-8">
+        <h3 className="text-lg font-semibold mb-2">Two-Factor Authentication</h3>
+        <p className="text-sm text-gray-400 mb-4">
+          Your account is <span className="text-green-400 font-semibold">protected</span> with 2FA.
         </p>
+        <button className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-md font-medium">
+          Manage 2FA Settings
+        </button>
+      </div>
 
-        <div className="space-y-6">
-          <div className="bg-slate-800 p-5 rounded-lg">
-            <h2 className="text-2xl font-semibold mb-2">End-to-End Encryption</h2>
-            <p className="text-slate-400">
-              All communications and transactions are encrypted using industry-standard SSL/TLS protocols.
-            </p>
-          </div>
-
-          <div className="bg-slate-800 p-5 rounded-lg">
-            <h2 className="text-2xl font-semibold mb-2">Two-Factor Authentication (2FA)</h2>
-            <p className="text-slate-400">
-              Enable 2FA for an extra layer of protection on your account.
-            </p>
-          </div>
-
-          <div className="bg-slate-800 p-5 rounded-lg">
-            <h2 className="text-2xl font-semibold mb-2">Escrow Protection</h2>
-            <p className="text-slate-400">
-              Every transaction is secured via our escrow system, holding funds until both parties fulfill their obligations.
-            </p>
-          </div>
-
-          <div className="bg-slate-800 p-5 rounded-lg">
-            <h2 className="text-2xl font-semibold mb-2">Data Privacy</h2>
-            <p className="text-slate-400">
-              Your data is stored securely and is never shared with third parties without your explicit consent.
-            </p>
-          </div>
-        </div>
+      {/* Login Activity */}
+      <div className="bg-[#1e293b] p-6 rounded-lg shadow-md">
+        <h3 className="text-lg font-semibold mb-4">Recent Login Activity</h3>
+        <ul className="space-y-4 text-sm">
+          {loginActivity.map((entry, index) => (
+            <li
+              key={index}
+              className="border-b border-gray-700 pb-2 flex justify-between"
+            >
+              <div>
+                <p className="font-medium">{entry.device}</p>
+                <p className="text-gray-400">{entry.location}</p>
+              </div>
+              <p className="text-gray-400">{entry.time}</p>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
