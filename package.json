@@ -1,5 +1,5 @@
 {
-  "name": "dealcross-frontend",
+  "name": "dealcross-frontend-final",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -9,20 +9,19 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "axios": "^1.6.8",
+    "@headlessui/react": "^1.7.17",
+    "@heroicons/react": "^2.1.3",
+    "axios": "^1.6.7",
+    "lucide-react": "^0.356.0",          //  ← NEW  (icons)
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.22.0"
+    "react-router-dom": "^6.22.3"
   },
   "devDependencies": {
-    "@types/react": "^18.2.33",
-    "@types/react-dom": "^18.2.14",
     "@vitejs/plugin-react": "^4.2.1",
-    "autoprefixer": "^10.4.17",
-    "eslint": "^8.57.0",
-    "eslint-plugin-react": "^7.34.1",
-    "postcss": "^8.4.34",
-    "tailwindcss": "^3.4.4",
-    "vite": "^4.5.1"
+    "autoprefixer": "^10.4.17",          //  ← for PostCSS
+    "postcss": "^8.4.35",                //  ← for PostCSS
+    "tailwindcss": "^3.4.4",             //  ← remove if you’re not using Tailwind
+    "vite": "^4.5.13"
   }
 }
