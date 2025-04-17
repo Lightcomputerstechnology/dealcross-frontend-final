@@ -1,51 +1,40 @@
-import React from 'react';
+// src/pages/ShareTrading.jsx
+import React, { useState } from 'react';
 
-const shares = [
-  { name: 'Tesla', symbol: 'TSLA', price: 781.23, change: '+1.2%' },
-  { name: 'Apple', symbol: 'AAPL', price: 142.81, change: '-0.8%' },
-  { name: 'Alphabet', symbol: 'GOOGL', price: 2_412.36, change: '+0.3%' },
-  { name: 'Amazon', symbol: 'AMZN', price: 98.25, change: '+2.1%' },
-];
+const ShareTrading = () => {
+  const [amount, setAmount] = useState('');
+  const sharePrice = 172.5;
 
-const ShareTradingPage = () => {
+  const estimatedShares = amount ? (parseFloat(amount) / sharePrice).toFixed(4) : 0;
+
   return (
-    <div className="min-h-screen bg-[#0f172a] text-white px-6 py-10">
-      <h2 className="text-2xl font-bold mb-6">Share Trading</h2>
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {shares.map((stock, index) => (
-          <div key={index} className="bg-[#1e293b] p-6 rounded-lg shadow">
-            <h3 className="text-xl font-semibold mb-1">{stock.name}</h3>
-            <p className="text-gray-400 text-sm mb-4">{stock.symbol}</p>
-
-            <div className="flex justify-between items-center mb-4">
-              <div>
-                <p className="text-sm text-gray-400">Current Price</p>
-                <p className="text-lg font-bold">${stock.price.toLocaleString()}</p>
-              </div>
-              <span
-                className={`text-sm px-2 py-1 rounded font-medium ${
-                  stock.change.startsWith('+')
-                    ? 'bg-green-700 text-green-300'
-                    : 'bg-red-700 text-red-300'
-                }`}
-              >
-                {stock.change}
-              </span>
-            </div>
-
-            <div className="flex gap-4">
-              <button className="flex-1 bg-blue-600 hover:bg-blue-700 py-2 rounded font-semibold">
-                Buy
-              </button>
-              <button className="flex-1 border border-white hover:bg-white hover:text-black py-2 rounded font-semibold">
-                Sell
-              </button>
-            </div>
-          </div>
-        ))}
+    <div className="min-h-screen bg-white dark:bg-gray-900 text-center px-4 py-10">
+      <div className="max-w-md mx-auto bg-gray-100 dark:bg-gray-800 p-6 rounded-2xl shadow-lg">
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Invest in Apple</h2>
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg"
+          alt="Apple"
+          className="w-16 h-16 mx-auto mb-4"
+        />
+        <div className="text-gray-800 dark:text-gray-300 mb-2">
+          <strong>Share Price:</strong> ${sharePrice}
+        </div>
+        <input
+          type="number"
+          placeholder="Amount to Invest"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+          className="w-full px-4 py-2 rounded-md border focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
+        />
+        <div className="text-gray-600 dark:text-gray-400 mb-4">
+          <strong>Estimated Shares:</strong> {estimatedShares}
+        </div>
+        <button className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 rounded-lg">
+          Invest Now
+        </button>
       </div>
     </div>
   );
 };
 
-export default ShareTradingPage;
+export default ShareTrading;
