@@ -1,5 +1,5 @@
 import React from 'react';
-import { FiUsers, FiAlertCircle, FiSettings, FiMessageSquare } from 'react-icons/fi';
+import { Users, AlertCircle, Settings, MessageSquare } from 'react-icons/fi';
 
 const AdminDashboard = () => {
   return (
