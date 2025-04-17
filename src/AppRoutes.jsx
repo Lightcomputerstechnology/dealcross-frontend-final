@@ -11,7 +11,7 @@ import FundWalletPage      from '@/pages/FundWalletPage';
 import StartDealPage       from '@/pages/StartDealPage';
 import DealConfirmation    from '@/pages/DealConfirmation';
 import DealTrackerPage     from '@/pages/DealTrackerPage';
-import ShareTradingPage    from '@/pages/ShareTradingPage';
+import ShareTrading        from '@/pages/ShareTrading';
 import TradingChartPage    from '@/pages/TradingChartPage';
 import KYCUploadPage       from '@/pages/KYCUploadPage';
 import DisputeResolutionPage from '@/pages/DisputeResolutionPage';
@@ -59,7 +59,7 @@ export default function AppRoutes() {
         <Route path="deal-tracker"      element={<DealTrackerPage  />} />
 
         {/* ---- trading / shares ---- */}
-        <Route path="share-trading"  element={<ShareTradingPage  />} />
+        <Route path="share-trading"  element={<ShareTrading />} />
         <Route path="trading-chart"  element={<TradingChartPage  />} />
         <Route path="live-chart"     element={<LiveTradingChart  />} />
 
