@@ -1,29 +1,15 @@
-// src/components/Navbar.jsx
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    localStorage.removeItem('token'); // or however you're storing the auth token
-    navigate('/login');
-  };
-
   return (
-    <nav className="bg-primary text-white p-4 flex items-center justify-between">
+    <nav className="bg-black text-white px-4 py-3 flex justify-between items-center shadow-md">
       <div className="text-xl font-bold">
         <Link to="/">Dealcross</Link>
       </div>
-      <div className="flex items-center gap-4">
-        <Link to="/login">Login</Link>
-        <Link to="/signup">Sign Up</Link>
-        <button
-          onClick={handleLogout}
-          className="bg-white text-primary font-medium px-3 py-1 rounded hover:bg-gray-100"
-        >
-          Logout
-        </button>
+      <div className="flex space-x-4 text-sm">
+        <Link to="/login" className="hover:text-blue-400">Login</Link>
+        <Link to="/signup" className="hover:text-blue-400">Sign Up</Link>
       </div>
     </nav>
   );
