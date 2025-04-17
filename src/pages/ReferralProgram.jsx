@@ -1,31 +1,47 @@
-// src/pages/ReferralProgram.jsx
-import React from 'react';
+import React, { useState } from 'react';
 
 const ReferralProgram = () => {
+  const referralLink = 'https://dealcross.com/signup?ref=you123';
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(referralLink);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
-    <div className="min-h-screen bg-slate-900 text-white p-6">
-      <div className="max-w-3xl mx-auto text-center">
-        <h1 className="text-4xl font-bold mb-4">Referral Program</h1>
-        <p className="mb-6 text-lg">
-          Invite your friends and earn rewards! Our referral program is simple:
-        </p>
+    <div className="min-h-screen bg-[#0f172a] text-white px-6 py-10">
+      <h2 className="text-2xl font-bold mb-6">Referral Program</h2>
 
-        <ul className="text-left list-disc list-inside space-y-3 text-base">
-          <li>Share your unique referral link with others.</li>
-          <li>Earn commission or bonus points for every new user that signs up and completes a transaction.</li>
-          <li>Track your referral stats in your dashboard.</li>
-        </ul>
-
-        <div className="mt-8 p-4 bg-slate-800 rounded-lg">
-          <p className="text-md text-slate-300">Your Referral Link:</p>
-          <div className="bg-slate-700 p-2 mt-2 rounded text-sm font-mono">
-            https://dealcross.com/signup?ref=yourusername
-          </div>
+      {/* Referral Link Card */}
+      <div className="bg-[#1e293b] p-6 rounded-lg shadow-md mb-8">
+        <p className="text-sm text-gray-300 mb-2">Your unique referral link:</p>
+        <div className="flex items-center justify-between bg-gray-800 px-4 py-2 rounded">
+          <span className="truncate">{referralLink}</span>
+          <button
+            onClick={handleCopy}
+            className="ml-4 bg-blue-600 hover:bg-blue-700 px-4 py-1 rounded text-sm font-medium"
+          >
+            {copied ? 'Copied!' : 'Copy'}
+          </button>
         </div>
+      </div>
 
-        <p className="mt-6 text-sm text-slate-400">
-          Please avoid spam. Violations may lead to disqualification from the program.
-        </p>
+      {/* Stats */}
+      <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <div className="bg-gray-800 p-5 rounded-lg shadow text-center">
+          <p className="text-sm text-gray-400">Users Referred</p>
+          <h3 className="text-2xl font-bold mt-1">17</h3>
+        </div>
+        <div className="bg-gray-800 p-5 rounded-lg shadow text-center">
+          <p className="text-sm text-gray-400">Earnings (USD)</p>
+          <h3 className="text-2xl font-bold mt-1">$230.50</h3>
+        </div>
+        <div className="bg-gray-800 p-5 rounded-lg shadow text-center">
+          <p className="text-sm text-gray-400">Pending Bonuses</p>
+          <h3 className="text-2xl font-bold mt-1">$80.00</h3>
+        </div>
       </div>
     </div>
   );
