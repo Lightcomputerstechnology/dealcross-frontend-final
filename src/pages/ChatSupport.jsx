@@ -1,42 +1,67 @@
-// src/pages/ChatSupport.jsx
+// File: src/pages/ChatSupport.jsx
+
 import React, { useState } from 'react';
 
 const ChatSupport = () => {
   const [messages, setMessages] = useState([
-    { id: 1, text: "Welcome to chat support!", sender: "system" },
+    { sender: 'you', text: 'Hi, did you receive the delivery?', time: '09:45 AM' },
+    { sender: 'partner', text: 'Yes, reviewing it now.', time: '09:46 AM' },
   ]);
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState('');
 
-  const sendMessage = () => {
+  const handleSend = (e) => {
+    e.preventDefault();
     if (!input.trim()) return;
-    setMessages([...messages, { id: Date.now(), text: input, sender: "user" }]);
-    setInput("");
+
+    const newMessage = {
+      sender: 'you',
+      text: input.trim(),
+      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+    };
+
+    setMessages([...messages, newMessage]);
+    setInput('');
   };
 
   return (
-    <div className="p-4 max-w-xl mx-auto">
-      <h2 className="text-xl font-semibold mb-4">Chat Support</h2>
-      <div className="bg-gray-100 dark:bg-gray-800 p-4 rounded h-64 overflow-y-auto mb-4">
-        {messages.map(msg => (
-          <div key={msg.id} className={`mb-2 ${msg.sender === "user" ? "text-right" : "text-left"}`}>
-            <span className="inline-block bg-blue-200 dark:bg-blue-600 text-sm px-3 py-1 rounded">
-              {msg.text}
-            </span>
+    <div className="min-h-screen bg-[#0f172a] text-white px-6 py-10 flex flex-col">
+      <h2 className="text-2xl font-bold mb-4">Deal Chat</h2>
+
+      <div className="flex-1 overflow-y-auto bg-[#1e293b] rounded-lg p-4 mb-4 shadow-md">
+        {messages.map((msg, index) => (
+          <div
+            key={index}
+            className={`mb-3 flex flex-col ${
+              msg.sender === 'you' ? 'items-end' : 'items-start'
+            }`}
+          >
+            <div
+              className={`px-4 py-2 rounded-lg max-w-xs ${
+                msg.sender === 'you' ? 'bg-blue-600' : 'bg-gray-700'
+              }`}
+            >
+              <p className="text-sm">{msg.text}</p>
+            </div>
+            <p className="text-xs text-gray-400 mt-1">{msg.time}</p>
           </div>
         ))}
       </div>
-      <div className="flex items-center space-x-2">
+
+      <form onSubmit={handleSend} className="flex gap-3">
         <input
-          className="flex-grow px-3 py-2 rounded border dark:bg-gray-900"
           type="text"
+          placeholder="Type your message..."
+          className="flex-1 px-4 py-2 rounded bg-gray-800 text-white"
           value={input}
-          placeholder="Type a message..."
           onChange={(e) => setInput(e.target.value)}
         />
-        <button onClick={sendMessage} className="px-4 py-2 bg-blue-600 text-white rounded">
+        <button
+          type="submit"
+          className="bg-blue-600 hover:bg-blue-700 px-5 py-2 rounded font-medium"
+        >
           Send
         </button>
-      </div>
+      </form>
     </div>
   );
 };
