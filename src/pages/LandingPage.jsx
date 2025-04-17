@@ -6,7 +6,7 @@ import Logo from '../assets/dealcross-logo.png'
 export default function LandingPage() {
   return (
     <>
-      {/* ====== Header / Navbar ====== */}
+      {/* ===== Header ===== */}
       <header className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white shadow">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link to="/" className="flex items-center space-x-2">
@@ -25,11 +25,10 @@ export default function LandingPage() {
               Login
             </Link>
           </nav>
-          {/* Mobile hamburger would go here */}
         </div>
       </header>
 
-      {/* ====== Hero ====== */}
+      {/* ===== Hero ===== */}
       <section className="bg-gray-50 dark:bg-gray-800 text-center py-20 px-6">
         <img
           src={Logo}
@@ -55,7 +54,7 @@ export default function LandingPage() {
         </Link>
       </section>
 
-      {/* ====== Features ====== */}
+      {/* ===== Features ===== */}
       <section className="py-16 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200">
         <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-8 px-6">
           <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow">
@@ -73,7 +72,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ====== Deals in Progress ====== */}
+      {/* ===== Deals in Progress ===== */}
       <section className="py-16 px-6 bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-gray-200">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center justify-between mb-6">
@@ -83,26 +82,33 @@ export default function LandingPage() {
             </Link>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
+            {/* Example cards */}
             <div className="bg-white dark:bg-gray-700 p-6 rounded-lg shadow">
               <h3 className="font-semibold">Laptop Sale</h3>
-              <p className="text-sm text-gray-500">Alica Bowen / Joshua White</p>
+              <p className="text-sm text-gray-500">
+                Alica Bowen / Joshua White
+              </p>
               <p className="mt-2 font-bold">$800</p>
             </div>
             <div className="bg-white dark:bg-gray-700 p-6 rounded-lg shadow">
               <h3 className="font-semibold">Web Development</h3>
-              <p className="text-sm text-gray-500">Kevin Singh / Emma Carter</p>
+              <p className="text-sm text-gray-500">
+                Kevin Singh / Emma Carter
+              </p>
               <p className="mt-2 font-bold">$1,500</p>
             </div>
             <div className="bg-white dark:bg-gray-700 p-6 rounded-lg shadow">
               <h3 className="font-semibold">Car Purchase</h3>
-              <p className="text-sm text-gray-500">Victoria Shaw / Brian Walsh</p>
+              <p className="text-sm text-gray-500">
+                Victoria Shaw / Brian Walsh
+              </p>
               <p className="mt-2 font-bold">$12,000</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ====== Secondary CTA ====== */}
+      {/* ===== Secondary CTA ===== */}
       <section className="py-16 bg-blue-600 text-white text-center px-6">
         <h2 className="text-3xl font-bold mb-4">
           Buy and Sell Company Shares
@@ -118,12 +124,11 @@ export default function LandingPage() {
         </Link>
       </section>
 
-      {/* ====== Contact Form ====== */}
+      {/* ===== Contact ===== */}
       <section className="py-16 bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-gray-200 px-6">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-8">
           <div>
             <h3 className="text-xl font-semibold mb-2">Get in touch</h3>
-            <p className="text-sm mb-4">Have questions? Drop us a line.</p>
             <form className="space-y-4">
               <input
                 type="text"
@@ -166,7 +171,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ====== Footer ====== */}
+      {/* ===== Footer ===== */}
       <footer className="bg-white dark:bg-gray-900 text-gray-600 dark:text-gray-400 py-6">
         <div className="max-w-6xl mx-auto text-center px-6">
           © {new Date().getFullYear()} Dealcross. All rights reserved.
@@ -174,5 +179,4 @@ export default function LandingPage() {
       </footer>
     </>
   )
-      }
-        
+                  }
