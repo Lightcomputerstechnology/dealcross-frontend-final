@@ -1,11 +1,8 @@
-import React from 'react';
-
-const Footer = () => {
+// src/components/Footer.jsx
+export default function Footer() {
   return (
-    <footer className="text-center py-4 text-sm text-gray-400 dark:text-gray-500 border-t border-gray-200 dark:border-gray-700 mt-10">
-      &copy; {new Date().getFullYear()} Dealcross. All rights reserved.
+    <footer className="border-t border-white/10 bg-surface px-6 py-8 text-center text-sm text-foreground/60">
+      © {new Date().getFullYear()} Dealcross. All rights reserved.
     </footer>
   );
-};
-
-export default Footer;
+}
