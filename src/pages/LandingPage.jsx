@@ -1,45 +1,37 @@
 // src/pages/LandingPage.jsx
-import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import React from "react";
+import { Link } from "react-router-dom";
+
+// 👉  use the same image, but larger
+import heroLogo from "../assets/dealcross-logo.png";
 
 export default function LandingPage() {
   return (
-    <section className="relative isolate overflow-hidden bg-gradient-to-b from-panel to-panel-dark text-white">
-      {/* hero wrapper */}
-      <div className="mx-auto max-w-7xl px-6 py-24 lg:grid lg:grid-cols-2 lg:gap-16 lg:px-8">
-        <div className="max-w-xl lg:pt-16">
-          <motion.h1
-            initial={{ y: 30, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: .6 }}
-            className="text-4xl font-bold tracking-tight sm:text-6xl"
-          >
-            Secure Transactions <br />with Escrow
-          </motion.h1>
-
-          <p className="mt-6 text-lg leading-8 text-slate-300">
-            Trust, protect and save time with Dealcross escrow services.
-          </p>
-
-          <div className="mt-10 flex gap-6">
-            <Link to="/start-deal" className="btn-primary-sm px-6 py-3 text-base">Start a deal</Link>
-            <Link to="#how"        className="btn-secondary-sm px-6 py-3 text-base">Learn more</Link>
-          </div>
-        </div>
-
-        {/* giant illustration */}
-        <motion.img
-          src="/escrow-hero.svg"              /* stub – replace later */
-          alt=""
-          className="mt-16 lg:mt-0 w-full max-w-md mx-auto"
-          initial={{ scale: .8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: .7 }}
+    <section className="min-h-screen bg-slate-50 dark:bg-[#0f172a]">
+      {/* hero ------------------------------------------------------------ */}
+      <div className="mx-auto flex max-w-5xl flex-col items-center gap-8 px-4 py-20 text-center">
+        <img
+          src={heroLogo}
+          alt="Dealcross shield handshake"
+          className="h-36 w-36 md:h-48 md:w-48"
         />
-      </div>
 
-      {/* decorative grid */}
-      <div className="absolute inset-0 pointer-events-none bg-grid-white/[0.03] mask-fade-y" />
+        <h1 className="text-4xl font-extrabold leading-tight text-[#0f172a] dark:text-white md:text-6xl">
+          Secure Transactions&nbsp;<br className="hidden md:block" />
+          <span className="text-blue-600">with Escrow</span>
+        </h1>
+
+        <p className="max-w-xl text-lg text-slate-600 dark:text-slate-300">
+          Trust, protect and save time with Dealcross escrow services.
+        </p>
+
+        <Link
+          to="/start-deal"
+          className="rounded bg-blue-600 px-6 py-3 text-white hover:bg-blue-700"
+        >
+          Start a deal
+        </Link>
+      </div>
     </section>
   );
 }
