@@ -1,82 +1,55 @@
-import React, { useState } from 'react';
-import { toast } from 'react-hot-toast';
+import React from 'react';
 
 const UserProfile = () => {
-  const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    photo: null,
-  });
-
-  const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    if (name === 'photo') {
-      setFormData({ ...formData, photo: files[0] });
-    } else {
-      setFormData({ ...formData, [name]: value });
-    }
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    toast.success('Profile updated successfully!');
-    // Add API call here in future to update user profile
+  const user = {
+    name: 'John Doe',
+    email: 'john@example.com',
+    trustLevel: 'Verified',
+    joined: 'February 12, 2024',
+    location: 'Lagos, Nigeria',
+    phone: '+234-705-889-6668',
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-black px-4 py-8 text-gray-900 dark:text-white">
-      <div className="max-w-xl mx-auto bg-white dark:bg-gray-900 p-6 rounded-lg shadow-md">
-        <h2 className="text-2xl font-bold mb-4 text-center">My Profile</h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
+    <div className="min-h-screen bg-[#0f172a] text-white px-6 py-10">
+      <div className="max-w-3xl mx-auto bg-[#1e293b] p-6 rounded-lg shadow-md">
+        {/* Avatar + Name */}
+        <div className="flex items-center gap-4 mb-6">
+          <div className="w-16 h-16 rounded-full bg-gray-700 flex items-center justify-center text-2xl font-bold">
+            {user.name.charAt(0)}
+          </div>
           <div>
-            <label htmlFor="fullName" className="block text-sm font-medium">Full Name</label>
-            <input
-              type="text"
-              name="fullName"
-              id="fullName"
-              value={formData.fullName}
-              onChange={handleChange}
-              className="mt-1 block w-full px-3 py-2 bg-gray-100 dark:bg-gray-800 rounded border border-gray-300 dark:border-gray-700"
-              placeholder="Enter your full name"
-              required
-            />
+            <h2 className="text-xl font-semibold">{user.name}</h2>
+            <p className="text-sm text-gray-400">{user.trustLevel}</p>
           </div>
+        </div>
 
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium">Email</label>
-            <input
-              type="email"
-              name="email"
-              id="email"
-              value={formData.email}
-              onChange={handleChange}
-              className="mt-1 block w-full px-3 py-2 bg-gray-100 dark:bg-gray-800 rounded border border-gray-300 dark:border-gray-700"
-              placeholder="Enter your email"
-              required
-            />
+        {/* Profile Info */}
+        <div className="space-y-4 text-sm">
+          <div className="flex justify-between border-b border-gray-700 pb-2">
+            <span className="text-gray-400">Email:</span>
+            <span>{user.email}</span>
           </div>
+          <div className="flex justify-between border-b border-gray-700 pb-2">
+            <span className="text-gray-400">Phone:</span>
+            <span>{user.phone}</span>
+          </div>
+          <div className="flex justify-between border-b border-gray-700 pb-2">
+            <span className="text-gray-400">Location:</span>
+            <span>{user.location}</span>
+          </div>
+          <div className="flex justify-between border-b border-gray-700 pb-2">
+            <span className="text-gray-400">Joined:</span>
+            <span>{user.joined}</span>
+          </div>
+        </div>
 
-          <div>
-            <label htmlFor="photo" className="block text-sm font-medium">Profile Picture</label>
-            <input
-              type="file"
-              name="photo"
-              id="photo"
-              onChange={handleChange}
-              accept="image/*"
-              className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 dark:file:bg-gray-700 file:text-blue-700 dark:file:text-white"
-            />
-          </div>
-
-          <div className="pt-4">
-            <button
-              type="submit"
-              className="w-full py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
-            >
-              Save Changes
-            </button>
-          </div>
-        </form>
+        {/* Edit Button */}
+        <div className="mt-6 text-right">
+          <button className="bg-blue-600 hover:bg-blue-700 px-5 py-2 rounded-md font-medium">
+            Edit Profile
+          </button>
+        </div>
       </div>
     </div>
   );
