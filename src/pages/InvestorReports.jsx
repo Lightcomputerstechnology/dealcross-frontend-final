@@ -1,41 +1,55 @@
 import React from 'react';
 
-const InvestorReports = () => {
-  const reports = [
-    {
-      id: 1,
-      title: 'Q1 Investment Summary',
-      description: 'Overview of investments and returns made in Q1.',
-      date: '2025-03-31',
-    },
-    {
-      id: 2,
-      title: 'Fraud Risk Audit Report',
-      description: 'Detailed fraud screening outcomes and scoring.',
-      date: '2025-04-01',
-    },
-    {
-      id: 3,
-      title: 'Annual ROI Projection',
-      description: 'Predicted growth and performance for the year.',
-      date: '2025-04-15',
-    },
-  ];
+const investments = [
+  {
+    company: 'Tesla',
+    amount: '$5,000',
+    roi: '12%',
+    date: 'Jan 10, 2024',
+  },
+  {
+    company: 'Apple',
+    amount: '$2,000',
+    roi: '8%',
+    date: 'Mar 3, 2024',
+  },
+  {
+    company: 'Amazon',
+    amount: '$3,500',
+    roi: '15%',
+    date: 'Apr 2, 2024',
+  },
+];
 
+const InvestorReports = () => {
   return (
-    <div className="min-h-screen p-6 bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-white">
-      <h1 className="text-3xl font-bold mb-6">Investor Reports</h1>
-      <div className="grid gap-6 md:grid-cols-2">
-        {reports.map((report) => (
-          <div
-            key={report.id}
-            className="bg-white dark:bg-gray-800 p-5 rounded-lg shadow border border-gray-200 dark:border-gray-700"
-          >
-            <h2 className="text-xl font-semibold mb-1">{report.title}</h2>
-            <p className="text-gray-600 dark:text-gray-300 mb-2">{report.description}</p>
-            <span className="text-sm text-gray-500">Date: {report.date}</span>
-          </div>
-        ))}
+    <div className="min-h-screen bg-[#0f172a] text-white px-6 py-10">
+      <h2 className="text-2xl font-bold mb-6">Investor Reports</h2>
+
+      <div className="overflow-x-auto">
+        <table className="min-w-full bg-[#1e293b] rounded-lg overflow-hidden">
+          <thead>
+            <tr className="text-left border-b border-gray-700">
+              <th className="py-3 px-4">Company</th>
+              <th className="py-3 px-4">Amount Invested</th>
+              <th className="py-3 px-4">ROI</th>
+              <th className="py-3 px-4">Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {investments.map((item, index) => (
+              <tr
+                key={index}
+                className="border-t border-gray-800 hover:bg-gray-700"
+              >
+                <td className="py-3 px-4">{item.company}</td>
+                <td className="py-3 px-4">{item.amount}</td>
+                <td className="py-3 px-4 text-green-400">{item.roi}</td>
+                <td className="py-3 px-4 text-gray-400">{item.date}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
