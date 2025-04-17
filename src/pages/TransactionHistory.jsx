@@ -1,40 +1,70 @@
-import React from 'react';
+// File: src/pages/TransactionHistory.jsx
 
-const mockTransactions = [
-  { id: 1, type: 'Deposit', amount: 1200, status: 'Success', date: '2025-04-01' },
-  { id: 2, type: 'Withdrawal', amount: 500, status: 'Pending', date: '2025-04-03' },
-  { id: 3, type: 'Share Purchase', amount: 300, status: 'Success', date: '2025-04-05' },
-];
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const TransactionHistory = () => {
+  const [transactions, setTransactions] = useState([]);
+  const [status, setStatus] = useState('Loading...');
+
+  useEffect(() => {
+    const fetchTransactions = async () => {
+      const token = localStorage.getItem('token');
+
+      if (!token) {
+        setStatus('Please log in to view your transactions.');
+        return;
+      }
+
+      try {
+        const response = await axios.get('https://d-final.onrender.com/wallet/transactions', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (response.data.length === 0) {
+          setStatus('No transactions yet.');
+        } else {
+          setTransactions(response.data);
+          setStatus(null);
+        }
+      } catch (error) {
+        setStatus('Failed to load transactions.');
+      }
+    };
+
+    fetchTransactions();
+  }, []);
+
   return (
-    <div className="min-h-screen px-4 py-8 bg-gray-100 dark:bg-black text-gray-900 dark:text-white">
-      <div className="max-w-4xl mx-auto bg-white dark:bg-gray-900 p-6 rounded shadow-md">
-        <h2 className="text-2xl font-bold mb-6 text-center">Transaction History</h2>
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-300 dark:divide-gray-700">
-            <thead>
-              <tr>
-                <th className="text-left py-2 px-4">Date</th>
-                <th className="text-left py-2 px-4">Type</th>
-                <th className="text-left py-2 px-4">Amount</th>
-                <th className="text-left py-2 px-4">Status</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-              {mockTransactions.map(tx => (
-                <tr key={tx.id}>
-                  <td className="py-2 px-4">{tx.date}</td>
-                  <td className="py-2 px-4">{tx.type}</td>
-                  <td className="py-2 px-4">${tx.amount}</td>
-                  <td className={`py-2 px-4 font-semibold ${tx.status === 'Success' ? 'text-green-600' : 'text-yellow-500'}`}>
-                    {tx.status}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+    <div className="min-h-screen bg-[#0f172a] text-white px-6 py-10">
+      <h2 className="text-2xl font-bold mb-6">Transaction History</h2>
+
+      {status && <p className="text-yellow-400 mb-6">{status}</p>}
+
+      <div className="space-y-4">
+        {transactions.map((txn, index) => (
+          <div
+            key={index}
+            className="bg-[#1e293b] p-4 rounded-lg shadow flex justify-between"
+          >
+            <div>
+              <h4 className="font-semibold">{txn.type}</h4>
+              <p className="text-sm text-gray-400">{txn.date}</p>
+            </div>
+            <div className="text-right">
+              <p
+                className={`text-lg font-bold ${
+                  txn.amount >= 0 ? 'text-green-400' : 'text-red-400'
+                }`}
+              >
+                {txn.amount >= 0 ? '+' : '-'}${Math.abs(txn.amount).toFixed(2)}
+              </p>
+              <p className="text-sm text-gray-400">{txn.status}</p>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
