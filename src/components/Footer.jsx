@@ -1,11 +1,9 @@
-import React from 'react'
-
 export default function Footer() {
   return (
-    <footer className="bg-white dark:bg-gray-900 text-gray-600 dark:text-gray-400 py-6">
-      <div className="max-w-6xl mx-auto text-center px-6">
-        © {new Date().getFullYear()} Dealcross. All rights reserved.
-      </div>
+    <footer className="bg-gray-100 dark:bg-gray-900 text-center py-4 mt-12 border-t">
+      <p className="text-sm text-gray-500 dark:text-gray-400">
+        © 2025 Dealcross. All rights reserved.
+      </p>
     </footer>
-  )
+  );
 }
