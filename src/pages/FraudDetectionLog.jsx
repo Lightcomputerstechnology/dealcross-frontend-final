@@ -1,54 +1,68 @@
 import React from 'react';
+import { FiAlertTriangle } from 'react-icons/fi';
 
 const fraudLogs = [
   {
-    id: 1,
-    user: 'user@example.com',
-    issue: 'Multiple failed payment attempts',
-    date: '2024-04-15',
-    status: 'Flagged',
+    type: 'VPN Login Detected',
+    user: 'mikejohnson',
+    time: '5 mins ago',
+    severity: 'High',
   },
   {
-    id: 2,
-    user: 'scamalert@buyer.com',
-    issue: 'Reported for non-delivery',
-    date: '2024-04-14',
-    status: 'Under Review',
+    type: 'Fake ID Uploaded',
+    user: 'lucaslee',
+    time: '12 mins ago',
+    severity: 'Medium',
   },
   {
-    id: 3,
-    user: 'admin@fakesite.io',
-    issue: 'Phishing domain linked',
-    date: '2024-04-13',
-    status: 'Blocked',
+    type: 'Multiple Accounts Linked',
+    user: 'rebecca_x',
+    time: '1 hour ago',
+    severity: 'High',
   },
 ];
 
+const getBadgeColor = (severity) => {
+  switch (severity) {
+    case 'High':
+      return 'bg-red-600 text-white';
+    case 'Medium':
+      return 'bg-yellow-500 text-black';
+    case 'Low':
+      return 'bg-green-500 text-black';
+    default:
+      return 'bg-gray-500 text-white';
+  }
+};
+
 const FraudDetectionLog = () => {
   return (
-    <div className="p-6 min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100">
-      <h2 className="text-2xl font-bold mb-6">Fraud Detection Log</h2>
-      <div className="overflow-x-auto">
-        <table className="min-w-full bg-white dark:bg-gray-800 border rounded shadow">
-          <thead>
-            <tr className="bg-gray-200 dark:bg-gray-700">
-              <th className="py-3 px-4 text-left">User</th>
-              <th className="py-3 px-4 text-left">Issue</th>
-              <th className="py-3 px-4 text-left">Date</th>
-              <th className="py-3 px-4 text-left">Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {fraudLogs.map(log => (
-              <tr key={log.id} className="border-t border-gray-300 dark:border-gray-600">
-                <td className="py-3 px-4">{log.user}</td>
-                <td className="py-3 px-4">{log.issue}</td>
-                <td className="py-3 px-4">{log.date}</td>
-                <td className="py-3 px-4">{log.status}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+    <div className="min-h-screen bg-[#0f172a] text-white px-6 py-10">
+      <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
+        <FiAlertTriangle className="text-red-500" /> Fraud Detection Log
+      </h2>
+
+      <div className="space-y-4">
+        {fraudLogs.map((log, index) => (
+          <div
+            key={index}
+            className="bg-[#1e293b] p-4 rounded-lg flex justify-between items-start shadow"
+          >
+            <div>
+              <h4 className="text-lg font-semibold">{log.type}</h4>
+              <p className="text-sm text-gray-400">
+                User: <span className="text-white">{log.user}</span> — {log.time}
+              </p>
+            </div>
+            <span
+              className={`text-xs px-3 py-1 rounded-full font-medium ${getBadgeColor(
+                log.severity
+              )}`}
+            >
+              {log.severity}
+            </span>
+          </div>
+        ))}
       </div>
     </div>
   );
