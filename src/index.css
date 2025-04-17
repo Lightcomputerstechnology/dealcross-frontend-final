@@ -1,8 +1,2 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-/* Custom global styles can go below */
-body {
-  font-family: 'Inter', sans-serif;
-}
+btn-primary-sm  { @apply inline-flex items-center rounded-md bg-primary-500 px-4 py-1.5 text-sm font-medium text-white hover:bg-primary-400; }
+.btn-secondary-sm{ @apply inline-flex items-center rounded-md bg-white/5   px-4 py-1.5 text-sm font-medium text-white hover:bg-white/10;}
