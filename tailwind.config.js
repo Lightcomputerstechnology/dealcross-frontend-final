@@ -1,16 +1,35 @@
 /** @type {import('tailwindcss').Config} */
-export default {
-  content: ["./index.html", "./src/**/*.{js,jsx}"],
+module.exports = {
+  content: ['./index.html', './src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {
       colors: {
-        "primary-50":  "#eef7f8",
-        "primary-100": "#cde6ea",
-        "primary-200": "#9acdd6",
-        "primary-400": "#1f7aa2",   // teal‑blue in the mock‑ups
-        "primary-500": "#0e5f87",
-        "primary-600": "#094b6b",
-        "accent-gold": "#d88d17",
+        /* main brand gradient (blue → gold) */
+        primary: {
+          50 : '#e7f5ff',
+          100: '#cae9ff',
+          200: '#9bd1ff',
+          300: '#5ab4ff',
+          400: '#2699ff',
+          500: '#007bff',   // ← use this one most often
+          600: '#0069e6',
+          700: '#0052b3',
+          800: '#003a80',
+          900: '#00264d',
+        },
+        accent: {
+          50 : '#fff8e6',
+          100: '#ffedc1',
+          200: '#ffe096',
+          300: '#ffd262',
+          400: '#ffc73d',
+          500: '#ffbb17',   // gold
+          600: '#e6a603',
+          700: '#b38302',
+          800: '#806001',
+          900: '#4d3a00',
+        },
+        surface: '#0f172a',  // dark background that all mocks use
       },
     },
   },
