@@ -2,7 +2,7 @@
 
 const StartDealPage = () => { const [role, setRole] = useState('buyer'); const [title, setTitle] = useState(''); const [email, setEmail] = useState(''); const [amount, setAmount] = useState(''); const [escrowType, setEscrowType] = useState('standard'); const [category, setCategory] = useState('product'); const [message, setMessage] = useState(''); const [files, setFiles] = useState([]); const [previews, setPreviews] = useState([]); const [status, setStatus] = useState(null);
 
-const MAX_FILE_SIZE_MB = 10; // Limit each file to 10MB
+const MAX_FILE_SIZE_MB = 10;
 
 useEffect(() => { return () => { previews.forEach((url) => URL.revokeObjectURL(url)); }; }, [previews]);
 
@@ -131,3 +131,5 @@ encType="multipart/form-data"
 ); };
 
 export default StartDealPage;
+
+        
