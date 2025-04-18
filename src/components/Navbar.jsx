@@ -33,11 +33,21 @@ export default function Navbar() {
           <LanguageSwitcher />
         </div>
 
-        {/* Mobile login/sign up circular buttons */}
+        {/* Mobile smart buttons + menu */}
         <div className="flex items-center md:hidden space-x-2">
-          <Link to="/login" className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-xs font-medium">In</Link>
-          <Link to="/signup" className="w-8 h-8 bg-gray-800 text-white rounded-full flex items-center justify-center text-xs font-medium">Up</Link>
-          <button className="ml-2" onClick={() => setOpen(!open)}>
+          <Link
+            to="/login"
+            className="px-3 py-1 text-xs bg-blue-600 text-white rounded-full hover:bg-blue-700"
+          >
+            Login
+          </Link>
+          <Link
+            to="/signup"
+            className="px-3 py-1 text-xs bg-gray-800 text-white rounded-full hover:bg-gray-700"
+          >
+            Sign Up
+          </Link>
+          <button onClick={() => setOpen(!open)}>
             {open ? (
               <XIcon className="h-6 w-6 text-gray-900 dark:text-white" />
             ) : (
@@ -66,4 +76,4 @@ export default function Navbar() {
       )}
     </nav>
   );
-            }
+        }
