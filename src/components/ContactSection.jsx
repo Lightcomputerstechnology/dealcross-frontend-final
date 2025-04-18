@@ -1,37 +1,39 @@
-// src/components/ContactSection.jsx
-import React from 'react';
+// src/components/ContactSection.jsx import React from 'react';
 
-export default function ContactSection() {
-  return (
-    <section className="bg-white dark:bg-gray-950 py-12 px-4">
-      <div className="max-w-6xl mx-auto">
-        <h2 className="text-2xl sm:text-3xl font-bold text-center mb-6">
-          Get in touch
-        </h2>
-        <form className="grid gap-6 sm:grid-cols-2">
-          <input
-            type="text"
-            placeholder="Full Name"
-            className="w-full p-3 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white"
-          />
-          <input
-            type="email"
-            placeholder="Email Address"
-            className="w-full p-3 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white"
-          />
-          <textarea
-            placeholder="Message"
-            className="sm:col-span-2 w-full p-3 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white"
-            rows={4}
-          ></textarea>
-          <button
-            type="submit"
-            className="sm:col-span-2 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-md font-medium"
-          >
-            Send message
-          </button>
-        </form>
+const ContactSection = () => { return ( <section className="bg-white dark:bg-gray-900 py-12 px-4"> <div className="max-w-5xl mx-auto"> <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-6 text-center"> Contact Us </h2>
+
+<form className="bg-gray-50 dark:bg-gray-800 rounded-lg shadow-md p-6 space-y-4">
+      <div className="grid md:grid-cols-2 gap-4">
+        <input
+          type="text"
+          placeholder="Your Name"
+          className="w-full px-4 py-2 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+          required
+        />
+        <input
+          type="email"
+          placeholder="Your Email"
+          className="w-full px-4 py-2 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+          required
+        />
       </div>
-    </section>
-  );
-}
+      <textarea
+        placeholder="Your Message"
+        rows="4"
+        className="w-full px-4 py-2 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+        required
+      ></textarea>
+      <button
+        type="submit"
+        className="w-full md:w-auto px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md font-semibold"
+      >
+        Send Message
+      </button>
+    </form>
+  </div>
+</section>
+
+); };
+
+export default ContactSection;
+
