@@ -1,9 +1,11 @@
-// src/components/ThemeToggle.jsx
 import React, { useEffect, useState } from 'react';
 import { Moon, Sun } from 'lucide-react';
 
 const ThemeToggle = () => {
-  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
+  const [theme, setTheme] = useState(() => {
+    const stored = localStorage.getItem('theme');
+    return stored ? stored : 'dark'; // Default to dark
+  });
 
   useEffect(() => {
     const root = window.document.documentElement;
