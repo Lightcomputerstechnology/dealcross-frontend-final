@@ -1,12 +1,12 @@
+// tailwind.config.js
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: 'class', // <<== This line is critical for theme toggling
   content: ['./index.html', './src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {
       colors: {
         primary: {
-          50: '#e7f5ff',
+          50 : '#e7f5ff',
           100: '#cae9ff',
           200: '#9bd1ff',
           300: '#5ab4ff',
@@ -18,7 +18,7 @@ module.exports = {
           900: '#00264d',
         },
         accent: {
-          50: '#fff8e6',
+          50 : '#fff8e6',
           100: '#ffedc1',
           200: '#ffe096',
           300: '#ffd262',
@@ -30,6 +30,10 @@ module.exports = {
           900: '#4d3a00',
         },
         surface: '#0f172a',
+        background: {
+          light: '#f8fafc',
+          dark: '#0f172a',
+        },
       },
     },
   },
