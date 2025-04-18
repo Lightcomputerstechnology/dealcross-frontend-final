@@ -1,32 +1,32 @@
 // src/pages/DealsPage.jsx
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const DealsPage = () => {
   const [deals, setDeals] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     const fetchDeals = async () => {
       const token = localStorage.getItem('token');
-
       if (!token) {
-        setError('Please login to view your deals.');
+        setIsLoggedIn(false);
         setLoading(false);
         return;
       }
 
+      setIsLoggedIn(true);
       try {
         const response = await axios.get('https://d-final.onrender.com/deals/my-deals', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-
-        setDeals(response.data);
-      } catch (err) {
-        setError(err.response?.data?.detail || 'Failed to fetch deals.');
+        setDeals(response.data || []);
+      } catch (error) {
+        console.error('Error fetching deals:', error);
       } finally {
         setLoading(false);
       }
@@ -35,27 +35,55 @@ const DealsPage = () => {
     fetchDeals();
   }, []);
 
-  if (loading) return <p className="text-center mt-6 text-blue-400">Loading deals...</p>;
-  if (error) return <p className="text-center mt-6 text-red-400">{error}</p>;
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
+        <p className="text-lg">Loading deals...</p>
+      </div>
+    );
+  }
+
+  if (!isLoggedIn) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center px-4 text-center bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
+        <h2 className="text-2xl font-semibold mb-4">Please log in to view your deals.</h2>
+        <div className="flex gap-4 mt-2">
+          <Link
+            to="/login"
+            className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md"
+          >
+            Login
+          </Link>
+          <Link
+            to="/signup"
+            className="px-6 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-md"
+          >
+            Sign Up
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8 text-white">
+    <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white px-6 py-10">
       <h1 className="text-2xl font-bold mb-6">My Deals</h1>
       {deals.length === 0 ? (
-        <p className="text-center text-gray-400">You have no deals yet.</p>
+        <p className="text-gray-500 dark:text-gray-400">You have no active deals yet.</p>
       ) : (
-        <div className="space-y-4">
+        <ul className="space-y-4">
           {deals.map((deal) => (
-            <div key={deal.id} className="bg-[#1e293b] p-4 rounded shadow">
-              <h2 className="text-lg font-semibold">{deal.title}</h2>
-              <p>Role: {deal.role}</p>
-              <p>Amount: ${deal.amount}</p>
-              <p>Status: <span className="text-yellow-400">{deal.status}</span></p>
-              <p>Escrow Type: {deal.escrow_type}</p>
-              <p className="text-sm text-gray-400">Created: {new Date(deal.created_at).toLocaleString()}</p>
-            </div>
+            <li
+              key={deal.id}
+              className="border border-gray-300 dark:border-gray-700 rounded p-4 bg-gray-50 dark:bg-gray-800"
+            >
+              <h2 className="font-semibold">{deal.title}</h2>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                Role: {deal.role} | Status: {deal.status} | Amount: ${deal.amount}
+              </p>
+            </li>
           ))}
-        </div>
+        </ul>
       )}
     </div>
   );
