@@ -39,7 +39,7 @@ import ReferralProgram     from '@/pages/ReferralProgram';
 import StartDealPairing    from '@/pages/StartDealPairing';
 import DisputeLogViewer    from '@/pages/DisputeLogViewer';
 import ChatSupport         from '@/pages/ChatSupport';
-import NotFoundPage        from '@/pages/NotFoundPage';
+import NotFound        from '@/pages/NotFound';
 
 export default function AppRoutes() {
   return (
@@ -93,7 +93,7 @@ export default function AppRoutes() {
         <Route path="chat"            element={<ChatSupport        />} />
 
         {/* catch‑all */}
-        <Route path="*" element={<NotFoundPage />} />
+        <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   );
