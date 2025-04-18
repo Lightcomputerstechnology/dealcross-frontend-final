@@ -6,10 +6,14 @@ const languages = [
   { code: 'fr', label: 'Français', emoji: '🇫🇷' },
   { code: 'es', label: 'Español', emoji: '🇪🇸' },
   { code: 'de', label: 'Deutsch', emoji: '🇩🇪' },
-  { code: 'zh', label: '中文', emoji: '🇨🇳' },
+  { code: 'pt', label: 'Português', emoji: '🇵🇹' },
+  { code: 'it', label: 'Italiano', emoji: '🇮🇹' },
   { code: 'ru', label: 'Русский', emoji: '🇷🇺' },
+  { code: 'zh', label: '中文', emoji: '🇨🇳' },
+  { code: 'ja', label: '日本語', emoji: '🇯🇵' },
   { code: 'ar', label: 'العربية', emoji: '🇸🇦' },
-  { code: 'pt', label: 'Português', emoji: '🇵🇹' }
+  { code: 'hi', label: 'हिन्दी', emoji: '🇮🇳' },
+  { code: 'yo', label: 'Yorùbá', emoji: '🇳🇬' },
 ];
 
 const LanguageSwitcher = () => {
@@ -20,23 +24,24 @@ const LanguageSwitcher = () => {
   const selectLanguage = (code) => {
     setSelectedLang(code);
     setOpen(false);
+    // Optional: store in localStorage or integrate i18n logic
   };
 
   const activeLabel = languages.find(lang => lang.code === selectedLang)?.label;
 
   return (
-    <div className="relative inline-block text-left">
+    <div className="relative inline-block text-left z-50">
       <button
         onClick={toggleDropdown}
-        className="bg-gray-100 dark:bg-gray-700 px-4 py-2 rounded-md text-sm font-medium text-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600"
+        className="bg-gray-100 dark:bg-gray-700 px-4 py-2 rounded-md text-sm font-medium text-gray-800 dark:text-white"
       >
-        🌐 {activeLabel}
+        {activeLabel}
       </button>
 
       {open && (
-        <div className="absolute right-0 mt-2 w-44 origin-top-right rounded-md bg-white dark:bg-gray-800 shadow-lg ring-1 ring-black ring-opacity-5 max-h-60 overflow-y-auto z-50">
+        <div className="absolute right-0 mt-2 w-44 origin-top-right rounded-md bg-white dark:bg-gray-800 shadow-lg ring-1 ring-black ring-opacity-5">
           <div className="py-1">
-            {languages.map(lang => (
+            {languages.map((lang) => (
               <button
                 key={lang.code}
                 onClick={() => selectLanguage(lang.code)}
@@ -53,4 +58,3 @@ const LanguageSwitcher = () => {
 };
 
 export default LanguageSwitcher;
-         
