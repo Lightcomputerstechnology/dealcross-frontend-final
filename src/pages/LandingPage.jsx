@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import Logo from '../assets/dealcross-logo.png';
 import TrustLevels from '../components/TrustLevels';
 import FastPayouts from '../components/FastPayouts';
+import HowItWorks from '../components/HowItWorks';
 import DealsInProgress from '../components/DealsInProgress';
 import StartTradingCTA from '../components/StartTradingCTA';
-
 export default function LandingPage() {
   return (
     <div className="min-h-screen flex flex-col bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition duration-300">
