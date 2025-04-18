@@ -1,4 +1,4 @@
-// // src/components/Navbar.jsx
+// src/components/Navbar.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Logo from '@/assets/dealcross-logo.png';
