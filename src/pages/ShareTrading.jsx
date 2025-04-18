@@ -6,7 +6,6 @@ import {
   Route,
 } from 'react-router-dom';
 
-import LandingPage   from './pages/LandingPage';
 import ShareTrading  from './pages/ShareTrading';
 import Deals         from './pages/Deals';
 import Contact       from './pages/Contact';
