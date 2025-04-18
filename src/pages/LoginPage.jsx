@@ -1,3 +1,4 @@
+// src/pages/LoginPage.jsx
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -16,51 +17,48 @@ const LoginPage = () => {
         password,
       });
 
-      if (response.data.access_token) {
+      if (response.data && response.data.access_token) {
         localStorage.setItem('token', response.data.access_token);
-        setStatus('Login successful! Redirecting...');
-        setTimeout(() => navigate('/wallet'), 1500); // Redirect after 1.5s
+        navigate('/deals');
       } else {
-        setStatus('Login failed. Please try again.');
+        setStatus('Login failed. Please check credentials.');
       }
-    } catch (error) {
-      setStatus(error.response?.data?.detail || 'Login failed. Please check your credentials.');
+    } catch (err) {
+      setStatus(err.response?.data?.detail || 'Login failed.');
     }
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-[#0f172a] text-white px-4">
-      <div className="w-full max-w-sm bg-[#1e293b] p-6 rounded-lg shadow-md">
-        <h2 className="text-xl font-semibold mb-4">Login to Dealcross</h2>
-        <form onSubmit={handleLogin}>
-          <input
-            type="email"
-            placeholder="Email"
-            className="w-full mb-3 px-4 py-2 rounded bg-gray-800 text-white"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            className="w-full mb-4 px-4 py-2 rounded bg-gray-800 text-white"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          <button
-            type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded"
-          >
-            Log In
-          </button>
-        </form>
-
-        {status && (
-          <p className="text-sm text-center mt-4 text-yellow-400">{status}</p>
-        )}
-      </div>
+    <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white flex items-center justify-center px-4">
+      <form
+        onSubmit={handleLogin}
+        className="w-full max-w-md bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow space-y-4"
+      >
+        <h2 className="text-xl font-bold text-center">Login</h2>
+        <input
+          type="email"
+          placeholder="Email"
+          required
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="w-full px-4 py-2 rounded bg-white dark:bg-gray-700 text-black dark:text-white"
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          required
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="w-full px-4 py-2 rounded bg-white dark:bg-gray-700 text-black dark:text-white"
+        />
+        <button
+          type="submit"
+          className="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white rounded font-semibold"
+        >
+          Login
+        </button>
+        {status && <p className="text-yellow-400 text-center text-sm">{status}</p>}
+      </form>
     </div>
   );
 };
