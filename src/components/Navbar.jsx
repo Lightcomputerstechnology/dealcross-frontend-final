@@ -34,4 +34,5 @@ open && (
     </div>
   </>
 )}
+export default Navbar;
 
