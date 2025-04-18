@@ -18,7 +18,7 @@ export default function LandingPage() {
         <div
           className="absolute inset-0 flex justify-center items-center z-0 opacity-10"
           style={{
-            backgroundImage: 'url("/assets/dealcross-logo.png")',
+            backgroundImage: 'url("/src/assets/dealcross-logo.png")',
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center',
             backgroundSize: '140px',
