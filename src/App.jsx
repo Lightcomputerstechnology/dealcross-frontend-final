@@ -1,10 +1,13 @@
-import React from 'react'
-import { Routes, Route } from 'react-router-dom'
-import LandingPage from './pages/LandingPage'
-import Deals from './pages/Deals'
-import ShareTrading from './pages/ShareTrading'
-import Contact from './pages/Contact'
-import NotFound from './pages/NotFound'
+// src/App.jsx
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+
+// Page imports — ensure these files exist exactly as written
+import LandingPage from './pages/LandingPage';
+import Deals from './pages/Deals';
+import ShareTrading from './pages/ShareTrading';
+import Contact from './pages/Contact';
+import NotFound from './pages/NotFound';
 
 export default function App() {
   return (
@@ -15,5 +18,5 @@ export default function App() {
       <Route path="/contact" element={<Contact />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
-  )
+  );
 }
