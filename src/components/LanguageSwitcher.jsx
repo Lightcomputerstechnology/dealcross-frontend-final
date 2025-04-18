@@ -2,56 +2,53 @@
 import React, { useState } from 'react';
 
 const languages = [
-  { code: 'en', label: 'English', emoji: '🇬🇧' },
-  { code: 'es', label: 'Español', emoji: '🇪🇸' },
-  { code: 'fr', label: 'Français', emoji: '🇫🇷' },
-  { code: 'de', label: 'Deutsch', emoji: '🇩🇪' },
-  { code: 'zh', label: '中文', emoji: '🇨🇳' },
-  { code: 'ar', label: 'العربية', emoji: '🇸🇦' },
-  { code: 'ru', label: 'Русский', emoji: '🇷🇺' },
-  { code: 'hi', label: 'हिन्दी', emoji: '🇮🇳' },
-  { code: 'pt', label: 'Português', emoji: '🇧🇷' },
-  { code: 'ja', label: '日本語', emoji: '🇯🇵' },
-  { code: 'tr', label: 'Türkçe', emoji: '🇹🇷' },
+  { code: 'en', name: 'English', emoji: '🇺🇸' },
+  { code: 'es', name: 'Español', emoji: '🇪🇸' },
+  { code: 'fr', name: 'Français', emoji: '🇫🇷' },
+  { code: 'de', name: 'Deutsch', emoji: '🇩🇪' },
+  { code: 'zh', name: '中文', emoji: '🇨🇳' },
+  { code: 'ru', name: 'Русский', emoji: '🇷🇺' },
+  { code: 'ar', name: 'العربية', emoji: '🇸🇦' },
+  { code: 'hi', name: 'हिन्दी', emoji: '🇮🇳' },
+  { code: 'pt', name: 'Português', emoji: '🇧🇷' },
+  { code: 'ja', name: '日本語', emoji: '🇯🇵' },
 ];
 
-const LanguageSwitcher = () => {
+export default function LanguageSwitcher() {
   const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState(languages[0]);
+  const [current, setCurrent] = useState(languages[0]);
 
-  const handleSelect = (lang) => {
-    setSelected(lang);
+  const toggleDropdown = () => setOpen(!open);
+  const selectLanguage = (lang) => {
+    setCurrent(lang);
     setOpen(false);
-    // TODO: implement actual language change logic
+    // future: handle language change logic here
   };
 
   return (
-    <div className="relative text-sm z-50">
+    <div className="relative inline-block text-left">
       <button
-        onClick={() => setOpen(!open)}
-        className="flex items-center px-3 py-2 rounded-md bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-white hover:shadow transition duration-300"
+        onClick={toggleDropdown}
+        className="flex items-center space-x-1 px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700"
       >
-        <span className="mr-2">{selected.emoji}</span>
-        {selected.label}
+        <span>{current.emoji}</span>
+        <span className="text-sm font-medium">{current.name}</span>
       </button>
 
       {open && (
-        <div className="absolute mt-2 w-40 max-h-60 overflow-y-auto bg-white dark:bg-gray-900 border dark:border-gray-700 rounded shadow-lg transition-all duration-300 ease-in-out">
+        <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded shadow-md z-50 overflow-y-auto max-h-64 transition duration-300 ease-in-out">
           {languages.map((lang) => (
-            <div
+            <button
               key={lang.code}
-              onClick={() => handleSelect(lang)}
-              className="px-4 py-2 cursor-pointer hover:bg-blue-100 dark:hover:bg-gray-800 flex items-center gap-2"
+              onClick={() => selectLanguage(lang)}
+              className="flex w-full items-center justify-start px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
             >
-              <span>{lang.emoji}</span>
-              {lang.label}
-            </div>
+              <span className="mr-2">{lang.emoji}</span>
+              <span>{lang.name}</span>
+            </button>
           ))}
         </div>
       )}
     </div>
   );
-};
-
-export default LanguageSwitcher;
-      
+}
