@@ -2,7 +2,7 @@
 import { Routes, Route } from 'react-router-dom';
 import SiteLayout from '@/layouts/SiteLayout';
 
-// pages
+// Pages
 import LandingPage from '@/pages/LandingPage';
 import LoginPage from '@/pages/LoginPage';
 import SignupPage from '@/pages/SignupPage';
@@ -40,6 +40,7 @@ import ReferralProgram from '@/pages/ReferralProgram';
 import StartDealPairing from '@/pages/StartDealPairing';
 import DisputeLogViewer from '@/pages/DisputeLogViewer';
 import ChatSupport from '@/pages/ChatSupport';
+import ContactPage from '@/pages/ContactPage';
 import NotFound from '@/pages/NotFound';
 
 export default function AppRoutes() {
@@ -69,7 +70,7 @@ export default function AppRoutes() {
         <Route path="investor-profile" element={<InvestorProfile />} />
         <Route path="investor-reports" element={<InvestorReports />} />
 
-        {/* Misc */}
+        {/* Misc Pages */}
         <Route path="kyc-upload" element={<KYCUploadPage />} />
         <Route path="dispute-resolution" element={<DisputeResolutionPage />} />
         <Route path="pitch-deck" element={<PitchDeckViewer />} />
@@ -91,10 +92,11 @@ export default function AppRoutes() {
         <Route path="pair-deal" element={<StartDealPairing />} />
         <Route path="dispute-log" element={<DisputeLogViewer />} />
         <Route path="chat" element={<ChatSupport />} />
+        <Route path="contact" element={<ContactPage />} />
 
         {/* Fallback */}
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   );
-      }
+  }
