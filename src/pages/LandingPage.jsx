@@ -6,6 +6,7 @@ import FastPayouts from '@/components/FastPayouts';
 import DealsInProgress from '@/components/DealsInProgress';
 import StartTradingCTA from '@/components/StartTradingCTA';
 import ContactSection from '@/components/ContactSection';
+import Logo from '@/assets/dealcross-logo.png';
 
 export default function LandingPage() {
   return (
@@ -18,7 +19,7 @@ export default function LandingPage() {
         <div
           className="absolute inset-0 flex justify-center items-center z-0 opacity-10"
           style={{
-            backgroundImage: 'url("/src/assets/dealcross-logo.png")',
+            backgroundImage: `url(${Logo})`,
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center',
             backgroundSize: '140px',
