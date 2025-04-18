@@ -39,6 +39,7 @@ import ReferralProgram     from '@/pages/ReferralProgram';
 import StartDealPairing    from '@/pages/StartDealPairing';
 import DisputeLogViewer    from '@/pages/DisputeLogViewer';
 import ChatSupport         from '@/pages/ChatSupport';
+import Deals               from '@/pages/Deals';
 import NotFound        from '@/pages/NotFound';
 
 export default function AppRoutes() {
@@ -90,6 +91,7 @@ export default function AppRoutes() {
         <Route path="referral"        element={<ReferralProgram    />} />
         <Route path="pair-deal"       element={<StartDealPairing   />} />
         <Route path="dispute-log"     element={<DisputeLogViewer   />} />
+        <Route path="deals"           element={<Deals              />} />
         <Route path="chat"            element={<ChatSupport        />} />
 
         {/* catch‑all */}
