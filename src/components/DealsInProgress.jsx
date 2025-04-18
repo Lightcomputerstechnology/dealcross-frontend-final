@@ -1,44 +1,52 @@
+// src/components/DealsInProgress.jsx
 import React from 'react';
+import { Briefcase, ShieldCheck, Timer } from 'lucide-react';
 
-const deals = [
-  { id: 1, title: 'Graphics Design Project', status: 'Processing' },
-  { id: 2, title: 'Electronics Shipment', status: 'Shipped' },
-  { id: 3, title: 'Freelance Writing', status: 'Awaiting Payment' },
-];
-
-const statusColors = {
-  'Processing': 'bg-yellow-100 text-yellow-800',
-  'Shipped': 'bg-blue-100 text-blue-800',
-  'Awaiting Payment': 'bg-red-100 text-red-800',
-};
-
-export default function DealsInProgress() {
+const DealsInProgress = () => {
   return (
-    <section className="bg-white dark:bg-gray-900 py-12 px-4">
+    <section className="bg-white dark:bg-gray-950 py-16 px-4">
       <div className="max-w-6xl mx-auto text-center">
-        <h2 className="text-2xl md:text-3xl font-bold mb-8 text-gray-900 dark:text-white">
+        <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
           Deals in Progress
         </h2>
+        <p className="text-gray-600 dark:text-gray-300 mb-10">
+          Real-time glimpse into the secure transactions happening on Dealcross.
+        </p>
+
         <div className="grid md:grid-cols-3 gap-6">
-          {deals.map(deal => (
-            <div
-              key={deal.id}
-              className="border border-gray-300 dark:border-gray-700 rounded-md p-4 bg-gray-50 dark:bg-gray-800 shadow"
-            >
-              <h3 className="font-semibold text-lg text-gray-800 dark:text-white mb-2">
-                {deal.title}
-              </h3>
-              <span
-                className={`inline-block px-3 py-1 text-sm rounded-full font-medium ${
-                  statusColors[deal.status] || 'bg-gray-200 text-gray-800'
-                }`}
-              >
-                {deal.status}
-              </span>
+          <div className="p-6 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition">
+            <div className="flex items-center gap-3 mb-2 text-blue-600 dark:text-blue-400">
+              <Briefcase className="w-6 h-6" />
+              <h4 className="text-lg font-semibold">Product Delivery</h4>
             </div>
-          ))}
+            <p className="text-sm text-gray-600 dark:text-gray-300">
+              A seller in Lagos is shipping electronics to a buyer in Abuja. Escrow protects both parties.
+            </p>
+          </div>
+
+          <div className="p-6 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition">
+            <div className="flex items-center gap-3 mb-2 text-blue-600 dark:text-blue-400">
+              <Timer className="w-6 h-6" />
+              <h4 className="text-lg font-semibold">Freelance Job</h4>
+            </div>
+            <p className="text-sm text-gray-600 dark:text-gray-300">
+              A client in Canada is working with a Nigerian web developer — funds held in escrow until delivery.
+            </p>
+          </div>
+
+          <div className="p-6 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition">
+            <div className="flex items-center gap-3 mb-2 text-blue-600 dark:text-blue-400">
+              <ShieldCheck className="w-6 h-6" />
+              <h4 className="text-lg font-semibold">Vehicle Deal</h4>
+            </div>
+            <p className="text-sm text-gray-600 dark:text-gray-300">
+              A buyer has secured payment for a used car. Release pending delivery and inspection.
+            </p>
+          </div>
         </div>
       </div>
     </section>
   );
-}
+};
+
+export default DealsInProgress;
