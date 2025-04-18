@@ -1,16 +1,19 @@
 // src/layouts/SiteLayout.jsx
-import { Outlet } from 'react-router-dom';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+import React from "react";
+import { Outlet } from "react-router-dom";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
-export default function SiteLayout() {
+const SiteLayout = () => {
   return (
-    <div className="flex min-h-screen flex-col bg-background text-foreground">
+    <div className="flex flex-col min-h-screen">
       <Navbar />
-      <main className="flex-1">
-        <Outlet />      {/* current page is rendered here */}
+      <main className="flex-grow">
+        <Outlet />
       </main>
       <Footer />
     </div>
   );
-}
+};
+
+export default SiteLayout;
