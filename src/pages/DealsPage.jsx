@@ -1,32 +1,64 @@
 // src/pages/DealsPage.jsx
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
-export default function DealsPage() {
+const DealsPage = () => {
+  const [deals, setDeals] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchDeals = async () => {
+      const token = localStorage.getItem('token');
+
+      if (!token) {
+        setError('Please login to view your deals.');
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const response = await axios.get('https://d-final.onrender.com/deals/my-deals', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        setDeals(response.data);
+      } catch (err) {
+        setError(err.response?.data?.detail || 'Failed to fetch deals.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDeals();
+  }, []);
+
+  if (loading) return <p className="text-center mt-6 text-blue-400">Loading deals...</p>;
+  if (error) return <p className="text-center mt-6 text-red-400">{error}</p>;
+
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-white px-4 py-12 text-center">
-      <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-        Welcome to <span className="text-blue-600">Dealcross Deals</span>
-      </h1>
-
-      <p className="text-gray-600 text-sm md:text-base mb-8 max-w-md">
-        Start, track, and manage your escrow deals easily and securely.
-      </p>
-
-      <div className="flex flex-col md:flex-row gap-4">
-        <Link
-          to="/start-deal"
-          className="w-full md:w-auto px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-sm md:text-base"
-        >
-          Start a New Deal
-        </Link>
-        <Link
-          to="/deal-tracker"
-          className="w-full md:w-auto px-6 py-3 bg-gray-800 hover:bg-gray-700 text-white rounded-md text-sm md:text-base"
-        >
-          Track Existing Deals
-        </Link>
-      </div>
+    <div className="max-w-4xl mx-auto px-4 py-8 text-white">
+      <h1 className="text-2xl font-bold mb-6">My Deals</h1>
+      {deals.length === 0 ? (
+        <p className="text-center text-gray-400">You have no deals yet.</p>
+      ) : (
+        <div className="space-y-4">
+          {deals.map((deal) => (
+            <div key={deal.id} className="bg-[#1e293b] p-4 rounded shadow">
+              <h2 className="text-lg font-semibold">{deal.title}</h2>
+              <p>Role: {deal.role}</p>
+              <p>Amount: ${deal.amount}</p>
+              <p>Status: <span className="text-yellow-400">{deal.status}</span></p>
+              <p>Escrow Type: {deal.escrow_type}</p>
+              <p className="text-sm text-gray-400">Created: {new Date(deal.created_at).toLocaleString()}</p>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
-  )
-}
+  );
+};
+
+export default DealsPage;
