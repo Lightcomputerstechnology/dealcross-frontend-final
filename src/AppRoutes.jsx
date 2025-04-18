@@ -1,8 +1,9 @@
+
 // src/AppRoutes.jsx
 import { Routes, Route } from 'react-router-dom';
 import SiteLayout from '@/layouts/SiteLayout';
 
-// Pages
+// pages
 import LandingPage from '@/pages/LandingPage';
 import LoginPage from '@/pages/LoginPage';
 import SignupPage from '@/pages/SignupPage';
@@ -40,45 +41,33 @@ import ReferralProgram from '@/pages/ReferralProgram';
 import StartDealPairing from '@/pages/StartDealPairing';
 import DisputeLogViewer from '@/pages/DisputeLogViewer';
 import ChatSupport from '@/pages/ChatSupport';
-import ContactPage from '@/pages/ContactPage';
-import AboutPage from '@/pages/AboutPage';
-import PrivacyPolicyPage from '@/pages/PrivacyPolicyPage';
+import ContactPage from '@/pages/ContactPage'; // ← NEW
 import NotFound from '@/pages/NotFound';
 
 export default function AppRoutes() {
   return (
     <Routes>
       <Route element={<SiteLayout />}>
-        {/* Public routes */}
         <Route index element={<LandingPage />} />
         <Route path="login" element={<LoginPage />} />
         <Route path="signup" element={<SignupPage />} />
-
-        {/* Wallet & Deals */}
         <Route path="wallet" element={<WalletPage />} />
         <Route path="fund-wallet" element={<FundWalletPage />} />
         <Route path="deals" element={<DealsPage />} />
         <Route path="start-deal" element={<StartDealPage />} />
         <Route path="deal-confirmation" element={<DealConfirmation />} />
         <Route path="deal-tracker" element={<DealTrackerPage />} />
-        <Route path="pair-deal" element={<StartDealPairing />} />
-
-        {/* Trading */}
         <Route path="share-trading" element={<ShareTrading />} />
         <Route path="trading-chart" element={<TradingChartPage />} />
         <Route path="live-chart" element={<LiveTradingChart />} />
-
-        {/* Investor & Admin */}
         <Route path="admin" element={<AdminDashboard />} />
         <Route path="investor" element={<InvestorPanel />} />
         <Route path="investor-profile" element={<InvestorProfile />} />
         <Route path="investor-reports" element={<InvestorReports />} />
-
-        {/* Utilities */}
         <Route path="kyc-upload" element={<KYCUploadPage />} />
         <Route path="dispute-resolution" element={<DisputeResolutionPage />} />
-        <Route path="fraud-log" element={<FraudDetectionLog />} />
         <Route path="pitch-deck" element={<PitchDeckViewer />} />
+        <Route path="fraud-log" element={<FraudDetectionLog />} />
         <Route path="escrow-tracker" element={<EscrowTracker />} />
         <Route path="mobile-app" element={<MobileAppPromo />} />
         <Route path="users" element={<UserManagement />} />
@@ -93,17 +82,12 @@ export default function AppRoutes() {
         <Route path="deal-analytics" element={<DealAnalytics />} />
         <Route path="security-center" element={<SecurityCenter />} />
         <Route path="referral" element={<ReferralProgram />} />
+        <Route path="pair-deal" element={<StartDealPairing />} />
         <Route path="dispute-log" element={<DisputeLogViewer />} />
         <Route path="chat" element={<ChatSupport />} />
-
-        {/* Static pages from footer */}
-        <Route path="contact" element={<ContactPage />} />
-        <Route path="about" element={<AboutPage />} />
-        <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
-
-        {/* Fallback */}
+        <Route path="contact" element={<ContactPage />} /> {/* ← NEW */}
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   );
-  }
+}
