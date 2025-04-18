@@ -1,7 +1,9 @@
+// src/components/Navbar.jsx
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu as MenuIcon, X as XIcon } from 'react-feather';
 import Logo from '../assets/dealcross-logo.png';
+import LanguageSwitcher from './LanguageSwitcher'; // Added
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -15,7 +17,7 @@ export default function Navbar() {
           <span className="text-xl font-bold text-gray-900 dark:text-white">Dealcross</span>
         </Link>
 
-        {/* Center: Desktop links */}
+        {/* Center: Desktop Links */}
         <div className="hidden md:flex space-x-6">
           <Link to="/" className="hover:text-blue-600 dark:hover:text-blue-400">Home</Link>
           <Link to="/deals" className="hover:text-blue-600 dark:hover:text-blue-400">Deals</Link>
@@ -23,8 +25,9 @@ export default function Navbar() {
           <Link to="/contact" className="hover:text-blue-600 dark:hover:text-blue-400">Contact</Link>
         </div>
 
-        {/* Right: Login/Signup - visible on all screens */}
-        <div className="flex space-x-2">
+        {/* Right: Language + Login/Signup */}
+        <div className="hidden md:flex items-center space-x-3">
+          <LanguageSwitcher /> {/* <-- Desktop only for now */}
           <Link to="/login" className="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-md">Login</Link>
           <Link to="/signup" className="px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-white text-sm rounded-md">Sign Up</Link>
         </div>
@@ -39,7 +42,7 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile Sidebar */}
+      {/* Sidebar - not touched yet */}
       {open && (
         <>
           <div
