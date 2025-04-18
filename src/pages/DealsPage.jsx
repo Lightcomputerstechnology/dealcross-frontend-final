@@ -1,27 +1,28 @@
+// src/pages/DealsPage.jsx
 import React from 'react'
 import { Link } from 'react-router-dom'
 
 export default function DealsPage() {
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 text-center p-8">
-      <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-        Welcome to Dealcross Deals
+    <div className="min-h-screen flex flex-col items-center justify-center bg-white px-4 py-12 text-center">
+      <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+        Welcome to <span className="text-blue-600">Dealcross Deals</span>
       </h1>
-      <p className="text-gray-600 dark:text-gray-300 mb-6">
+
+      <p className="text-gray-600 text-sm md:text-base mb-8 max-w-md">
         Start, track, and manage your escrow deals easily and securely.
       </p>
 
-      <div className="space-x-4">
+      <div className="flex flex-col md:flex-row gap-4">
         <Link
           to="/start-deal"
-          className="bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700"
+          className="w-full md:w-auto px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-sm md:text-base"
         >
           Start a New Deal
         </Link>
-
         <Link
           to="/deal-tracker"
-          className="bg-gray-800 text-white px-6 py-3 rounded hover:bg-gray-700"
+          className="w-full md:w-auto px-6 py-3 bg-gray-800 hover:bg-gray-700 text-white rounded-md text-sm md:text-base"
         >
           Track Existing Deals
         </Link>
