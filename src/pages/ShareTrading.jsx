@@ -1,26 +1,14 @@
-// src/App.jsx
+// src/pages/ShareTrading.jsx
 import React from 'react';
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-} from 'react-router-dom';
 
-import ShareTrading  from './pages/ShareTrading';
-import Deals         from './pages/Deals';
-import Contact       from './pages/Contact';
-import NotFound      from './pages/NotFound';
-
-export default function App() {
+export default function ShareTrading() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/"               element={<LandingPage/>}   />
-        <Route path="/deals"          element={<Deals/>}         />
-        <Route path="/share-trading"  element={<ShareTrading/>}  />
-        <Route path="/contact"        element={<Contact/>}       />
-        <Route path="*"               element={<NotFound/>}      />
-      </Routes>
-    </Router>
+    <main className="px-4 py-8">
+      <h1 className="text-2xl font-bold mb-4">Buy &amp; Sell Company Shares</h1>
+      <p className="mb-6">Trade company shares securely and efficiently.</p>
+      <button className="bg-blue-600 text-white px-6 py-2 rounded">
+        Start trading
+      </button>
+    </main>
   );
 }
