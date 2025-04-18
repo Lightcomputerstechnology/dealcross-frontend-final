@@ -1,60 +1,31 @@
-// src/components/LanguageSwitcher.jsx
-import React, { useState } from 'react';
+// src/components/LanguageSwitcher.jsx import React, { useState } from 'react';
 
-const languages = [
-  { code: 'en', label: 'English', emoji: '🇬🇧' },
-  { code: 'fr', label: 'Français', emoji: '🇫🇷' },
-  { code: 'es', label: 'Español', emoji: '🇪🇸' },
-  { code: 'de', label: 'Deutsch', emoji: '🇩🇪' },
-  { code: 'pt', label: 'Português', emoji: '🇵🇹' },
-  { code: 'it', label: 'Italiano', emoji: '🇮🇹' },
-  { code: 'ru', label: 'Русский', emoji: '🇷🇺' },
-  { code: 'zh', label: '中文', emoji: '🇨🇳' },
-  { code: 'ja', label: '日本語', emoji: '🇯🇵' },
-  { code: 'ar', label: 'العربية', emoji: '🇸🇦' },
-  { code: 'hi', label: 'हिन्दी', emoji: '🇮🇳' },
-  { code: 'yo', label: 'Yorùbá', emoji: '🇳🇬' },
-];
+const languages = [ { code: 'en', name: 'English', emoji: '🇺🇸' }, { code: 'es', name: 'Spanish', emoji: '🇪🇸' }, { code: 'fr', name: 'French', emoji: '🇫🇷' }, { code: 'de', name: 'German', emoji: '🇩🇪' }, { code: 'it', name: 'Italian', emoji: '🇮🇹' }, { code: 'pt', name: 'Portuguese', emoji: '🇵🇹' }, { code: 'zh', name: 'Chinese', emoji: '🇨🇳' }, { code: 'ja', name: 'Japanese', emoji: '🇯🇵' }, { code: 'ar', name: 'Arabic', emoji: '🇸🇦' }, { code: 'ru', name: 'Russian', emoji: '🇷🇺' }, ];
 
-const LanguageSwitcher = () => {
-  const [selectedLang, setSelectedLang] = useState('en');
-  const [open, setOpen] = useState(false);
+const LanguageSwitcher = () => { const [selected, setSelected] = useState(languages[0]); const [open, setOpen] = useState(false);
 
-  const toggleDropdown = () => setOpen(!open);
-  const selectLanguage = (code) => {
-    setSelectedLang(code);
-    setOpen(false);
-    // Optional: store in localStorage or integrate i18n logic
-  };
+const handleSelect = (lang) => { setSelected(lang); setOpen(false); // Add your i18n change logic here };
 
-  const activeLabel = languages.find(lang => lang.code === selectedLang)?.label;
+return ( <div className="relative inline-block text-left"> <button onClick={() => setOpen(!open)} className="inline-flex items-center px-3 py-2 text-sm font-medium bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white rounded-md hover:shadow" > <span className="mr-2">{selected.emoji}</span> {selected.name} </button>
 
-  return (
-    <div className="relative inline-block text-left z-50">
-      <button
-        onClick={toggleDropdown}
-        className="bg-gray-100 dark:bg-gray-700 px-4 py-2 rounded-md text-sm font-medium text-gray-800 dark:text-white"
-      >
-        {activeLabel}
-      </button>
-
-      {open && (
-        <div className="absolute right-0 mt-2 w-44 origin-top-right rounded-md bg-white dark:bg-gray-800 shadow-lg ring-1 ring-black ring-opacity-5">
-          <div className="py-1">
-            {languages.map((lang) => (
-              <button
-                key={lang.code}
-                onClick={() => selectLanguage(lang.code)}
-                className="w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700"
-              >
-                {lang.emoji} {lang.label}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
+{open && (
+    <div className="absolute right-0 mt-2 w-40 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md shadow-lg z-50">
+      {languages.map((lang) => (
+        <button
+          key={lang.code}
+          onClick={() => handleSelect(lang)}
+          className="w-full px-4 py-2 text-sm text-left hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-800 dark:text-white flex items-center gap-2"
+        >
+          <span>{lang.emoji}</span>
+          {lang.name}
+        </button>
+      ))}
     </div>
-  );
-};
+  )}
+</div>
+
+); };
 
 export default LanguageSwitcher;
+
+  
