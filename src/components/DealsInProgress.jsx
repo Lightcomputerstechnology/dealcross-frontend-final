@@ -1,34 +1,44 @@
-// src/components/DealsInProgress.jsx
 import React from 'react';
 
-const mockDeals = [
-  { title: 'Laptop Sale', buyer: 'Alica Bowen', seller: 'Joshua White', amount: '$800' },
-  { title: 'Web Development', buyer: 'Kevin Singh', seller: 'Emma Carter', amount: '$1,500' },
-  { title: 'Car Purchase', buyer: 'Victoria Shaw', seller: 'Brian Walsh', amount: '$12,000' },
+const deals = [
+  { id: 1, title: 'Graphics Design Project', status: 'Processing' },
+  { id: 2, title: 'Electronics Shipment', status: 'Shipped' },
+  { id: 3, title: 'Freelance Writing', status: 'Awaiting Payment' },
 ];
+
+const statusColors = {
+  'Processing': 'bg-yellow-100 text-yellow-800',
+  'Shipped': 'bg-blue-100 text-blue-800',
+  'Awaiting Payment': 'bg-red-100 text-red-800',
+};
 
 export default function DealsInProgress() {
   return (
-    <section className="py-12 px-4 bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
-      <div className="max-w-6xl mx-auto">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold">Deals in Progress</h2>
-          <a href="/deals" className="text-blue-600 dark:text-blue-400 hover:underline text-sm">View All</a>
-        </div>
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {mockDeals.map((deal, index) => (
+    <section className="bg-white dark:bg-gray-900 py-12 px-4">
+      <div className="max-w-6xl mx-auto text-center">
+        <h2 className="text-2xl md:text-3xl font-bold mb-8 text-gray-900 dark:text-white">
+          Deals in Progress
+        </h2>
+        <div className="grid md:grid-cols-3 gap-6">
+          {deals.map(deal => (
             <div
-              key={index}
-              className="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow hover:shadow-md transition duration-300"
+              key={deal.id}
+              className="border border-gray-300 dark:border-gray-700 rounded-md p-4 bg-gray-50 dark:bg-gray-800 shadow"
             >
-              <h3 className="font-semibold text-lg mb-2">{deal.title}</h3>
-              <p className="text-sm">Buyer: {deal.buyer}</p>
-              <p className="text-sm">Seller: {deal.seller}</p>
-              <p className="text-sm font-bold mt-2">Amount: {deal.amount}</p>
+              <h3 className="font-semibold text-lg text-gray-800 dark:text-white mb-2">
+                {deal.title}
+              </h3>
+              <span
+                className={`inline-block px-3 py-1 text-sm rounded-full font-medium ${
+                  statusColors[deal.status] || 'bg-gray-200 text-gray-800'
+                }`}
+              >
+                {deal.status}
+              </span>
             </div>
           ))}
         </div>
       </div>
     </section>
   );
-              }
+}
