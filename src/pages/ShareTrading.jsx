@@ -1,5 +1,5 @@
 // src/pages/ShareTrading.jsx
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const mockShares = [
   { name: 'Bitcoin (BTC)', price: '$42,000', change: '+2.5%' },
