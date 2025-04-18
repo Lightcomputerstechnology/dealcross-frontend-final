@@ -1,22 +1,14 @@
 // src/App.jsx
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import React from "react";
+import { BrowserRouter as Router } from "react-router-dom";
+import AppRoutes from "./AppRoutes";
 
-// Page imports — ensure these files exist exactly as written
-import LandingPage from './pages/LandingPage';
-import Deals from './pages/Deals';
-import ShareTrading from './pages/ShareTrading';
-import Contact from './pages/Contact';
-import NotFound from './pages/NotFound';
-
-export default function App() {
+function App() {
   return (
-    <Routes>
-      <Route path="/" element={<LandingPage />} />
-      <Route path="/deals" element={<Deals />} />
-      <Route path="/share-trading" element={<ShareTrading />} />
-      <Route path="/contact" element={<Contact />} />
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+    <Router>
+      <AppRoutes />
+    </Router>
   );
 }
+
+export default App;
