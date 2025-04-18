@@ -11,13 +11,29 @@ export default function LandingPage() {
   return (
     <main className="bg-white dark:bg-gray-950 text-gray-900 dark:text-white">
       {/* Hero Section */}
-      <section className="max-w-6xl mx-auto px-4 py-20 text-center">
-        <h1 className="text-4xl sm:text-5xl font-extrabold mb-4">
-          Secure Transactions with Dealcross
-        </h1>
-        <p className="text-lg text-gray-600 dark:text-gray-300">
-          Trade safely and confidently with our global escrow platform.
-        </p>
+      <section
+        className="relative text-center py-20 px-4 bg-white dark:bg-gray-950 overflow-hidden"
+      >
+        {/* Background Logo */}
+        <div
+          className="absolute inset-0 flex justify-center items-center z-0 opacity-10"
+          style={{
+            backgroundImage: 'url("/assets/dealcross-logo.png")',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center',
+            backgroundSize: '140px',
+          }}
+        ></div>
+
+        {/* Main Text Content */}
+        <div className="relative z-10 max-w-4xl mx-auto">
+          <h1 className="text-4xl sm:text-5xl font-extrabold mb-4 text-gray-900 dark:text-white">
+            Secure Transactions with Dealcross
+          </h1>
+          <p className="text-lg text-gray-600 dark:text-gray-300">
+            Trade safely and confidently with our global escrow platform.
+          </p>
+        </div>
       </section>
 
       {/* Key Features Section */}
