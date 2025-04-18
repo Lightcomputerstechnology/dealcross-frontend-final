@@ -12,7 +12,7 @@ import FundWalletPage      from '@/pages/FundWalletPage';
 import StartDealPage       from '@/pages/StartDealPage';
 import DealConfirmation    from '@/pages/DealConfirmation';
 import DealTrackerPage     from '@/pages/DealTrackerPage';
-import ShareTrading        from '@/pages/ShareTrading';
+import StartDealPage       from '@/pages/StartDealPage';
 import TradingChartPage    from '@/pages/TradingChartPage';
 import KYCUploadPage       from '@/pages/KYCUploadPage';
 import DisputeResolutionPage from '@/pages/DisputeResolutionPage';
