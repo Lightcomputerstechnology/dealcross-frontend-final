@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import SiteLayout          from '@/layouts/SiteLayout';
 
 // pages
+import DealsPage           from '@/pages/DealsPage';
 import LandingPage         from '@/pages/LandingPage';
 import LoginPage           from '@/pages/LoginPage';
 import SignupPage          from '@/pages/SignupPage';
@@ -55,6 +56,7 @@ export default function AppRoutes() {
         {/* ---- wallet & deals ---- */}
         <Route path="wallet"            element={<WalletPage       />} />
         <Route path="fund-wallet"       element={<FundWalletPage   />} />
+        <Route path="deals"             element={<DealsPage        />} />
         <Route path="start-deal"        element={<StartDealPage    />} />
         <Route path="deal-confirmation" element={<DealConfirmation />} />
         <Route path="deal-tracker"      element={<DealTrackerPage  />} />
