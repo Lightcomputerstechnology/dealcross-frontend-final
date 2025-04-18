@@ -2,49 +2,50 @@
 import React, { useState } from 'react';
 
 const languages = [
-  { code: 'en', name: 'English', emoji: '🇺🇸' },
-  { code: 'es', name: 'Spanish', emoji: '🇪🇸' },
-  { code: 'fr', name: 'French', emoji: '🇫🇷' },
-  { code: 'de', name: 'German', emoji: '🇩🇪' },
-  { code: 'it', name: 'Italian', emoji: '🇮🇹' },
-  { code: 'pt', name: 'Portuguese', emoji: '🇵🇹' },
-  { code: 'zh', name: 'Chinese', emoji: '🇨🇳' },
-  { code: 'ja', name: 'Japanese', emoji: '🇯🇵' },
-  { code: 'ar', name: 'Arabic', emoji: '🇸🇦' },
-  { code: 'ru', name: 'Russian', emoji: '🇷🇺' },
+  { code: 'en', label: 'English', emoji: '🇬🇧' },
+  { code: 'es', label: 'Español', emoji: '🇪🇸' },
+  { code: 'fr', label: 'Français', emoji: '🇫🇷' },
+  { code: 'de', label: 'Deutsch', emoji: '🇩🇪' },
+  { code: 'zh', label: '中文', emoji: '🇨🇳' },
+  { code: 'ar', label: 'العربية', emoji: '🇸🇦' },
+  { code: 'ru', label: 'Русский', emoji: '🇷🇺' },
+  { code: 'hi', label: 'हिन्दी', emoji: '🇮🇳' },
+  { code: 'pt', label: 'Português', emoji: '🇧🇷' },
+  { code: 'ja', label: '日本語', emoji: '🇯🇵' },
+  { code: 'tr', label: 'Türkçe', emoji: '🇹🇷' },
 ];
 
 const LanguageSwitcher = () => {
-  const [selected, setSelected] = useState(languages[0]);
   const [open, setOpen] = useState(false);
+  const [selected, setSelected] = useState(languages[0]);
 
   const handleSelect = (lang) => {
     setSelected(lang);
     setOpen(false);
-    // Add your i18n change logic here
+    // TODO: implement actual language change logic
   };
 
   return (
-    <div className="relative inline-block text-left">
+    <div className="relative text-sm z-50">
       <button
         onClick={() => setOpen(!open)}
-        className="inline-flex items-center px-3 py-2 text-sm font-medium bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white rounded-md hover:shadow"
+        className="flex items-center px-3 py-2 rounded-md bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-white hover:shadow transition duration-300"
       >
         <span className="mr-2">{selected.emoji}</span>
-        {selected.name}
+        {selected.label}
       </button>
 
       {open && (
-        <div className="absolute right-0 mt-2 w-40 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md shadow-lg z-50">
+        <div className="absolute mt-2 w-40 max-h-60 overflow-y-auto bg-white dark:bg-gray-900 border dark:border-gray-700 rounded shadow-lg transition-all duration-300 ease-in-out">
           {languages.map((lang) => (
-            <button
+            <div
               key={lang.code}
               onClick={() => handleSelect(lang)}
-              className="w-full px-4 py-2 text-sm text-left hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-800 dark:text-white flex items-center gap-2"
+              className="px-4 py-2 cursor-pointer hover:bg-blue-100 dark:hover:bg-gray-800 flex items-center gap-2"
             >
               <span>{lang.emoji}</span>
-              {lang.name}
-            </button>
+              {lang.label}
+            </div>
           ))}
         </div>
       )}
@@ -53,4 +54,4 @@ const LanguageSwitcher = () => {
 };
 
 export default LanguageSwitcher;
-        
+      
