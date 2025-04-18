@@ -6,7 +6,7 @@ import LandingPage  from './pages/LandingPage';
 import Deals        from './pages/Deals';
 import ShareTrading from './pages/ShareTrading';
 import Contact      from './pages/Contact';
-import NotFound     from './pages/NotFound';
+import NotFoundPage     from './pages/NotFoundPage';
 
 export default function App() {
   return (
@@ -16,7 +16,7 @@ export default function App() {
         <Route path="/deals"         element={<Deals />}         />
         <Route path="/share-trading" element={<ShareTrading />}  />
         <Route path="/contact"       element={<Contact />}       />
-        <Route path="*"              element={<NotFound />}      />
+        <Route path="*"              element={<NotFoundPage />}      />
       </Routes>
     </Router>
   );
