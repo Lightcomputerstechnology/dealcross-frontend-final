@@ -1,5 +1,5 @@
 // src/pages/LandingPage.jsx
-import React from 'react'
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom'
 import Logo from '../assets/dealcross-logo.png'
 
