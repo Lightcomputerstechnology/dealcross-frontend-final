@@ -1,3 +1,4 @@
+// src/pages/LandingPage.jsx
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Logo from '../assets/dealcross-logo.png'
@@ -15,7 +16,6 @@ export default function LandingPage() {
           <Link to="/share-trading" className="hover:underline">Share Trading</Link>
           <Link to="/contact" className="hover:underline">Contact</Link>
         </nav>
-        {/* mobile menu button… */}
       </header>
 
       <main className="flex-grow flex flex-col items-center justify-center p-4 text-center">
@@ -33,5 +33,10 @@ export default function LandingPage() {
           Start a deal
         </Link>
       </main>
+
+      <footer className="bg-gray-100 text-center p-4">
+        © {new Date().getFullYear()} Dealcross. All rights reserved.
+      </footer>
+    </div>
   )
 }
