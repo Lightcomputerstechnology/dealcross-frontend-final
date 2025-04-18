@@ -1,26 +1,10 @@
 // File: src/pages/StartDealPage.jsx import React, { useState, useEffect } from 'react'; import axios from 'axios';
 
-const StartDealPage = () => { const [role, setRole] = useState('buyer'); const [title, setTitle] = useState(''); const [email, setEmail] = useState(''); const [amount, setAmount] = useState(''); const [escrowType, setEscrowType] = useState('standard'); const [category, setCategory] = useState('product'); const [message, setMessage] = useState(''); const [files, setFiles] = useState([]); const [previews, setPreviews] = useState([]); const [status, setStatus] = useState(null);
+const StartDealPage = () => { const [role, setRole] = useState('buyer'); const [title, setTitle] = useState(''); const [email, setEmail] = useState(''); const [amount, setAmount] = useState(''); const [escrowType, setEscrowType] = useState('standard'); const [category, setCategory] = useState('product'); const [message, setMessage] = useState(''); const [files, setFiles] = useState([]); const [status, setStatus] = useState(null);
 
 const MAX_FILE_SIZE_MB = 10;
 
-useEffect(() => { return () => { previews.forEach((url) => URL.revokeObjectURL(url)); }; }, [previews]);
-
-const handleFileChange = (e) => { const selectedFiles = Array.from(e.target.files); const validFiles = []; const imagePreviews = [];
-
-selectedFiles.forEach((file) => {
-  if (file.size / 1024 / 1024 <= MAX_FILE_SIZE_MB) {
-    validFiles.push(file);
-    if (file.type.startsWith('image/')) {
-      imagePreviews.push(URL.createObjectURL(file));
-    }
-  }
-});
-
-setFiles(validFiles);
-setPreviews(imagePreviews);
-
-};
+const handleFileChange = (e) => { const selectedFiles = Array.from(e.target.files); const validFiles = selectedFiles.filter( (file) => file.size / 1024 / 1024 <= MAX_FILE_SIZE_MB ); setFiles(validFiles); };
 
 const handleSubmit = async (e) => { e.preventDefault(); const token = localStorage.getItem('token'); if (!token) { setStatus('Login required.'); return; }
 
@@ -58,7 +42,6 @@ try {
     setCategory('product');
     setMessage('');
     setFiles([]);
-    setPreviews([]);
   } else {
     setStatus('Deal creation failed.');
   }
@@ -112,14 +95,6 @@ encType="multipart/form-data"
       <input type="file" multiple onChange={handleFileChange} className="w-full px-4 py-2 bg-gray-800 rounded text-white" />
     </div>
 
-    {previews.length > 0 && (
-      <div className="grid grid-cols-2 gap-2 mt-2">
-        {previews.map((src, i) => (
-          <img key={i} src={src} alt="preview" className="w-full h-24 object-cover rounded" />
-        ))}
-      </div>
-    )}
-
     <button type="submit" className="w-full py-2 bg-blue-600 hover:bg-blue-700 rounded font-semibold">
       Create Deal
     </button>
@@ -132,4 +107,4 @@ encType="multipart/form-data"
 
 export default StartDealPage;
 
-        
+              
