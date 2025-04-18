@@ -33,10 +33,6 @@ export default function LandingPage() {
           Start a deal
         </Link>
       </main>
-
-      <footer className="bg-gray-100 text-center p-4">
-        © {new Date().getFullYear()} Dealcross. All rights reserved.
-      </footer>
     </div>
   )
 }
