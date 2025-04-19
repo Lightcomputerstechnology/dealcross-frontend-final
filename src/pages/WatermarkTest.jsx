@@ -1,22 +1,30 @@
 // src/pages/WatermarkTest.jsx
 import React from 'react';
-import Logo from '../assets/dealcross-logo.png';
+import logo from '@/assets/dealcross-logo.png';
 
 export default function WatermarkTest() {
   return (
-    <main className="relative h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-white flex items-center justify-center">
-      {/* Watermark Logo */}
-      <div className="absolute inset-0 flex justify-center items-center opacity-10 pointer-events-none z-0">
-        <img src={Logo} alt="Dealcross Logo Watermark" className="w-64 md:w-96" />
-      </div>
+    <div className="relative min-h-screen bg-white dark:bg-gray-900 text-center overflow-hidden">
+      {/* Background Watermark Image */}
+      <div
+        className="absolute inset-0 bg-center bg-contain bg-no-repeat opacity-10 z-0"
+        style={{
+          backgroundImage: `url(${logo})`,
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center',
+        }}
+      ></div>
 
-      {/* Foreground Content */}
-      <div className="relative z-10 text-center">
-        <h1 className="text-4xl font-bold mb-4">Dealcross Watermark Test</h1>
-        <p className="text-lg text-gray-600 dark:text-gray-300">
-          If you can see the faint logo behind, the watermark works.
+      {/* Content */}
+      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4">
+        <h1 className="text-4xl sm:text-5xl font-extrabold mb-4 text-gray-900 dark:text-white">
+          Dealcross Watermark Test
+        </h1>
+        <p className="text-lg text-gray-600 dark:text-gray-300 max-w-xl">
+          If you can see the faint logo behind, the watermark works. The background now covers the full section area.
         </p>
       </div>
-    </main>
+    </div>
   );
 }
