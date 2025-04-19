@@ -19,7 +19,7 @@ const DealsInProgress = () => {
   useEffect(() => {
     const slide = setInterval(() => {
       setIndex(prev => (prev + 1) % deals.length);
-    }, 7000); // 7 seconds
+    }, 10000); // 10 seconds
 
     return () => clearInterval(slide);
   }, []);
