@@ -21,7 +21,7 @@ export default function LandingPage() {
         </p>
       </section>
 
-      {/* Deals in Progress Section - just under Hero */}
+      {/* Deals in Progress Section */}
       <section className="py-12">
         <DealsInProgress />
       </section>
@@ -46,4 +46,4 @@ export default function LandingPage() {
       </section>
     </main>
   );
-      }
+}
