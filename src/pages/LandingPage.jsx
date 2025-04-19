@@ -6,6 +6,7 @@ import FastPayouts from '@/components/FastPayouts';
 import DealsInProgress from '@/components/DealsInProgress';
 import StartTradingCTA from '@/components/StartTradingCTA';
 import ContactSection from '@/components/ContactSection';
+import FAQSection from '@/components/FAQSection'; // <- import FAQ
 
 export default function LandingPage() {
   return (
@@ -21,7 +22,7 @@ export default function LandingPage() {
         </p>
       </section>
 
-      {/* Deals in Progress Section */}
+      {/* Deals in Progress Section - just under Hero */}
       <section className="py-12">
         <DealsInProgress />
       </section>
@@ -43,6 +44,11 @@ export default function LandingPage() {
       {/* Contact Section */}
       <section className="py-12">
         <ContactSection />
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-12 bg-white dark:bg-gray-950">
+        <FAQSection />
       </section>
     </main>
   );
