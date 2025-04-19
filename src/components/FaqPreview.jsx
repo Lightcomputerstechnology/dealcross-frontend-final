@@ -1,43 +1,42 @@
-// src/components/FaqPreview.jsx
+// src/components/FAQPreview.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const faqPreviewList = [
+const faqItems = [
   {
-    question: "What is Dealcross?",
-    answer: "Dealcross is a secure online escrow platform for safe transactions.",
+    question: 'What is Dealcross?',
+    answer: 'Dealcross is a secure escrow platform for global online transactions.',
   },
   {
-    question: "How do I start a deal?",
-    answer: "Register, log in, and go to Start Deal to begin your transaction.",
+    question: 'How does escrow work?',
+    answer: 'The buyer funds the deal, the seller delivers, and funds are released upon confirmation.',
   },
   {
-    question: "Is my money safe?",
-    answer: "Yes, funds are held securely until both parties fulfill the agreement.",
+    question: 'Can I trade shares here?',
+    answer: 'Yes, Dealcross allows you to buy and sell digital shares securely.',
+  },
+  {
+    question: 'Is my money safe?',
+    answer: 'Yes, funds are held in escrow until all parties are satisfied.',
   },
 ];
 
-export default function FaqPreview() {
+export default function FAQPreview() {
   return (
-    <section className="bg-gray-100 dark:bg-gray-900 py-12">
-      <div className="max-w-5xl mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-8">FAQs</h2>
-        <div className="space-y-6">
-          {faqPreviewList.map((faq, i) => (
-            <div key={i} className="border-b pb-4">
-              <h3 className="text-lg font-semibold">{faq.question}</h3>
-              <p className="text-gray-700 dark:text-gray-300">{faq.answer}</p>
+    <section className="bg-gray-100 dark:bg-gray-900 py-12 px-6">
+      <div className="max-w-5xl mx-auto text-center">
+        <h2 className="text-3xl font-bold mb-8">Frequently Asked Questions</h2>
+        <div className="grid gap-6 text-left">
+          {faqItems.map((item, index) => (
+            <div key={index} className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+              <h3 className="font-semibold text-lg">{item.question}</h3>
+              <p className="text-gray-700 dark:text-gray-300 mt-2">{item.answer}</p>
             </div>
           ))}
         </div>
-        <div className="mt-6 text-center">
-          <Link
-            to="/faq"
-            className="inline-block px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition"
-          >
-            View All FAQs
-          </Link>
-        </div>
+        <Link to="/faq" className="inline-block mt-6 text-blue-600 hover:underline dark:text-blue-400">
+          View All FAQs →
+        </Link>
       </div>
     </section>
   );
