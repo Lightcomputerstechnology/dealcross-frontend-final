@@ -11,14 +11,14 @@ import Logo from '@/assets/dealcross-logo.png';
 export default function LandingPage() {
   return (
     <main className="relative bg-white dark:bg-gray-950 text-gray-900 dark:text-white">
-      
+
       {/* Hero Section with Watermark */}
       <section className="relative z-10 max-w-6xl mx-auto px-4 py-20 text-center">
-        <div className="absolute inset-0 flex justify-center items-center opacity-5 pointer-events-none z-0">
+        <div className="absolute inset-0 z-0 flex justify-center items-center pointer-events-none">
           <img
             src={Logo}
-            alt="Dealcross Watermark"
-            className="w-[420px] sm:w-[520px] md:w-[580px]"
+            alt="Dealcross Logo Watermark"
+            className="w-[80%] max-w-2xl opacity-10 dark:opacity-10"
           />
         </div>
         <h1 className="text-4xl sm:text-5xl font-extrabold mb-4 relative z-10">
@@ -29,7 +29,7 @@ export default function LandingPage() {
         </p>
       </section>
 
-      {/* Deals in Progress Section - moved up */}
+      {/* Deals in Progress Section - directly under hero */}
       <section className="py-12 relative z-10">
         <DealsInProgress />
       </section>
@@ -54,4 +54,4 @@ export default function LandingPage() {
       </section>
     </main>
   );
-      }
+          }
