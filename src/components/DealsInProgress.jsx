@@ -1,56 +1,50 @@
 // src/components/DealsInProgress.jsx
 import React, { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 
-const deals = [
-  { title: "Website Design Deal", details: "John (Buyer) ↔ Sarah (Seller)", amount: "$350" },
-  { title: "Crypto Exchange", details: "Alice ↔ Bob", amount: "$1,200" },
-  { title: "Freelance Development", details: "David ↔ LightDev", amount: "$500" },
-  { title: "Used Laptop Sale", details: "Chris ↔ Sandra", amount: "$280" },
-  { title: "NFT Transfer", details: "Kofi ↔ Anika", amount: "$2,000" },
-  { title: "Graphic Design", details: "Mercy ↔ JoeDesigns", amount: "$140" },
-  { title: "Digital Art Deal", details: "Julia ↔ Ethan", amount: "$90" },
-  { title: "Ecommerce Payment", details: "ShopBay ↔ Derrick", amount: "$760" },
-  { title: "Domain Purchase", details: "Wale ↔ HostNet", amount: "$99" },
-  { title: "Shipping Goods", details: "Logix ↔ Carlos", amount: "$430" }
+const dealItems = [
+  { id: 1, title: 'iPhone 14 Pro Max Purchase', amount: '$1,199', country: 'USA' },
+  { id: 2, title: 'Freelance UI/UX Design Contract', amount: '$450', country: 'Canada' },
+  { id: 3, title: 'Used Toyota Corolla Deal', amount: '$4,200', country: 'Nigeria' },
+  { id: 4, title: 'Web App Dev Escrow', amount: '$2,000', country: 'Germany' },
+  { id: 5, title: 'Crypto Mentorship Package', amount: '$300', country: 'UK' },
+  { id: 6, title: 'Real Estate Booking (Lagos)', amount: '$15,000', country: 'Nigeria' },
+  { id: 7, title: 'Custom Cake Order – Birthday', amount: '$90', country: 'USA' },
+  { id: 8, title: 'Fashion Clothing Bulk Order', amount: '$750', country: 'Ghana' },
+  { id: 9, title: 'Digital Marketing Subscription', amount: '$520', country: 'South Africa' },
+  { id: 10, title: 'Vehicle Shipping – Port to Home', amount: '$3,600', country: 'UAE' },
 ];
 
-const DealsInProgress = () => {
+export default function DealsInProgress() {
   const [current, setCurrent] = useState(0);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % deals.length);
-    }, 20000); // 20 seconds
-    return () => clearInterval(timer);
+    const interval = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % dealItems.length);
+    }, 10000); // 10 seconds per card
+    return () => clearInterval(interval);
   }, []);
 
   return (
-    <section className="bg-white dark:bg-gray-950 py-12 overflow-hidden">
-      <div className="max-w-4xl mx-auto text-center">
-        <h2 className="text-2xl font-bold mb-6 text-blue-600 dark:text-blue-400">Deals in Progress</h2>
-        <div className="relative h-48 md:h-56">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={current}
-              initial={{ opacity: 0, x: 100 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -100 }}
-              transition={{ duration: 0.6 }}
-              className="absolute w-full h-full flex flex-col justify-center items-center px-6"
+    <div className="relative bg-blue-900 text-white py-16 overflow-hidden">
+      <div className="max-w-4xl mx-auto text-center px-6">
+        <h2 className="text-3xl font-bold mb-6">Deals in Progress</h2>
+        <div className="relative h-40">
+          {dealItems.map((deal, index) => (
+            <div
+              key={deal.id}
+              className={`absolute inset-0 transition-opacity duration-700 ease-in-out 
+                ${index === current ? 'opacity-100' : 'opacity-0'}
+                flex items-center justify-center`}
             >
-              <div className="rounded-xl shadow-md p-6 bg-blue-900 text-white w-full max-w-md">
-                <h3 className="text-xl font-semibold mb-2">{deals[current].title}</h3>
-                <p className="text-md">{deals[current].details}</p>
-                <p className="text-lg font-bold mt-2">{deals[current].amount}</p>
+              <div className="w-full max-w-md bg-blue-800 rounded-xl shadow-lg p-6 border border-blue-500">
+                <h3 className="text-xl font-semibold mb-2">{deal.title}</h3>
+                <p className="text-sm text-blue-100">Amount: <strong>{deal.amount}</strong></p>
+                <p className="text-sm text-blue-100">Country: <strong>{deal.country}</strong></p>
               </div>
-            </motion.div>
-          </AnimatePresence>
+            </div>
+          ))}
         </div>
       </div>
-    </section>
+    </div>
   );
-};
-
-export default DealsInProgress;
-            
+                          }
