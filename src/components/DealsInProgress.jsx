@@ -14,44 +14,39 @@ const deals = [
 ];
 
 const DealsInProgress = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentIndex(prev => (prev + 1) % deals.length);
-    }, 10000); // 10 seconds per deal
+    const slide = setInterval(() => {
+      setIndex(prev => (prev + 1) % deals.length);
+    }, 7000); // 7 seconds
 
-    return () => clearInterval(timer);
+    return () => clearInterval(slide);
   }, []);
 
   return (
-    <div className="relative overflow-hidden max-w-4xl mx-auto px-4">
-      <h2 className="text-2xl font-bold text-center mb-6">Deals in Progress</h2>
-      <div className="w-full h-40 relative">
-        <div
-          className="flex transition-transform duration-700 ease-in-out"
-          style={{ transform: `translateX(-${currentIndex * 100}%)`, width: `${deals.length * 100}%` }}
-        >
-          {deals.map((deal, index) => (
-            <div
-              key={index}
-              className="w-full flex-shrink-0 p-6 bg-[#0a2a7e] text-white rounded-2xl shadow-lg flex flex-col justify-center"
-              style={{
-                backgroundImage: "url('/src/assets/dealcross-logo.png')",
-                backgroundRepeat: 'no-repeat',
-                backgroundPosition: 'center',
-                backgroundSize: '50%',
-                backgroundBlendMode: 'soft-light',
-              }}
-            >
-              <h3 className="text-lg font-semibold">{deal.title}</h3>
-              <p className="text-md mt-1">Amount: <strong>{deal.amount}</strong></p>
-              <p className="text-md">Status: {deal.status}</p>
-            </div>
-          ))}
+    <section className="bg-white py-12">
+      <div className="max-w-4xl mx-auto text-center px-4">
+        <h2 className="text-2xl font-bold mb-6">Deals in Progress</h2>
+        <div className="overflow-hidden relative h-48">
+          <div
+            className="flex transition-transform duration-700 ease-in-out"
+            style={{ transform: `translateX(-${index * 100}%)`, width: `${deals.length * 100}%` }}
+          >
+            {deals.map((deal, i) => (
+              <div
+                key={i}
+                className="w-full flex-shrink-0 bg-[#002366] text-white rounded-xl p-6 shadow-xl mx-auto"
+              >
+                <h3 className="text-lg font-semibold">{deal.title}</h3>
+                <p className="mt-2">Amount: <strong>{deal.amount}</strong></p>
+                <p>Status: {deal.status}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
