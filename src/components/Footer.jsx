@@ -25,11 +25,13 @@ const Footer = () => {
         </div>
 
         {/* Footer Links */}
-        <div className="flex justify-center space-x-4 text-sm">
+        <div className="flex flex-wrap justify-center space-x-4 text-sm text-gray-600 dark:text-gray-400">
           <Link to="/about" className="hover:underline">About</Link>
           <Link to="/contact" className="hover:underline">Contact</Link>
           <Link to="/privacy-policy" className="hover:underline">Privacy</Link>
           <Link to="/docs" className="hover:underline">Docs</Link>
+          <Link to="/terms" className="hover:underline">Terms</Link>
+          <Link to="/refund" className="hover:underline">Refund</Link>
         </div>
 
         {/* Copyright */}
