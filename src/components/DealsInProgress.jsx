@@ -89,3 +89,4 @@ const DealsInProgress = () => {
     </section>
   );
 };
+export default DealsInProgress;
