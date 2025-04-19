@@ -1,73 +1,64 @@
-// src/pages/SignupPage.jsx
 import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 
 const SignupPage = () => {
   const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [status, setStatus] = useState(null);
-  const navigate = useNavigate();
 
-  const handleSignup = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post('https://d-final.onrender.com/auth/register', {
-        email,
-        name,
-        password,
-      });
-
-      if (response.status === 200 || response.status === 201) {
-        setStatus('Account created. Redirecting to login...');
-        setTimeout(() => navigate('/login'), 1500);
-      } else {
-        setStatus('Signup failed.');
-      }
-    } catch (err) {
-      setStatus(err.response?.data?.detail || 'Signup failed.');
-    }
+    console.log('Signup with', { email, username, password });
+    // handle signup logic...
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white flex items-center justify-center px-4">
+    <div className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-950 text-gray-900 dark:text-white transition duration-300">
       <form
-        onSubmit={handleSignup}
-        className="w-full max-w-md bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow space-y-4"
+        onSubmit={handleSubmit}
+        className="w-full max-w-md bg-gray-100 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 shadow-md rounded-lg p-8 space-y-6"
       >
-        <h2 className="text-xl font-bold text-center">Sign Up</h2>
+        <h2 className="text-2xl font-bold text-center">Create an Account</h2>
+
         <input
           type="text"
-          placeholder="Full Name"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
           required
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className="w-full px-4 py-2 rounded bg-white dark:bg-gray-700 text-black dark:text-white"
+          className="w-full px-4 py-2 rounded bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 focus:outline-none"
         />
+
         <input
           type="email"
-          placeholder="Email"
-          required
+          placeholder="Email address"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full px-4 py-2 rounded bg-white dark:bg-gray-700 text-black dark:text-white"
+          required
+          className="w-full px-4 py-2 rounded bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 focus:outline-none"
         />
+
         <input
           type="password"
-          placeholder="Password"
-          required
+          placeholder="Create password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full px-4 py-2 rounded bg-white dark:bg-gray-700 text-black dark:text-white"
+          required
+          className="w-full px-4 py-2 rounded bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 focus:outline-none"
         />
+
         <button
           type="submit"
-          className="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white rounded font-semibold"
+          className="w-full py-2 rounded bg-blue-600 hover:bg-blue-700 text-white font-semibold transition"
         >
-          Create Account
+          Sign Up
         </button>
-        {status && <p className="text-yellow-400 text-center text-sm">{status}</p>}
+
+        <p className="text-sm text-center text-gray-500 dark:text-gray-400">
+          Already have an account?{' '}
+          <a href="/login" className="text-blue-600 dark:text-blue-400 hover:underline">
+            Log in
+          </a>
+        </p>
       </form>
     </div>
   );
