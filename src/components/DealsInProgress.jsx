@@ -60,7 +60,7 @@ const DealsInProgress = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex(prev => (prev + 1) % deals.length);
-    }, 10000); // 10 seconds
+    }, 7000); // 7 seconds
     return () => clearInterval(interval);
   }, []);
 
