@@ -42,6 +42,14 @@ const faqList = [
     question: "Is there a mobile app for Dealcross?",
     answer: "Yes, our mobile app is launching soon for Android and iOS. You’ll be able to manage deals and wallets on the go.",
   },
+  {
+    question: "What currencies are supported?",
+    answer: "Currently, Dealcross supports bank transfers, cards, Bitcoin, and USDT. We are expanding to support more global currencies.",
+  },
+  {
+    question: "Is Dealcross free to use?",
+    answer: "Basic usage is free. Small transaction fees are applied only when deals are funded or shares are traded.",
+  },
 ];
 
 export default function FaqPage() {
@@ -78,4 +86,4 @@ export default function FaqPage() {
       </div>
     </main>
   );
-}
+              }
