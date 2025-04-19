@@ -1,5 +1,6 @@
 // src/pages/LandingPage.jsx
 import React from 'react';
+import { Link } from 'react-router-dom';
 import HowItWorks from '@/components/HowItWorks';
 import TrustLevels from '@/components/TrustLevels';
 import FastPayouts from '@/components/FastPayouts';
@@ -37,15 +38,68 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Feature Sections */}
+      {/* Core Feature Sections */}
       <DealsInProgress />
       <HowItWorks />
       <TrustLevels />
       <FastPayouts />
       <StartTradingCTA />
+
+      {/* Referral CTA Button */}
+      <div className="text-center mt-12">
+        <Link
+          to="/referral"
+          className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+        >
+          Join Our Referral Program →
+        </Link>
+      </div>
+
+      {/* FAQ and Blog */}
       <FAQPreview />
       <BlogPreviewList />
+
+      {/* Explore More Cards */}
+      <section className="max-w-6xl mx-auto px-4 py-16 text-center">
+        <h2 className="text-2xl font-bold mb-8">Explore More</h2>
+        <div className="grid sm:grid-cols-3 gap-6">
+          {/* Referral */}
+          <Link
+            to="/referral"
+            className="bg-white dark:bg-gray-800 p-6 rounded shadow hover:shadow-lg transition"
+          >
+            <h3 className="text-lg font-semibold mb-2">Referral Program</h3>
+            <p className="text-sm text-gray-600 dark:text-gray-300">
+              Earn money by inviting others to Dealcross.
+            </p>
+          </Link>
+
+          {/* FAQ */}
+          <Link
+            to="/faq"
+            className="bg-white dark:bg-gray-800 p-6 rounded shadow hover:shadow-lg transition"
+          >
+            <h3 className="text-lg font-semibold mb-2">Frequently Asked Questions</h3>
+            <p className="text-sm text-gray-600 dark:text-gray-300">
+              Find quick answers to common user concerns.
+            </p>
+          </Link>
+
+          {/* Blog */}
+          <Link
+            to="/blog"
+            className="bg-white dark:bg-gray-800 p-6 rounded shadow hover:shadow-lg transition"
+          >
+            <h3 className="text-lg font-semibold mb-2">Our Blog</h3>
+            <p className="text-sm text-gray-600 dark:text-gray-300">
+              Read tips, product updates, and industry insights.
+            </p>
+          </Link>
+        </div>
+      </section>
+
+      {/* Contact */}
       <ContactSection />
     </main>
   );
-}
+      }
