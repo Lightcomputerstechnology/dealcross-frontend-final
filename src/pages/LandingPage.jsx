@@ -6,24 +6,32 @@ import FastPayouts from '@/components/FastPayouts';
 import DealsInProgress from '@/components/DealsInProgress';
 import StartTradingCTA from '@/components/StartTradingCTA';
 import ContactSection from '@/components/ContactSection';
-import Logo from '../assets/dealcross-logo.png';
+import Logo from '@/assets/dealcross-logo.png';
 
 export default function LandingPage() {
   return (
     <main className="relative bg-white dark:bg-gray-950 text-gray-900 dark:text-white">
-      {/* Logo Background */}
-      <div className="absolute inset-0 flex justify-center items-center opacity-5 pointer-events-none">
-        <img src={Logo} alt="Dealcross Logo Watermark" className="w-64 md:w-96" />
-      </div>
-
-      {/* Hero Section */}
+      
+      {/* Hero Section with Watermark */}
       <section className="relative z-10 max-w-6xl mx-auto px-4 py-20 text-center">
-        <h1 className="text-4xl sm:text-5xl font-extrabold mb-4">
+        <div className="absolute inset-0 flex justify-center items-center opacity-5 pointer-events-none z-0">
+          <img
+            src={Logo}
+            alt="Dealcross Watermark"
+            className="w-[420px] sm:w-[520px] md:w-[580px]"
+          />
+        </div>
+        <h1 className="text-4xl sm:text-5xl font-extrabold mb-4 relative z-10">
           Secure Transactions with Dealcross
         </h1>
-        <p className="text-lg text-gray-600 dark:text-gray-300">
+        <p className="text-lg text-gray-600 dark:text-gray-300 relative z-10">
           Trade safely and confidently with our global escrow platform.
         </p>
+      </section>
+
+      {/* Deals in Progress Section - moved up */}
+      <section className="py-12 relative z-10">
+        <DealsInProgress />
       </section>
 
       {/* Key Features Section */}
@@ -33,11 +41,6 @@ export default function LandingPage() {
           <TrustLevels />
           <FastPayouts />
         </div>
-      </section>
-
-      {/* Deals in Progress Section */}
-      <section className="py-12 relative z-10">
-        <DealsInProgress />
       </section>
 
       {/* Call to Action Section */}
