@@ -6,7 +6,7 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          50 : '#e7f5ff',
+          50: '#e7f5ff',
           100: '#cae9ff',
           200: '#9bd1ff',
           300: '#5ab4ff',
@@ -18,7 +18,7 @@ module.exports = {
           900: '#00264d',
         },
         accent: {
-          50 : '#fff8e6',
+          50: '#fff8e6',
           100: '#ffedc1',
           200: '#ffe096',
           300: '#ffd262',
@@ -35,7 +35,27 @@ module.exports = {
           dark: '#0f172a',
         },
       },
+      keyframes: {
+        slideInFromRight: {
+          '0%': { transform: 'translateX(100%)', opacity: 0 },
+          '100%': { transform: 'translateX(0)', opacity: 1 },
+        },
+        slideInFromLeft: {
+          '0%': { transform: 'translateX(-100%)', opacity: 0 },
+          '100%': { transform: 'translateX(0)', opacity: 1 },
+        },
+        fadeIn: {
+          '0%': { opacity: 0 },
+          '100%': { opacity: 1 },
+        },
+      },
+      animation: {
+        slideInFromRight: 'slideInFromRight 1s ease-out',
+        slideInFromLeft: 'slideInFromLeft 1s ease-out',
+        fadeIn: 'fadeIn 2s ease-in-out',
+      },
     },
   },
   plugins: [],
+  darkMode: 'class',
 };
