@@ -1,106 +1,56 @@
-import React, { useEffect, useRef, useState } from 'react';
+// src/components/DealsInProgress.jsx
+import React, { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const deals = [
-  {
-    title: 'iPhone 14 Pro',
-    buyer: 'Sarah',
-    description: 'Buyer from Lagos purchasing iPhone from a trusted seller in Abuja.'
-  },
-  {
-    title: 'Web Design Service',
-    buyer: 'Michael',
-    description: 'Client from Canada hiring Nigerian developer via escrow.'
-  },
-  {
-    title: 'Used Car Sale',
-    buyer: 'Emily',
-    description: 'Payment secured for a used car. Delivery in progress.'
-  },
-  {
-    title: 'Business Investment',
-    buyer: 'James',
-    description: 'An investor funding a verified Nigerian tech startup.'
-  },
-  {
-    title: 'Laptop Purchase',
-    buyer: 'Joshua',
-    description: 'Escrow holds funds for a MacBook purchase. Delivery pending.'
-  },
-  {
-    title: 'Logo Design Deal',
-    buyer: 'Sofia',
-    description: 'Freelancer in Enugu creating logo for client in UK.'
-  },
-  {
-    title: 'Clothing Wholesale',
-    buyer: 'Amina',
-    description: 'Bulk Ankara fabrics deal between Lagos and New York.'
-  },
-  {
-    title: 'Crypto Exchange',
-    buyer: 'Victor',
-    description: 'Escrow secures $500 USDT for P2P trade in Port Harcourt.'
-  },
-  {
-    title: 'CAC Business Registration',
-    buyer: 'Jennifer',
-    description: 'Client paying for fast CAC registration via Dealcross.'
-  },
-  {
-    title: 'Real Estate Booking',
-    buyer: 'Tunde',
-    description: 'Verified land title secured with escrow in Asaba.'
-  },
-  {
-    title: 'Furniture Order',
-    buyer: 'Esther',
-    description: 'Custom couch ordered from Abuja to be delivered to Lagos.'
-  },
-  {
-    title: 'Affiliate Commission',
-    buyer: 'Daniel',
-    description: 'Affiliate commission payout secured and ready for release.'
-  }
+  { title: "Website Design Deal", details: "John (Buyer) ↔ Sarah (Seller)", amount: "$350" },
+  { title: "Crypto Exchange", details: "Alice ↔ Bob", amount: "$1,200" },
+  { title: "Freelance Development", details: "David ↔ LightDev", amount: "$500" },
+  { title: "Used Laptop Sale", details: "Chris ↔ Sandra", amount: "$280" },
+  { title: "NFT Transfer", details: "Kofi ↔ Anika", amount: "$2,000" },
+  { title: "Graphic Design", details: "Mercy ↔ JoeDesigns", amount: "$140" },
+  { title: "Digital Art Deal", details: "Julia ↔ Ethan", amount: "$90" },
+  { title: "Ecommerce Payment", details: "ShopBay ↔ Derrick", amount: "$760" },
+  { title: "Domain Purchase", details: "Wale ↔ HostNet", amount: "$99" },
+  { title: "Shipping Goods", details: "Logix ↔ Carlos", amount: "$430" }
 ];
 
-export default function DealsInProgress() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const timeoutRef = useRef(null);
+const DealsInProgress = () => {
+  const [current, setCurrent] = useState(0);
 
   useEffect(() => {
-    timeoutRef.current = setTimeout(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % deals.length);
-    }, 4000); // 4 seconds
-
-    return () => clearTimeout(timeoutRef.current);
-  }, [currentIndex]);
+    const timer = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % deals.length);
+    }, 20000); // 20 seconds
+    return () => clearInterval(timer);
+  }, []);
 
   return (
-    <section className="py-16 px-4 bg-white dark:bg-gray-950 text-center">
-      <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">
-        Deals in Progress
-      </h2>
-      <div className="relative h-[240px] overflow-hidden">
-        <div
-          className="flex transition-transform duration-700 ease-in-out"
-          style={{
-            transform: `translateX(-${currentIndex * 100}%)`,
-            width: `${deals.length * 100}%`
-          }}
-        >
-          {deals.map((deal, index) => (
-            <div
-              key={index}
-              className="w-full px-4 flex-shrink-0 flex justify-center items-center"
+    <section className="bg-white dark:bg-gray-950 py-12 overflow-hidden">
+      <div className="max-w-4xl mx-auto text-center">
+        <h2 className="text-2xl font-bold mb-6 text-blue-600 dark:text-blue-400">Deals in Progress</h2>
+        <div className="relative h-48 md:h-56">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={current}
+              initial={{ opacity: 0, x: 100 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -100 }}
+              transition={{ duration: 0.6 }}
+              className="absolute w-full h-full flex flex-col justify-center items-center px-6"
             >
-              <div className="bg-gradient-to-br from-blue-600 to-yellow-400 text-white shadow-xl rounded-xl p-6 max-w-md w-full text-left">
-                <h3 className="text-2xl font-semibold mb-2">{deal.title} - Buyer: {deal.buyer}</h3>
-                <p className="text-sm text-white/90">{deal.description}</p>
+              <div className="rounded-xl shadow-md p-6 bg-blue-900 text-white w-full max-w-md">
+                <h3 className="text-xl font-semibold mb-2">{deals[current].title}</h3>
+                <p className="text-md">{deals[current].details}</p>
+                <p className="text-lg font-bold mt-2">{deals[current].amount}</p>
               </div>
-            </div>
-          ))}
+            </motion.div>
+          </AnimatePresence>
         </div>
       </div>
     </section>
   );
-      }
+};
+
+export default DealsInProgress;
+            
