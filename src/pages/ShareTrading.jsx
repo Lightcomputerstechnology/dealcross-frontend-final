@@ -1,23 +1,28 @@
 // src/pages/ShareTrading.jsx
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 const mockShares = [
   { name: 'Bitcoin (BTC)', price: '$42,000', change: '+2.5%' },
   { name: 'Ethereum (ETH)', price: '$2,600', change: '-1.2%' },
   { name: 'Apple Inc. (AAPL)', price: '$175', change: '+0.8%' },
   { name: 'Tesla Inc. (TSLA)', price: '$690', change: '-0.3%' },
+  { name: 'Google (GOOG)', price: '$2,950', change: '+1.5%' },
+  { name: 'Microsoft (MSFT)', price: '$315', change: '+0.9%' },
+  { name: 'Amazon (AMZN)', price: '$3,280', change: '-1.1%' },
+  { name: 'Solana (SOL)', price: '$120', change: '+5.3%' },
+  { name: 'Meta Platforms (META)', price: '$250', change: '+0.4%' },
 ];
 
-const ShareTrading = () => {
+export default function ShareTrading() {
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white px-4 py-8">
+    <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white px-4 py-10">
       <div className="max-w-6xl mx-auto">
         <h1 className="text-3xl font-bold text-center mb-6">Share Trading</h1>
         <p className="text-center text-gray-500 dark:text-gray-400 mb-10">
           Buy and sell popular shares instantly on Dealcross.
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {mockShares.map((share, index) => (
             <div
               key={index}
@@ -29,9 +34,7 @@ const ShareTrading = () => {
               </p>
               <p
                 className={`mt-1 text-sm font-medium ${
-                  share.change.startsWith('-')
-                    ? 'text-red-500'
-                    : 'text-green-500'
+                  share.change.startsWith('-') ? 'text-red-500' : 'text-green-500'
                 }`}
               >
                 Change: {share.change}
@@ -50,6 +53,4 @@ const ShareTrading = () => {
       </div>
     </div>
   );
-};
-
-export default ShareTrading;
+}
