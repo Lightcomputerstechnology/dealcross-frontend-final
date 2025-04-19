@@ -12,37 +12,52 @@ import DealsPage from '@/pages/DealsPage';
 import StartDealPage from '@/pages/StartDealPage';
 import DealConfirmation from '@/pages/DealConfirmation';
 import DealTrackerPage from '@/pages/DealTrackerPage';
+import DealDetailsPage from '@/pages/DealDetailsPage';
+import StartDealPairing from '@/pages/StartDealPairing';
+
 import ShareTrading from '@/pages/ShareTrading';
 import TradingChartPage from '@/pages/TradingChartPage';
+import LiveTradingChart from '@/pages/LiveTradingChart';
+
 import KYCUploadPage from '@/pages/KYCUploadPage';
 import DisputeResolutionPage from '@/pages/DisputeResolutionPage';
+
 import AdminDashboard from '@/pages/AdminDashboard';
 import InvestorPanel from '@/pages/InvestorPanel';
 import InvestorProfile from '@/pages/InvestorProfile';
+import InvestorReports from '@/pages/InvestorReports';
+import DealAnalytics from '@/pages/DealAnalytics';
+
 import PitchDeckViewer from '@/pages/PitchDeckViewer';
 import FraudDetectionLog from '@/pages/FraudDetectionLog';
 import EscrowTracker from '@/pages/EscrowTracker';
-import LiveTradingChart from '@/pages/LiveTradingChart';
-import MobileAppPromo from '@/pages/MobileAppPromo';
-import UserManagement from '@/pages/UserManagement';
+import EscrowDashboard from '@/pages/EscrowDashboard';
+
 import AnalyticsDashboard from '@/pages/AnalyticsDashboard';
 import ReportCenter from '@/pages/ReportCenter';
-import SettingsPage from '@/pages/Settings';
-import UserProfile from '@/pages/UserProfile';
-import TransactionHistory from '@/pages/TransactionHistory';
-import EscrowDashboard from '@/pages/EscrowDashboard';
-import DocsPage from '@/pages/DocsPage';
-import AIInsightCenter from '@/pages/AIInsightCenter';
-import InvestorReports from '@/pages/InvestorReports';
-import DealAnalytics from '@/pages/DealAnalytics';
+import UserManagement from '@/pages/UserManagement';
+
 import SecurityCenter from '@/pages/SecurityCenter';
 import ReferralProgram from '@/pages/ReferralProgram';
-import StartDealPairing from '@/pages/StartDealPairing';
+import UserProfile from '@/pages/UserProfile';
+import TransactionHistory from '@/pages/TransactionHistory';
+import SettingsPage from '@/pages/Settings';
+
+import AIInsightCenter from '@/pages/AIInsightCenter';
 import DisputeLogViewer from '@/pages/DisputeLogViewer';
 import ChatSupport from '@/pages/ChatSupport';
+
 import ContactPage from '@/pages/ContactPage';
 import AboutPage from '@/pages/AboutPage';
 import PrivacyPolicyPage from '@/pages/PrivacyPolicyPage';
+import TermsPage from '@/pages/TermsPage';
+import RefundPolicyPage from '@/pages/RefundPolicyPage';
+import DocsPage from '@/pages/DocsPage';
+import FAQPage from '@/pages/FaqPage';
+
+import BlogListPage from '@/pages/BlogListPage';
+import BlogDetails from '@/pages/BlogDetails';
+
 import WatermarkTest from '@/pages/WatermarkTest';
 import NotFound from '@/pages/NotFound';
 
@@ -50,15 +65,16 @@ export default function AppRoutes() {
   return (
     <Routes>
       <Route element={<SiteLayout />}>
-        {/* Public */}
+        {/* Public Routes */}
         <Route index element={<LandingPage />} />
         <Route path="login" element={<LoginPage />} />
         <Route path="signup" element={<SignupPage />} />
 
-        {/* Wallet & Deals */}
+        {/* Deals & Wallet */}
         <Route path="wallet" element={<WalletPage />} />
         <Route path="fund-wallet" element={<FundWalletPage />} />
         <Route path="deals" element={<DealsPage />} />
+        <Route path="deal/:dealId" element={<DealDetailsPage />} />
         <Route path="start-deal" element={<StartDealPage />} />
         <Route path="deal-confirmation" element={<DealConfirmation />} />
         <Route path="deal-tracker" element={<DealTrackerPage />} />
@@ -89,7 +105,6 @@ export default function AppRoutes() {
         <Route path="profile" element={<UserProfile />} />
         <Route path="transactions" element={<TransactionHistory />} />
         <Route path="escrow-dashboard" element={<EscrowDashboard />} />
-        <Route path="docs" element={<DocsPage />} />
         <Route path="ai-insights" element={<AIInsightCenter />} />
         <Route path="deal-analytics" element={<DealAnalytics />} />
         <Route path="security-center" element={<SecurityCenter />} />
@@ -97,17 +112,23 @@ export default function AppRoutes() {
         <Route path="dispute-log" element={<DisputeLogViewer />} />
         <Route path="chat" element={<ChatSupport />} />
 
-        {/* Footer Links */}
+        {/* Content Pages */}
+        <Route path="faq" element={<FAQPage />} />
+        <Route path="blog" element={<BlogListPage />} />
+        <Route path="blog/:id" element={<BlogDetails />} />
         <Route path="contact" element={<ContactPage />} />
         <Route path="about" element={<AboutPage />} />
         <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
+        <Route path="terms" element={<TermsPage />} />
+        <Route path="refund" element={<RefundPolicyPage />} />
+        <Route path="docs" element={<DocsPage />} />
 
-        {/* Test Page */}
+        {/* Test */}
         <Route path="test-watermark" element={<WatermarkTest />} />
 
-        {/* Catch-All */}
+        {/* Fallback */}
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   );
-        }
+  }
