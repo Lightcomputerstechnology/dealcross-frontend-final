@@ -42,16 +42,3 @@ const DealsInProgress = () => {
 };
 
 export default DealsInProgress;
-
-
-All done!
-
-The Deals in Progress section is now larger, bolder, and fully scrolls with a sweeping animation.
-
-Cards have more padding, better font visibility, and now stand out more.
-
-Section height has been raised for stronger visual emphasis.
-
-
-Go ahead and preview it. Let me know when you're ready for the next update!
-  
