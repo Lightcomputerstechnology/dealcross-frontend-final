@@ -1,62 +1,93 @@
 // src/components/DealsInProgress.jsx
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const deals = [
-  { title: 'iPhone 14 Pro Purchase', buyer: 'Sarah', amount: '$1,200', status: 'Locked' },
-  { title: 'Helena paying for web dev', buyer: 'Helena', amount: '$4,200', status: 'Locked' },
-  { title: 'House Rent in Abuja', buyer: 'Emeka', amount: '$800', status: 'Locked' },
-  { title: 'Bitcoin Trade', buyer: 'Alex', amount: '$1,500', status: 'Locked' },
-  { title: 'Delivery from Lagos to Ghana', buyer: 'Maya', amount: '$300', status: 'Locked' },
-  { title: 'Tuition Payment', buyer: 'Chisom', amount: '$2,000', status: 'Locked' },
-  { title: 'Laptop Sales', buyer: 'Linda', amount: '$1,050', status: 'Locked' },
-  { title: 'Used Car Deal', buyer: 'Victor', amount: '$5,300', status: 'Locked' },
-  { title: 'SEO & Ads Job', buyer: 'Nancy', amount: '$700', status: 'Locked' },
-  { title: 'Graphic Design Work', buyer: 'Hassan', amount: '$450', status: 'Locked' },
+  {
+    title: 'iPhone 14 Pro Purchase',
+    amount: '$1,200',
+    status: 'In Escrow',
+  },
+  {
+    title: 'Helena paying for web dev',
+    amount: '$4,200',
+    status: 'Locked',
+  },
+  {
+    title: 'Amazon Order Deal',
+    amount: '$300',
+    status: 'Pending',
+  },
+  {
+    title: 'Design Contract - Bryan',
+    amount: '$1,000',
+    status: 'Secured',
+  },
+  {
+    title: 'Crypto Exchange Deal',
+    amount: '$5,000',
+    status: 'Locked',
+  },
+  {
+    title: 'Used Car Purchase',
+    amount: '$6,800',
+    status: 'In Progress',
+  },
+  {
+    title: 'Furniture Delivery',
+    amount: '$2,100',
+    status: 'Completed',
+  },
+  {
+    title: 'Freelance Video Edit',
+    amount: '$400',
+    status: 'In Escrow',
+  },
+  {
+    title: 'School Payment Contract',
+    amount: '$3,500',
+    status: 'Active',
+  },
+  {
+    title: 'Consulting Payment',
+    amount: '$1,800',
+    status: 'Escrowed',
+  },
 ];
 
-export default function DealsInProgress() {
+const DealsInProgress = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % deals.length);
+    const interval = setInterval(() => {
+      setCurrentIndex(prev => (prev + 1) % deals.length);
     }, 10000); // 10 seconds
-
-    return () => clearInterval(timer);
+    return () => clearInterval(interval);
   }, []);
 
+  const currentDeal = deals[currentIndex];
+
   return (
-    <section className="bg-white dark:bg-gray-950 py-12 overflow-hidden">
-      <div className="max-w-6xl mx-auto px-4">
-        <h2 className="text-2xl font-bold text-center mb-8 text-gray-900 dark:text-white">
-          Deals in Progress
-        </h2>
-        <div className="relative h-48">
-          <div
-            className="absolute inset-0 transition-transform duration-700 ease-in-out"
-            style={{
-              transform: `translateX(-${currentIndex * 100}%)`,
-              display: 'flex',
-              width: `${deals.length * 100}%`,
-            }}
-          >
-            {deals.map((deal, idx) => (
-              <div
-                key={idx}
-                className="w-full flex-shrink-0 px-4"
-                style={{ flexBasis: '100%' }}
-              >
-                <div className="bg-primary-700 text-white p-6 rounded-xl shadow-md h-full flex flex-col justify-center items-center">
-                  <h3 className="text-lg font-semibold mb-2">{deal.title}</h3>
-                  <p className="text-sm">Buyer: {deal.buyer}</p>
-                  <p className="text-sm">Amount: <strong>{deal.amount}</strong></p>
-                  <p className="text-sm">Status: {deal.status}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+    <section className="py-12 bg-white dark:bg-gray-950 text-center">
+      <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-8">
+        Deals in Progress
+      </h2>
+
+      <div className="max-w-md mx-auto">
+        <div
+          key={currentIndex}
+          className="bg-blue-900 text-white rounded-2xl shadow-xl p-6 animate-[slideInFromRight_1s_ease-out]"
+        >
+          <h3 className="text-xl font-semibold mb-2">{currentDeal.title}</h3>
+          <p className="text-lg">
+            <strong>Amount:</strong> {currentDeal.amount}
+          </p>
+          <p className="text-sm">
+            <strong>Status:</strong> {currentDeal.status}
+          </p>
         </div>
       </div>
     </section>
   );
-}
+};
+
+export default DealsInProgress;
