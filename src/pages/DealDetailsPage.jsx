@@ -10,7 +10,7 @@ export default function DealDetailsPage() {
     <main className="max-w-4xl mx-auto py-10 px-6 text-gray-900 dark:text-white">
       <h1 className="text-3xl font-bold mb-6">Deal #{dealId}</h1>
 
-      {/* Deal Info (simulated) */}
+      {/* Deal Info (Simulated) */}
       <section className="bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-lg p-6 mb-8 shadow">
         <h2 className="text-xl font-semibold mb-2">Escrow Deal Details</h2>
         <p className="mb-1"><strong>Item:</strong> Sample Item Title</p>
@@ -22,7 +22,7 @@ export default function DealDetailsPage() {
       {/* Live Chat Area */}
       <section>
         <h2 className="text-xl font-semibold mb-4">Live Chat with Counterparty</h2>
-        <DealChatRoom />
+        <DealChatRoom dealId={dealId} />
       </section>
     </main>
   );
