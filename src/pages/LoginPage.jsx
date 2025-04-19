@@ -1,4 +1,3 @@
-// src/pages/LoginPage.jsx
 import React, { useState } from 'react';
 
 const LoginPage = () => {
@@ -7,8 +6,19 @@ const LoginPage = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    console.log('Logging in with', { email, password });
-    // TODO: connect to backend here
+
+    // Simulated login logic
+    const fakeUser = {
+      email,
+      role: email.includes('seller') ? 'seller' : 'buyer', // or use backend logic
+      token: 'fake-jwt-token'
+    };
+
+    localStorage.setItem('user', JSON.stringify(fakeUser));
+    console.log('Logged in as:', fakeUser);
+
+    // Redirect (optional)
+    window.location.href = '/deals';
   };
 
   return (
