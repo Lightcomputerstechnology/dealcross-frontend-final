@@ -6,14 +6,12 @@ import TrustLevels from '@/components/TrustLevels';
 import FastPayouts from '@/components/FastPayouts';
 import DealsInProgress from '@/components/DealsInProgress';
 import StartTradingCTA from '@/components/StartTradingCTA';
-import BlogPreviewList from '@/components/BlogPreviewList';
 import FAQPreview from '@/components/FAQPreview';
 import ContactSection from '@/components/ContactSection';
 
 export default function LandingPage() {
   return (
     <main className="bg-white dark:bg-gray-950 text-gray-900 dark:text-white">
-      
       {/* Hero Section */}
       <section className="max-w-6xl mx-auto px-4 py-20 text-center">
         <h1 className="text-4xl sm:text-5xl font-extrabold mb-4">
@@ -55,15 +53,47 @@ export default function LandingPage() {
         </Link>
       </div>
 
-      {/* FAQ and Blog */}
+      {/* FAQ Section */}
       <FAQPreview />
-      <BlogPreviewList />
+
+      {/* Blog Preview Section */}
+      <section className="bg-gray-50 dark:bg-gray-900 py-12">
+        <div className="max-w-6xl mx-auto px-4">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-gray-900 dark:text-white">
+            From the Blog
+          </h2>
+          <ul className="space-y-4">
+            <li>
+              <Link to="/why-dealcross" className="text-blue-600 dark:text-blue-400 hover:underline text-lg">
+                Why Dealcross Beats Other Platforms
+              </Link>
+            </li>
+            <li>
+              <Link to="/dispute-guide" className="text-blue-600 dark:text-blue-400 hover:underline text-lg">
+                Understanding Dispute Resolution on Dealcross
+              </Link>
+            </li>
+            <li>
+              <Link to="/fast-payouts" className="text-blue-600 dark:text-blue-400 hover:underline text-lg">
+                Fast Payouts on Dealcross
+              </Link>
+            </li>
+          </ul>
+          <div className="mt-6">
+            <Link
+              to="/blog"
+              className="inline-block text-sm font-medium text-blue-600 dark:text-blue-400 hover:underline"
+            >
+              View All Posts →
+            </Link>
+          </div>
+        </div>
+      </section>
 
       {/* Explore More Cards */}
       <section className="max-w-6xl mx-auto px-4 py-16 text-center">
         <h2 className="text-2xl font-bold mb-8">Explore More</h2>
         <div className="grid sm:grid-cols-3 gap-6">
-          {/* Referral */}
           <Link
             to="/referral"
             className="bg-white dark:bg-gray-800 p-6 rounded shadow hover:shadow-lg transition"
@@ -74,7 +104,6 @@ export default function LandingPage() {
             </p>
           </Link>
 
-          {/* FAQ */}
           <Link
             to="/faq"
             className="bg-white dark:bg-gray-800 p-6 rounded shadow hover:shadow-lg transition"
@@ -85,7 +114,6 @@ export default function LandingPage() {
             </p>
           </Link>
 
-          {/* Blog */}
           <Link
             to="/blog"
             className="bg-white dark:bg-gray-800 p-6 rounded shadow hover:shadow-lg transition"
@@ -102,4 +130,4 @@ export default function LandingPage() {
       <ContactSection />
     </main>
   );
-      }
+}
