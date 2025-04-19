@@ -1,3 +1,4 @@
+// src/pages/SignupPage.jsx
 import React, { useState } from 'react';
 
 const SignupPage = () => {
@@ -8,14 +9,14 @@ const SignupPage = () => {
   const handleSignup = (e) => {
     e.preventDefault();
     console.log('Signing up with', { email, password, confirm });
-    // handle signup logic here
+    // TODO: connect to backend here
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-950 text-gray-900 dark:text-white transition duration-300">
+    <main className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-950 px-4">
       <form
         onSubmit={handleSignup}
-        className="w-full max-w-md bg-gray-100 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 shadow-md rounded-lg p-8 space-y-6"
+        className="w-full max-w-md bg-white dark:bg-gray-900 p-8 rounded-2xl shadow-md space-y-6"
       >
         <h2 className="text-2xl font-bold text-center">Create an Account</h2>
 
@@ -25,7 +26,7 @@ const SignupPage = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          className="w-full px-4 py-2 rounded bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 focus:outline-none"
+          className="w-full px-4 py-2 rounded-lg bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 focus:outline-none text-gray-900 dark:text-white"
         />
 
         <input
@@ -34,7 +35,7 @@ const SignupPage = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
-          className="w-full px-4 py-2 rounded bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 focus:outline-none"
+          className="w-full px-4 py-2 rounded-lg bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 focus:outline-none text-gray-900 dark:text-white"
         />
 
         <input
@@ -43,24 +44,24 @@ const SignupPage = () => {
           value={confirm}
           onChange={(e) => setConfirm(e.target.value)}
           required
-          className="w-full px-4 py-2 rounded bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 focus:outline-none"
+          className="w-full px-4 py-2 rounded-lg bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 focus:outline-none text-gray-900 dark:text-white"
         />
 
         <button
           type="submit"
-          className="w-full py-2 rounded bg-blue-600 hover:bg-blue-700 text-white font-semibold transition"
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition"
         >
           Sign Up
         </button>
 
-        <p className="text-sm text-center text-gray-500 dark:text-gray-400">
+        <p className="text-sm text-center text-gray-600 dark:text-gray-400">
           Already have an account?{' '}
-          <a href="/login" className="text-blue-600 dark:text-blue-400 hover:underline">
+          <a href="/login" className="text-blue-600 hover:underline dark:text-blue-400">
             Log in
           </a>
         </p>
       </form>
-    </div>
+    </main>
   );
 };
 
