@@ -20,7 +20,7 @@ export default function DealsInProgress() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrent((prev) => (prev + 1) % dealItems.length);
-    }, 10000); // 10 seconds per card
+    }, 5000); // 5 seconds per card
     return () => clearInterval(interval);
   }, []);
 
