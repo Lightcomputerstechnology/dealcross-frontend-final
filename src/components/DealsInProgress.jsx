@@ -19,7 +19,7 @@ const DealsInProgress = () => {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentIndex(prev => (prev + 1) % deals.length);
-    }, 6000); // 6 seconds
+    }, 10000); // 10 seconds per deal
 
     return () => clearInterval(timer);
   }, []);
@@ -27,26 +27,26 @@ const DealsInProgress = () => {
   return (
     <div className="relative overflow-hidden max-w-4xl mx-auto px-4">
       <h2 className="text-2xl font-bold text-center mb-6">Deals in Progress</h2>
-      <div className="w-full h-36 relative">
+      <div className="w-full h-40 relative">
         <div
-          className="absolute top-0 left-0 w-full h-full transition-transform duration-700 ease-in-out"
-          style={{ transform: `translateX(-${currentIndex * 100}%)`, display: 'flex' }}
+          className="flex transition-transform duration-700 ease-in-out"
+          style={{ transform: `translateX(-${currentIndex * 100}%)`, width: `${deals.length * 100}%` }}
         >
           {deals.map((deal, index) => (
             <div
               key={index}
-              className="min-w-full p-6 bg-blue-900 text-white rounded-lg shadow-lg mx-2 flex flex-col justify-center"
+              className="w-full flex-shrink-0 p-6 bg-[#0a2a7e] text-white rounded-2xl shadow-lg flex flex-col justify-center"
               style={{
                 backgroundImage: "url('/src/assets/dealcross-logo.png')",
                 backgroundRepeat: 'no-repeat',
                 backgroundPosition: 'center',
-                backgroundSize: '60%',
+                backgroundSize: '50%',
                 backgroundBlendMode: 'soft-light',
               }}
             >
               <h3 className="text-lg font-semibold">{deal.title}</h3>
-              <p className="text-sm mt-1">Amount: <strong>{deal.amount}</strong></p>
-              <p className="text-sm">Status: {deal.status}</p>
+              <p className="text-md mt-1">Amount: <strong>{deal.amount}</strong></p>
+              <p className="text-md">Status: {deal.status}</p>
             </div>
           ))}
         </div>
