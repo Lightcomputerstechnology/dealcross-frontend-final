@@ -1,50 +1,58 @@
-// src/components/DealsInProgress.jsx
 import React, { useEffect, useState } from 'react';
 
-const dealItems = [
-  { id: 1, title: 'iPhone 14 Pro Max Purchase', amount: '$1,199', country: 'USA' },
-  { id: 2, title: 'Freelance UI/UX Design Contract', amount: '$450', country: 'Canada' },
-  { id: 3, title: 'Used Toyota Corolla Deal', amount: '$4,200', country: 'Nigeria' },
-  { id: 4, title: 'Web App Dev Escrow', amount: '$2,000', country: 'Germany' },
-  { id: 5, title: 'Crypto Mentorship Package', amount: '$300', country: 'UK' },
-  { id: 6, title: 'Real Estate Booking (Lagos)', amount: '$15,000', country: 'Nigeria' },
-  { id: 7, title: 'Custom Cake Order – Birthday', amount: '$90', country: 'USA' },
-  { id: 8, title: 'Fashion Clothing Bulk Order', amount: '$750', country: 'Ghana' },
-  { id: 9, title: 'Digital Marketing Subscription', amount: '$520', country: 'South Africa' },
-  { id: 10, title: 'Vehicle Shipping – Port to Home', amount: '$3,600', country: 'UAE' },
+const deals = [
+  { title: 'John buying electronics from Sarah', amount: '$1,500', status: 'Ongoing' },
+  { title: 'Emily purchasing fashion items from Chidi', amount: '$750', status: 'Secured' },
+  { title: 'Ahmed paying for tech services from Clara', amount: '$1,200', status: 'Verified' },
+  { title: 'David booking hotel via Kelvin', amount: '$2,000', status: 'In Escrow' },
+  { title: 'Alicia paying for freelance logo design', amount: '$300', status: 'Pending' },
+  { title: 'Musa funding vehicle purchase with Jake', amount: '$8,000', status: 'Processing' },
+  { title: 'Helena paying for web dev project', amount: '$4,200', status: 'Locked' },
+  { title: 'Prince buying land from Anita', amount: '$12,000', status: 'Ongoing' },
+  { title: 'Francis making payment to contractor', amount: '$3,500', status: 'Under Review' },
+  { title: 'Mark securing art purchase with Abiola', amount: '$980', status: 'Held' },
 ];
 
-export default function DealsInProgress() {
-  const [current, setCurrent] = useState(0);
+const DealsInProgress = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % dealItems.length);
-    }, 5000); // 5 seconds per card
-    return () => clearInterval(interval);
+    const timer = setInterval(() => {
+      setCurrentIndex(prev => (prev + 1) % deals.length);
+    }, 6000); // 6 seconds
+
+    return () => clearInterval(timer);
   }, []);
 
   return (
-    <div className="relative bg-blue-900 text-white py-16 overflow-hidden">
-      <div className="max-w-4xl mx-auto text-center px-6">
-        <h2 className="text-3xl font-bold mb-6">Deals in Progress</h2>
-        <div className="relative h-40">
-          {dealItems.map((deal, index) => (
+    <div className="relative overflow-hidden max-w-4xl mx-auto px-4">
+      <h2 className="text-2xl font-bold text-center mb-6">Deals in Progress</h2>
+      <div className="w-full h-36 relative">
+        <div
+          className="absolute top-0 left-0 w-full h-full transition-transform duration-700 ease-in-out"
+          style={{ transform: `translateX(-${currentIndex * 100}%)`, display: 'flex' }}
+        >
+          {deals.map((deal, index) => (
             <div
-              key={deal.id}
-              className={`absolute inset-0 transition-opacity duration-700 ease-in-out 
-                ${index === current ? 'opacity-100' : 'opacity-0'}
-                flex items-center justify-center`}
+              key={index}
+              className="min-w-full p-6 bg-blue-900 text-white rounded-lg shadow-lg mx-2 flex flex-col justify-center"
+              style={{
+                backgroundImage: "url('/src/assets/dealcross-logo.png')",
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'center',
+                backgroundSize: '60%',
+                backgroundBlendMode: 'soft-light',
+              }}
             >
-              <div className="w-full max-w-md bg-blue-800 rounded-xl shadow-lg p-6 border border-blue-500">
-                <h3 className="text-xl font-semibold mb-2">{deal.title}</h3>
-                <p className="text-sm text-blue-100">Amount: <strong>{deal.amount}</strong></p>
-                <p className="text-sm text-blue-100">Country: <strong>{deal.country}</strong></p>
-              </div>
+              <h3 className="text-lg font-semibold">{deal.title}</h3>
+              <p className="text-sm mt-1">Amount: <strong>{deal.amount}</strong></p>
+              <p className="text-sm">Status: {deal.status}</p>
             </div>
           ))}
         </div>
       </div>
     </div>
   );
-                          }
+};
+
+export default DealsInProgress;
