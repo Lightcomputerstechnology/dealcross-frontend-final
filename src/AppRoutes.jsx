@@ -44,12 +44,13 @@ import ContactPage from '@/pages/ContactPage';
 import AboutPage from '@/pages/AboutPage';
 import PrivacyPolicyPage from '@/pages/PrivacyPolicyPage';
 import NotFound from '@/pages/NotFound';
+import WatermarkTest from '@/pages/WatermarkTest';
 
 export default function AppRoutes() {
   return (
     <Routes>
       <Route element={<SiteLayout />}>
-        {/* Public Routes */}
+        {/* Public */}
         <Route index element={<LandingPage />} />
         <Route path="login" element={<LoginPage />} />
         <Route path="signup" element={<SignupPage />} />
@@ -74,7 +75,7 @@ export default function AppRoutes() {
         <Route path="investor-profile" element={<InvestorProfile />} />
         <Route path="investor-reports" element={<InvestorReports />} />
 
-        {/* Utilities */}
+        {/* Tools & Utilities */}
         <Route path="kyc-upload" element={<KYCUploadPage />} />
         <Route path="dispute-resolution" element={<DisputeResolutionPage />} />
         <Route path="fraud-log" element={<FraudDetectionLog />} />
@@ -96,14 +97,17 @@ export default function AppRoutes() {
         <Route path="dispute-log" element={<DisputeLogViewer />} />
         <Route path="chat" element={<ChatSupport />} />
 
-        {/* Static Pages (Footer Links) */}
+        {/* Footer Links */}
         <Route path="contact" element={<ContactPage />} />
         <Route path="about" element={<AboutPage />} />
         <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
+
+        {/* Watermark Test Page */}
+        <Route path="test-watermark" element={<WatermarkTest />} />
 
         {/* Catch-all */}
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   );
-}
+  }
