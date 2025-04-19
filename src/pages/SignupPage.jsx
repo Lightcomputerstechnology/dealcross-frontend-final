@@ -1,4 +1,3 @@
-// src/pages/SignupPage.jsx
 import React, { useState } from 'react';
 
 const SignupPage = () => {
@@ -8,8 +7,19 @@ const SignupPage = () => {
 
   const handleSignup = (e) => {
     e.preventDefault();
-    console.log('Signing up with', { email, password, confirm });
-    // TODO: connect to backend here
+
+    // Simulated signup logic
+    const fakeUser = {
+      email,
+      role: email.includes('seller') ? 'seller' : 'buyer', // simple logic for now
+      token: 'fake-signup-token'
+    };
+
+    localStorage.setItem('user', JSON.stringify(fakeUser));
+    console.log('Signed up as:', fakeUser);
+
+    // Redirect (optional)
+    window.location.href = '/deals';
   };
 
   return (
