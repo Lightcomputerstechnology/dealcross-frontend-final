@@ -43,8 +43,8 @@ import ChatSupport from '@/pages/ChatSupport';
 import ContactPage from '@/pages/ContactPage';
 import AboutPage from '@/pages/AboutPage';
 import PrivacyPolicyPage from '@/pages/PrivacyPolicyPage';
-import NotFound from '@/pages/NotFound';
 import WatermarkTest from '@/pages/WatermarkTest';
+import NotFound from '@/pages/NotFound';
 
 export default function AppRoutes() {
   return (
@@ -102,12 +102,12 @@ export default function AppRoutes() {
         <Route path="about" element={<AboutPage />} />
         <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
 
-        {/* Watermark Test Page */}
+        {/* Test Page */}
         <Route path="test-watermark" element={<WatermarkTest />} />
 
-        {/* Catch-all */}
+        {/* Catch-All */}
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   );
-  }
+        }
