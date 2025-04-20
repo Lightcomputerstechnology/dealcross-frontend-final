@@ -2,33 +2,31 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import PropTypes from 'prop-types';
 
-const SEOHead = ({ title, description, keywords, author = 'Dealcross Team' }) => {
-  const defaultTitle = 'Dealcross - Secure Escrow Platform';
-  const defaultDescription =
-    'Dealcross is a secure financial platform enabling safe online transactions, share trading, and escrow services globally.';
-  const defaultKeywords =
-    'dealcross, escrow, secure transactions, share trading, wallet, fintech, dispute resolution';
-
+const SEOHead = ({
+  title = 'Dealcross - Escrow & Trading Platform',
+  description = 'Secure deals, manage your wallet, and trade confidently on Dealcross.',
+  keywords = 'escrow, dealcross, trading, fintech, secure payments, wallet, share trading, crypto',
+  author = 'Dealcross Team',
+}) => {
   return (
     <Helmet>
-      <title>{title || defaultTitle}</title>
-      <meta name="description" content={description || defaultDescription} />
-      <meta name="keywords" content={keywords || defaultKeywords} />
+      <title>{title}</title>
+      <meta name="description" content={description} />
+      <meta name="keywords" content={keywords} />
       <meta name="author" content={author} />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-      {/* OpenGraph for social sharing */}
-      <meta property="og:title" content={title || defaultTitle} />
-      <meta property="og:description" content={description || defaultDescription} />
+      {/* Open Graph / Facebook */}
+      <meta property="og:title" content={title} />
+      <meta property="og:description" content={description} />
       <meta property="og:type" content="website" />
-      <meta property="og:image" content="/logo512.png" />
-      <meta property="og:url" content="https://dealcross.com" />
+      <meta property="og:site_name" content="Dealcross" />
+      <meta property="og:image" content="/logo.png" />
 
-      {/* Twitter Card */}
+      {/* Twitter */}
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:description" content={description} />
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={title || defaultTitle} />
-      <meta name="twitter:description" content={description || defaultDescription} />
-      <meta name="twitter:image" content="/logo512.png" />
+      <meta name="twitter:image" content="/logo.png" />
     </Helmet>
   );
 };
