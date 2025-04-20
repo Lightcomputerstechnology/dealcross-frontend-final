@@ -1,13 +1,12 @@
-// src/AppRoutes.jsx
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import SiteLayout from "@/layouts/SiteLayout";
 
-// Auth Pages
+// Auth
 import LoginPage from "@/pages/LoginPage";
 import SignupPage from "@/pages/SignupPage";
 
-// Deal & Wallet Pages
+// Wallet & Deals
 import LandingPage from "@/pages/LandingPage";
 import WalletPage from "@/pages/WalletPage";
 import FundWalletPage from "@/pages/FundWalletPage";
@@ -18,22 +17,20 @@ import DealConfirmation from "@/pages/DealConfirmation";
 import DealTrackerPage from "@/pages/DealTrackerPage";
 import StartDealPairing from "@/pages/StartDealPairing";
 
-// Trading Pages
+// Trading
 import ShareTrading from "@/pages/ShareTrading";
 import TradingChartPage from "@/pages/TradingChartPage";
 import LiveTradingChart from "@/pages/LiveTradingChart";
 
-// Admin & Investor Pages
+// Admin & Investor
 import AdminDashboard from "@/pages/AdminDashboard";
-import AdminDealActivityLog from "@/pages/AdminDealActivityLog";
-import AdminRealTimeMetrics from "@/pages/AdminRealTimeMetrics";
 import InvestorPanel from "@/pages/InvestorPanel";
 import InvestorProfile from "@/pages/InvestorProfile";
 import InvestorReports from "@/pages/InvestorReports";
 import DealAnalytics from "@/pages/DealAnalytics";
 import EscrowDashboard from "@/pages/EscrowDashboard";
 
-// Utility Pages
+// Admin Tools
 import KYCUploadPage from "@/pages/KYCUploadPage";
 import DisputeResolutionPage from "@/pages/DisputeResolutionPage";
 import FraudDetectionLog from "@/pages/FraudDetectionLog";
@@ -50,6 +47,8 @@ import SettingsPage from "@/pages/Settings";
 import AIInsightCenter from "@/pages/AIInsightCenter";
 import DisputeLogViewer from "@/pages/DisputeLogViewer";
 import ChatSupport from "@/pages/ChatSupport";
+import AdminDealActivityLog from "@/pages/AdminDealActivityLog";
+import AdminRealTimeMetrics from "@/pages/AdminRealTimeMetrics";
 
 // Content Pages
 import ContactPage from "@/pages/ContactPage";
@@ -60,7 +59,7 @@ import RefundPolicyPage from "@/pages/RefundPolicyPage";
 import DocsPage from "@/pages/DocsPage";
 import FAQPage from "@/pages/FaqPage";
 
-// Blog Pages
+// Blog
 import BlogListPage from "@/pages/BlogListPage";
 import WhyDealcrossBeats from "@/pages/WhyDealcrossBeats";
 import DisputeResolutionGuide from "@/pages/DisputeResolutionGuide";
@@ -68,7 +67,7 @@ import FastPayoutsExplained from "@/pages/FastPayoutsExplained";
 import IntroToDealcross from "@/pages/IntroToDealcross";
 import ShareTradingTips from "@/pages/ShareTradingTips";
 
-// Misc Pages
+// Misc
 import WatermarkTest from "@/pages/WatermarkTest";
 import NotFound from "@/pages/NotFound";
 import MobileAppPromo from "@/pages/MobileAppPromo";
@@ -99,34 +98,33 @@ export default function AppRoutes() {
 
         {/* Admin & Investor */}
         <Route path="admin" element={<AdminDashboard />} />
-        <Route path="admin/deal-activity-log" element={<AdminDealActivityLog />} />
-        <Route path="admin/real-metrics" element={<AdminRealTimeMetrics />} />
         <Route path="investor" element={<InvestorPanel />} />
         <Route path="investor-profile" element={<InvestorProfile />} />
         <Route path="investor-reports" element={<InvestorReports />} />
 
-        {/* Utilities */}
+        {/* Admin Utilities */}
+        <Route path="analytics" element={<AnalyticsDashboard />} />
+        <Route path="realtime-metrics" element={<AdminRealTimeMetrics />} />
+        <Route path="deal-activity-log" element={<AdminDealActivityLog />} />
+        <Route path="fraud-log" element={<FraudDetectionLog />} />
+        <Route path="deal-analytics" element={<DealAnalytics />} />
+        <Route path="pitch-deck" element={<PitchDeckViewer />} />
+        <Route path="escrow-dashboard" element={<EscrowDashboard />} />
+        <Route path="escrow-tracker" element={<EscrowTracker />} />
+        <Route path="dispute-log" element={<DisputeLogViewer />} />
         <Route path="kyc-upload" element={<KYCUploadPage />} />
         <Route path="dispute-resolution" element={<DisputeResolutionPage />} />
-        <Route path="fraud-log" element={<FraudDetectionLog />} />
-        <Route path="pitch-deck" element={<PitchDeckViewer />} />
-        <Route path="escrow-tracker" element={<EscrowTracker />} />
-        <Route path="mobile-app" element={<MobileAppPromo />} />
         <Route path="users" element={<UserManagement />} />
-        <Route path="analytics" element={<AnalyticsDashboard />} />
         <Route path="reports" element={<ReportCenter />} />
         <Route path="settings" element={<SettingsPage />} />
         <Route path="profile" element={<UserProfile />} />
         <Route path="transactions" element={<TransactionHistory />} />
-        <Route path="escrow-dashboard" element={<EscrowDashboard />} />
         <Route path="ai-insights" element={<AIInsightCenter />} />
-        <Route path="deal-analytics" element={<DealAnalytics />} />
+        <Route path="chat" element={<ChatSupport />} />
         <Route path="security-center" element={<SecurityCenter />} />
         <Route path="referral" element={<ReferralProgram />} />
-        <Route path="dispute-log" element={<DisputeLogViewer />} />
-        <Route path="chat" element={<ChatSupport />} />
 
-        {/* Content Pages */}
+        {/* Content */}
         <Route path="faq" element={<FAQPage />} />
         <Route path="blog" element={<BlogListPage />} />
         <Route path="why-dealcross" element={<WhyDealcrossBeats />} />
@@ -140,11 +138,12 @@ export default function AppRoutes() {
         <Route path="terms" element={<TermsPage />} />
         <Route path="refund" element={<RefundPolicyPage />} />
         <Route path="docs" element={<DocsPage />} />
+        <Route path="mobile-app" element={<MobileAppPromo />} />
 
-        {/* Test + Fallback */}
+        {/* Testing + 404 */}
         <Route path="test-watermark" element={<WatermarkTest />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   );
-  }
+}
