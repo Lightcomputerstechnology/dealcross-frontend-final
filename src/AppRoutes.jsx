@@ -50,10 +50,8 @@ import EscrowTracker from "@/pages/EscrowTracker";
 import MobileAppPromo from "@/pages/MobileAppPromo";
 import ChatSupport from "@/pages/ChatSupport";
 import AIInsightCenter from "@/pages/AIInsightCenter";
-
-// Admin Extensions
-import AdminDealLog from "@/pages/AdminDealLog"; // If separated from logs
-import AdminCharts from "@/pages/AdminCharts";   // Chart component if separated
+import AdminDealLog from "@/pages/AdminDealLog";
+import AdminCharts from "@/pages/AdminCharts";
 
 // User & Settings
 import UserProfile from "@/pages/UserProfile";
@@ -77,12 +75,11 @@ export default function AppRoutes() {
   return (
     <Routes>
       <Route element={<SiteLayout />}>
-        {/* Public & Landing */}
         <Route index element={<LandingPage />} />
         <Route path="login" element={<LoginPage />} />
         <Route path="signup" element={<SignupPage />} />
 
-        {/* Wallet & Deal System */}
+        {/* Deals & Wallet */}
         <Route path="wallet" element={<WalletPage />} />
         <Route path="fund-wallet" element={<FundWalletPage />} />
         <Route path="transactions" element={<TransactionHistory />} />
@@ -93,13 +90,13 @@ export default function AppRoutes() {
         <Route path="deal-confirmation" element={<DealConfirmation />} />
         <Route path="deal-tracker" element={<DealTrackerPage />} />
 
-        {/* Share Trading */}
+        {/* Trading */}
         <Route path="share-trading" element={<ShareTrading />} />
         <Route path="trading-chart" element={<TradingChartPage />} />
         <Route path="live-chart" element={<LiveTradingChart />} />
         <Route path="share-trading-tips" element={<ShareTradingTips />} />
 
-        {/* Admin Panel */}
+        {/* Admin */}
         <Route path="admin" element={<AdminDashboard />} />
         <Route path="analytics" element={<AnalyticsDashboard />} />
         <Route path="deal-analytics" element={<DealAnalytics />} />
@@ -118,7 +115,7 @@ export default function AppRoutes() {
         <Route path="chat" element={<ChatSupport />} />
         <Route path="ai-insights" element={<AIInsightCenter />} />
 
-        {/* User Settings */}
+        {/* Settings */}
         <Route path="profile" element={<UserProfile />} />
         <Route path="settings" element={<SettingsPage />} />
         <Route path="kyc-upload" element={<KYCUploadPage />} />
@@ -133,7 +130,7 @@ export default function AppRoutes() {
         <Route path="fast-payouts" element={<FastPayoutsExplained />} />
         <Route path="intro-to-dealcross" element={<IntroToDealcross />} />
 
-        {/* Static / Legal / Docs */}
+        {/* Info Pages */}
         <Route path="faq" element={<FAQPage />} />
         <Route path="about" element={<AboutPage />} />
         <Route path="contact" element={<ContactPage />} />
@@ -143,9 +140,10 @@ export default function AppRoutes() {
         <Route path="docs" element={<DocsPage />} />
         <Route path="test-watermark" element={<WatermarkTest />} />
 
-        {/* 404 */}
+        {/* Fallback */}
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   );
   }
+  
