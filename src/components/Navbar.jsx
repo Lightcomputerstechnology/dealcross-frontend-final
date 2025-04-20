@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Menu as MenuIcon, X as XIcon } from 'react-feather';
 import Logo from '../assets/dealcross-logo.png';
 import LanguageSwitcher from './LanguageSwitcher';
+import ThemeToggle from './ThemeToggle';
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -25,14 +26,15 @@ export default function Navbar() {
           <Link to="/docs" className="hover:text-blue-600 dark:hover:text-blue-400">Docs</Link>
         </div>
 
-        {/* Desktop Right */}
+        {/* Desktop Right Controls */}
         <div className="hidden md:flex items-center space-x-3">
           <Link to="/login" className="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-md">Login</Link>
           <Link to="/signup" className="px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-white text-sm rounded-md">Sign Up</Link>
+          <ThemeToggle />
           <LanguageSwitcher />
         </div>
 
-        {/* Mobile smart buttons + menu */}
+        {/* Mobile Buttons */}
         <div className="flex items-center md:hidden space-x-2">
           <Link
             to="/login"
@@ -73,7 +75,11 @@ export default function Navbar() {
             </div>
 
             {/* Divider */}
-            <div className="border-t pt-4">
+            <div className="border-t pt-4 space-y-4">
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-gray-500 dark:text-gray-400">Theme</span>
+                <ThemeToggle />
+              </div>
               <LanguageSwitcher />
             </div>
           </div>
@@ -81,4 +87,4 @@ export default function Navbar() {
       )}
     </nav>
   );
-          }
+        }
