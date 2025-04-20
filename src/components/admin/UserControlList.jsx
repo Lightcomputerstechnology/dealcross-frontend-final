@@ -1,37 +1,24 @@
-// File: src/components/admin/UserControlList.jsx
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const UserControlList = () => {
   const [users, setUsers] = useState([]);
-  const [status, setStatus] = useState('Loading...');
+  const [search, setSearch] = useState('');
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [loading, setLoading] = useState(true);
 
   const fetchUsers = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('https://d-final.onrender.com/admin/users', {
+      const res = await axios.get('https://d-final.onrender.com/admin/users', {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setUsers(response.data);
-      setStatus(null);
+      setUsers(res.data);
     } catch (err) {
-      setStatus('Failed to load users');
-    }
-  };
-
-  const updateUser = async (id, action, reason = '') => {
-    try {
-      const token = localStorage.getItem('token');
-      await axios.post(
-        `https://d-final.onrender.com/admin/user-action`,
-        { id, action, reason },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      fetchUsers();
-    } catch (err) {
-      alert('Failed to update user.');
+      toast.error('Failed to load users');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -39,34 +26,92 @@ const UserControlList = () => {
     fetchUsers();
   }, []);
 
+  const handleAction = async (id, action) => {
+    try {
+      const token = localStorage.getItem('token');
+      await axios.post(
+        `https://d-final.onrender.com/admin/users/${id}/${action}`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      toast.success(`User ${action === 'ban' ? 'banned' : 'unbanned'} successfully`);
+      fetchUsers();
+    } catch (err) {
+      toast.error(`Failed to ${action} user`);
+    }
+  };
+
+  const filtered = users.filter((u) => {
+    const matchSearch = u.email.toLowerCase().includes(search.toLowerCase());
+    const matchStatus =
+      statusFilter === 'all' || (statusFilter === 'banned' && u.is_banned) || (statusFilter === 'active' && !u.is_banned);
+    return matchSearch && matchStatus;
+  });
+
   return (
     <div className="space-y-4">
-      {status && <p className="text-yellow-400 text-sm">{status}</p>}
-      {users.map((user) => (
-        <div key={user.id} className="bg-gray-800 p-4 rounded shadow">
-          <div className="flex justify-between items-center">
-            <div>
-              <p className="text-white font-semibold">{user.username}</p>
-              <p className="text-gray-400 text-sm">{user.email}</p>
-              <p className="text-gray-500 text-xs">Status: {user.status}</p>
+      <div className="flex flex-wrap gap-4">
+        <input
+          type="text"
+          placeholder="Search by email"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="bg-gray-800 border border-gray-600 px-3 py-1 rounded text-white w-60"
+        />
+        <select
+          value={statusFilter}
+          onChange={(e) => setStatusFilter(e.target.value)}
+          className="bg-gray-800 border border-gray-600 px-3 py-1 rounded text-white"
+        >
+          <option value="all">All</option>
+          <option value="active">Active</option>
+          <option value="banned">Banned</option>
+        </select>
+      </div>
+
+      {loading ? (
+        <p className="text-yellow-400">Loading users...</p>
+      ) : filtered.length > 0 ? (
+        <div className="space-y-3">
+          {filtered.map((u) => (
+            <div
+              key={u.id}
+              className="bg-gray-800 p-4 rounded shadow flex justify-between items-center"
+            >
+              <div>
+                <p className="font-medium">{u.email}</p>
+                <p className="text-sm text-gray-400">
+                  {u.full_name || 'Unnamed'} — Status:{' '}
+                  <span className={u.is_banned ? 'text-red-500' : 'text-green-400'}>
+                    {u.is_banned ? 'Banned' : 'Active'}
+                  </span>
+                </p>
+              </div>
+              <div>
+                {u.is_banned ? (
+                  <button
+                    onClick={() => handleAction(u.id, 'unban')}
+                    className="px-4 py-1 bg-green-600 hover:bg-green-700 text-white rounded"
+                  >
+                    Unban
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => handleAction(u.id, 'ban')}
+                    className="px-4 py-1 bg-red-600 hover:bg-red-700 text-white rounded"
+                  >
+                    Ban
+                  </button>
+                )}
+              </div>
             </div>
-            <div className="space-x-2">
-              <button
-                onClick={() => updateUser(user.id, 'ban', prompt('Reason for ban:'))}
-                className="bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-sm"
-              >
-                Ban
-              </button>
-              <button
-                onClick={() => updateUser(user.id, 'approve', prompt('Approval note:'))}
-                className="bg-green-600 hover:bg-green-700 px-3 py-1 rounded text-sm"
-              >
-                Approve
-              </button>
-            </div>
-          </div>
+          ))}
         </div>
-      ))}
+      ) : (
+        <p className="text-gray-400">No users found.</p>
+      )}
     </div>
   );
 };
