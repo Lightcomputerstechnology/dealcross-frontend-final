@@ -1,4 +1,5 @@
 // File: src/pages/AdminDashboard.jsx
+
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
@@ -12,7 +13,6 @@ import {
   FiBriefcase,
   FiClipboard,
   FiMenu,
-  FiPieChart,
 } from 'react-icons/fi';
 
 import MetricsCard from '@/components/admin/MetricsCard';
@@ -20,7 +20,7 @@ import FraudList from '@/components/admin/FraudList';
 import AuditLogViewer from '@/components/admin/AuditLogViewer';
 import PendingDealList from '@/components/admin/PendingDealList';
 import UserControlList from '@/components/admin/UserControlList';
-import AdminCharts from '@/components/admin/AdminCharts';
+import AdminCharts from '@/components/admin/AdminCharts'; // NEW chart panel
 
 const AdminDashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -31,22 +31,22 @@ const AdminDashboard = () => {
 
   const fetchMetrics = async () => {
     try {
-      const response = await axios.get('https://d-final.onrender.com/admin/metrics');
-      setMetrics(response.data);
+      const res = await axios.get('https://d-final.onrender.com/admin/metrics');
+      setMetrics(res.data);
       setLoadingMetrics(false);
     } catch (err) {
-      console.error('Failed to fetch metrics:', err);
+      console.error('Metrics error:', err);
       setLoadingMetrics(false);
     }
   };
 
   const fetchFraudReports = async () => {
     try {
-      const response = await axios.get('https://d-final.onrender.com/admin/fraud-reports');
-      setFraudReports(response.data);
+      const res = await axios.get('https://d-final.onrender.com/admin/fraud-reports');
+      setFraudReports(res.data);
       setLoadingFraud(false);
     } catch (err) {
-      console.error('Failed to fetch fraud reports:', err);
+      console.error('Fraud error:', err);
       setLoadingFraud(false);
     }
   };
@@ -71,9 +71,7 @@ const AdminDashboard = () => {
     <>
       <Helmet>
         <title>Admin Dashboard - Dealcross</title>
-        <meta name="description" content="Admin dashboard overview for managing users, deals, disputes, and settings on Dealcross." />
-        <meta name="keywords" content="dealcross, admin, dashboard, manage, fraud, users, deals" />
-        <meta name="author" content="Dealcross Team" />
+        <meta name="description" content="Admin dashboard overview for Dealcross system and user control." />
       </Helmet>
 
       <div className="flex min-h-screen bg-[#0f172a] text-white">
@@ -87,21 +85,18 @@ const AdminDashboard = () => {
             <Link to="/dispute-log" className="flex items-center gap-2 hover:text-blue-400"><FiAlertCircle /> Disputes</Link>
             <Link to="/settings" className="flex items-center gap-2 hover:text-blue-400"><FiSettings /> Settings</Link>
             <Link to="/admin-deal-log" className="flex items-center gap-2 hover:text-blue-400"><FiClipboard /> Deal Logs</Link>
-            <Link to="/analytics" className="flex items-center gap-2 hover:text-blue-400"><FiPieChart /> Charts</Link>
           </nav>
         </aside>
 
         {/* Main Content */}
         <main className="flex-1 p-6 md:p-8 space-y-10 w-full">
           <div className="md:hidden mb-4">
-            <button
-              onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="text-white bg-gray-700 p-2 rounded-lg"
-            >
+            <button onClick={() => setSidebarOpen(!sidebarOpen)} className="text-white bg-gray-700 p-2 rounded-lg">
               <FiMenu className="w-6 h-6" />
             </button>
           </div>
 
+          {/* Metrics */}
           <section>
             <h2 className="text-xl font-semibold mb-4">Live System Metrics</h2>
             {loadingMetrics ? (
@@ -115,11 +110,40 @@ const AdminDashboard = () => {
             )}
           </section>
 
+          {/* Charts */}
+          <section className="bg-gray-900 p-6 rounded-lg shadow">
+            <h2 className="text-xl font-semibold mb-4">Platform Activity Charts</h2>
+            <AdminCharts />
+          </section>
+
+          {/* Recent Deals */}
+          <section>
+            <h2 className="text-xl font-semibold mb-4">Recent Deals</h2>
+            <div className="bg-gray-900 rounded-lg p-4">
+              <div className="grid grid-cols-3 text-sm text-gray-400 mb-2">
+                <span>Deal</span>
+                <span>Amount</span>
+                <span>Expected</span>
+              </div>
+              {recentDeals.map((deal, i) => (
+                <div key={i} className="grid grid-cols-3 py-2 border-t border-gray-700">
+                  <span>{deal.title}</span>
+                  <span>${deal.amount.toLocaleString()}</span>
+                  <span className="text-yellow-400 text-sm">{deal.expected_completion}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Fraud Alerts */}
           <section className="bg-gray-900 p-4 rounded-lg shadow">
-            <h3 className="font-semibold mb-3">Fraud Alerts</h3>
+            <h3 className="font-semibold mb-3 flex items-center gap-2">
+              <FiAlertCircle /> Fraud Alerts
+            </h3>
             <FraudList loading={loadingFraud} fraudReports={fraudReports} />
           </section>
 
+          {/* Admin Controls */}
           <section className="bg-gray-900 p-4 rounded-lg shadow">
             <h3 className="font-semibold mb-3">Pending Deal Approvals</h3>
             <PendingDealList />
@@ -130,16 +154,13 @@ const AdminDashboard = () => {
             <UserControlList />
           </section>
 
+          {/* Audit Logs */}
           <section className="bg-gray-900 p-4 rounded-lg shadow">
-            <h3 className="font-semibold mb-3">Audit Logs</h3>
+            <h3 className="font-semibold mb-3">Admin Audit Logs</h3>
             <AuditLogViewer />
           </section>
 
-          <section className="bg-gray-900 p-4 rounded-lg shadow">
-            <h3 className="font-semibold mb-3">Admin Chart Overview</h3>
-            <AdminCharts />
-          </section>
-
+          {/* Notifications */}
           <section className="bg-gray-900 p-4 rounded-lg shadow">
             <h3 className="font-semibold mb-3 flex items-center gap-2">
               <FiMessageSquare /> System Notifications
@@ -155,4 +176,3 @@ const AdminDashboard = () => {
 };
 
 export default AdminDashboard;
-    
