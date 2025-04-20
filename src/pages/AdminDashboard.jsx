@@ -1,8 +1,31 @@
-// File: src/pages/AdminDashboard.jsx import React from 'react'; import { FiAlertCircle, FiMessageSquare, FiBarChart2, FiUsers, FiSettings, FiBriefcase } from 'react-icons/fi'; import { Helmet } from 'react-helmet';
+// File: src/pages/AdminDashboard.jsx import React, { useEffect, useState } from 'react'; import axios from 'axios'; import { Helmet } from 'react-helmet'; import { FiAlertCircle, FiMessageSquare, FiBarChart2, FiUsers, FiSettings, FiBriefcase } from 'react-icons/fi';
 
-const AdminDashboard = () => { const recentDeals = [ { title: 'Equipment Purchase', amount: 5000, expected_completion: '2025-06-10' }, { title: 'Web Design Services', amount: 1200, expected_completion: '2025-04-30' }, { title: 'Vehicle Sale', amount: 3800, expected_completion: '2025-05-15' }, ];
+const AdminDashboard = () => { const [stats, setStats] = useState(null); const [recent, setRecent] = useState([]); const [status, setStatus] = useState('Loading dashboard...');
 
-return ( <> <Helmet> <title>Admin Dashboard - Dealcross</title> <meta name="description" content="Admin dashboard overview for managing users, deals, disputes, and settings on Dealcross." /> <meta name="keywords" content="dealcross, admin, dashboard, manage, fraud, users, deals" /> <meta name="author" content="Dealcross Team" /> </Helmet>
+useEffect(() => { const token = localStorage.getItem('token'); if (!token) { setStatus('Admin login required.'); return; }
+
+const fetchAll = async () => {
+  try {
+    const statsRes = await axios.get('https://d-final.onrender.com/admin/analytics', {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const activityRes = await axios.get('https://d-final.onrender.com/admin/activity-log', {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    setStats(statsRes.data);
+    setRecent(activityRes.data.logs || []);
+    setStatus(null);
+  } catch (err) {
+    setStatus('Failed to load admin data.');
+  }
+};
+
+fetchAll();
+
+}, []);
+
+return ( <> <Helmet> <title>Admin Dashboard - Dealcross</title> <meta name="description" content="Admin dashboard overview for managing users, deals, disputes, and analytics." /> </Helmet>
 
 <div className="flex min-h-screen bg-[#0f172a] text-white">
     {/* Sidebar */}
@@ -19,67 +42,65 @@ return ( <> <Helmet> <title>Admin Dashboard - Dealcross</title> <meta name="desc
 
     {/* Main Content */}
     <main className="flex-1 p-8 space-y-10">
-      {/* Top Grid: Metrics */}
-      <div className="grid md:grid-cols-4 gap-6">
-        <div className="bg-gray-800 p-4 rounded-lg shadow">
-          <h3 className="text-sm text-gray-400">Pending Approval</h3>
-          <p className="text-2xl font-bold mt-2">5</p>
-        </div>
-        <div className="bg-gray-800 p-4 rounded-lg shadow">
-          <h3 className="text-sm text-gray-400">Fraud Alerts</h3>
-          <p className="text-2xl font-bold mt-2 text-red-500">3</p>
-        </div>
-        <div className="bg-gray-800 p-4 rounded-lg shadow">
-          <h3 className="text-sm text-gray-400">User Activity</h3>
-          <p className="text-2xl font-bold mt-2">1,204</p>
-        </div>
-        <div className="bg-gray-800 p-4 rounded-lg shadow">
-          <h3 className="text-sm text-gray-400">Refund Requests</h3>
-          <p className="text-2xl font-bold mt-2">1</p>
-        </div>
-      </div>
+      {status && <p className="text-yellow-400 text-sm mb-4">{status}</p>}
 
-      {/* Recent Deals */}
-      <div>
-        <h2 className="text-xl font-semibold mb-4">Recent Deals</h2>
-        <div className="bg-gray-900 rounded-lg p-4">
-          <div className="grid grid-cols-3 text-sm text-gray-400 mb-2">
-            <span>Deal</span>
-            <span>Amount</span>
-            <span>Expected</span>
+      {stats && (
+        <div className="grid md:grid-cols-4 gap-6">
+          <div className="bg-gray-800 p-4 rounded-lg shadow text-center">
+            <p className="text-sm text-gray-400">Users</p>
+            <h3 className="text-2xl font-bold mt-1">{stats.users}</h3>
           </div>
-          {recentDeals.map((deal, i) => (
-            <div key={i} className="grid grid-cols-3 py-2 border-t border-gray-700">
-              <span>{deal.title}</span>
-              <span>${deal.amount.toLocaleString()}</span>
-              <span className="text-yellow-400 text-sm">{deal.expected_completion}</span>
-            </div>
-          ))}
+          <div className="bg-gray-800 p-4 rounded-lg shadow text-center">
+            <p className="text-sm text-gray-400">Deals</p>
+            <h3 className="text-2xl font-bold mt-1">{stats.deals}</h3>
+          </div>
+          <div className="bg-gray-800 p-4 rounded-lg shadow text-center">
+            <p className="text-sm text-gray-400">Wallet Funded</p>
+            <h3 className="text-2xl font-bold mt-1">{stats.wallets_funded}</h3>
+          </div>
+          <div className="bg-gray-800 p-4 rounded-lg shadow text-center">
+            <p className="text-sm text-gray-400">Disputes</p>
+            <h3 className="text-2xl font-bold mt-1 text-red-400">{stats.disputes}</h3>
+          </div>
         </div>
-      </div>
+      )}
 
-      {/* Alerts & Notifications */}
+      {/* Activity Logs */}
+      {recent.length > 0 && (
+        <div>
+          <h2 className="text-xl font-semibold mb-4">Recent Admin Activities</h2>
+          <div className="bg-gray-900 rounded-lg p-4 space-y-2 text-sm">
+            {recent.slice(0, 6).map((log, i) => (
+              <div key={i} className="border-b border-gray-700 py-2">
+                <p className="text-gray-300">
+                  <span className="text-yellow-400 font-semibold">{log.deal_title || 'Unknown Deal'}:</span> {log.action}
+                </p>
+                <p className="text-xs text-gray-500">{new Date(log.timestamp).toLocaleString()}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Alerts */}
       <div className="grid md:grid-cols-2 gap-6">
         <div className="bg-gray-900 p-4 rounded-lg shadow">
           <h3 className="font-semibold mb-3 flex items-center gap-2">
-            <FiAlertCircle /> Fraud Alerts
+            <FiAlertCircle /> Security Notices
           </h3>
           <ul className="text-sm space-y-2">
-            <li>Suspicious activity by lenesie - 1m ago</li>
-            <li>VPN Detected - morevillzos</li>
-            <li>Unusual withdrawal - a few hours ago</li>
+            <li>2FA recommended for all admins</li>
+            <li>Unusual login detected yesterday</li>
           </ul>
         </div>
 
         <div className="bg-gray-900 p-4 rounded-lg shadow">
           <h3 className="font-semibold mb-3 flex items-center gap-2">
-            <FiMessageSquare /> System Notifications
+            <FiMessageSquare /> System Notices
           </h3>
           <ul className="text-sm space-y-2">
-            <li>Dispute by sarshee - 0:98</li>
-            <li>New user: thomaswilfams</li>
-            <li>Refund: robertsmith</li>
-            <li>Approved for lucywhite</li>
+            <li>Dealcross v2.1 deployment successful</li>
+            <li>Audit logs exported last week</li>
           </ul>
         </div>
       </div>
@@ -91,4 +112,4 @@ return ( <> <Helmet> <title>Admin Dashboard - Dealcross</title> <meta name="desc
 
 export default AdminDashboard;
 
-          
+    
