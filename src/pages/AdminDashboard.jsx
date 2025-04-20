@@ -1,4 +1,3 @@
-// File: src/pages/AdminDashboard.jsx
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
@@ -13,6 +12,9 @@ import {
   FiClipboard,
   FiMenu,
 } from 'react-icons/fi';
+
+import MetricsCard from '@/components/admin/MetricsCard';
+import FraudList from '@/components/admin/FraudList';
 
 const AdminDashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -93,7 +95,7 @@ const AdminDashboard = () => {
             </button>
           </div>
 
-          {/* Metrics */}
+          {/* Live Metrics */}
           <div>
             <h2 className="text-xl font-semibold mb-4">Live System Metrics</h2>
             {loadingMetrics ? (
@@ -101,11 +103,7 @@ const AdminDashboard = () => {
             ) : (
               <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                 {metrics.map((m) => (
-                  <div key={m.id} className="bg-gray-800 p-4 rounded shadow text-center">
-                    <p className="text-sm text-gray-400">{m.type.toUpperCase()}</p>
-                    <h3 className="text-2xl font-bold mt-1">{m.value}</h3>
-                    <p className="text-xs text-gray-500">{new Date(m.timestamp).toLocaleTimeString()}</p>
-                  </div>
+                  <MetricsCard key={m.id} type={m.type} value={m.value} timestamp={m.timestamp} />
                 ))}
               </div>
             )}
@@ -135,17 +133,7 @@ const AdminDashboard = () => {
             <h3 className="font-semibold mb-3 flex items-center gap-2">
               <FiAlertCircle /> Fraud Alerts
             </h3>
-            {loadingFraud ? (
-              <p className="text-yellow-400">Loading fraud alerts...</p>
-            ) : fraudReports.length > 0 ? (
-              <ul className="text-sm space-y-2">
-                {fraudReports.map((item, index) => (
-                  <li key={index}>{item.message} - <span className="text-xs text-gray-400">{new Date(item.timestamp).toLocaleString()}</span></li>
-                ))}
-              </ul>
-            ) : (
-              <p className="text-gray-400 text-sm">No fraud alerts available.</p>
-            )}
+            <FraudList loading={loadingFraud} fraudReports={fraudReports} />
           </div>
 
           {/* System Notifications */}
@@ -154,7 +142,7 @@ const AdminDashboard = () => {
               <FiMessageSquare /> System Notifications
             </h3>
             <ul className="text-sm space-y-2">
-              <li>System operational - {new Date().toLocaleTimeString()}</li>
+              <li>System operational — {new Date().toLocaleTimeString()}</li>
             </ul>
           </div>
         </main>
@@ -164,4 +152,3 @@ const AdminDashboard = () => {
 };
 
 export default AdminDashboard;
-      
