@@ -1,3 +1,5 @@
+// ... (previous pages remain unchanged)
+
 // src/pages/ProfileSettings.jsx import React, { useEffect, useState } from 'react'; import axios from 'axios'; import { Helmet } from 'react-helmet';
 
 export default function ProfileSettings() { const [email, setEmail] = useState(''); const [role, setRole] = useState('buyer'); const [status, setStatus] = useState(null);
