@@ -1,12 +1,12 @@
 // File: src/pages/WalletPage.jsx
-
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 
 const WalletPage = () => {
   const [balance, setBalance] = useState(null);
-  const [status, setStatus] = useState(null);
+  const [status, setStatus] = useState('Loading...');
 
   useEffect(() => {
     const fetchWallet = async () => {
@@ -19,12 +19,11 @@ const WalletPage = () => {
 
       try {
         const response = await axios.get('https://d-final.onrender.com/wallet/balance', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` },
         });
 
         setBalance(response.data.balance);
+        setStatus(null);
       } catch (error) {
         setStatus(error.response?.data?.detail || 'Unable to fetch wallet balance.');
       }
@@ -34,37 +33,51 @@ const WalletPage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#0f172a] text-white px-6 py-10">
-      <h2 className="text-2xl font-bold mb-6">Wallet</h2>
+    <>
+      <Helmet>
+        <title>Wallet - Dealcross</title>
+        <meta name="description" content="View your Dealcross wallet balance and manage transactions securely." />
+        <meta name="keywords" content="wallet, fund, withdraw, escrow, dealcross" />
+        <meta name="author" content="Dealcross Team" />
+      </Helmet>
 
-      {/* Wallet Balance */}
-      <div className="bg-[#1e293b] p-6 rounded-lg shadow mb-10">
-        {balance !== null ? (
-          <>
-            <p className="text-sm text-gray-400">Available Balance</p>
-            <h1 className="text-3xl font-bold mt-2">USD {balance.toFixed(2)}</h1>
-          </>
-        ) : (
-          <p className="text-yellow-400">{status || 'Loading balance...'}</p>
-        )}
+      <div className="min-h-screen bg-[#0f172a] text-white px-6 py-10">
+        <h2 className="text-3xl font-bold mb-6">Wallet</h2>
 
-        <div className="mt-6 flex flex-wrap gap-4">
-          <Link to="/fund-wallet">
-            <button className="bg-blue-600 hover:bg-blue-700 px-5 py-2 rounded-md font-medium">
-              Fund Wallet
+        <div className="bg-[#1e293b] p-6 rounded-lg shadow-lg space-y-4">
+          {balance !== null ? (
+            <>
+              <p className="text-sm text-gray-400">Available Balance</p>
+              <h1 className="text-4xl font-bold">USD {balance.toFixed(2)}</h1>
+            </>
+          ) : (
+            <p className="text-yellow-400">{status}</p>
+          )}
+
+          <div className="flex flex-wrap gap-4 mt-6">
+            <Link to="/fund-wallet">
+              <button className="bg-blue-600 hover:bg-blue-700 px-5 py-2 rounded font-medium transition">
+                Fund Wallet
+              </button>
+            </Link>
+
+            <Link to="/transactions">
+              <button className="border border-gray-500 hover:bg-gray-700 px-5 py-2 rounded font-medium transition">
+                Transaction History
+              </button>
+            </Link>
+
+            <button
+              disabled
+              className="border border-red-500 text-red-400 hover:bg-red-700 hover:text-white px-5 py-2 rounded font-medium transition cursor-not-allowed"
+              title="Withdraw functionality coming soon"
+            >
+              Withdraw
             </button>
-          </Link>
-          <Link to="/transactions">
-            <button className="border border-gray-500 hover:bg-gray-700 px-5 py-2 rounded-md font-medium">
-              Transaction History
-            </button>
-          </Link>
-          <button className="border border-red-500 hover:bg-red-700 px-5 py-2 rounded-md font-medium">
-            Withdraw
-          </button>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
