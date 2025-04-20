@@ -1,3 +1,4 @@
+// File: src/pages/AdminDashboard.jsx
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
@@ -12,7 +13,6 @@ import {
   FiClipboard,
   FiMenu,
 } from 'react-icons/fi';
-
 import MetricsCard from '@/components/admin/MetricsCard';
 import FraudList from '@/components/admin/FraudList';
 
@@ -66,7 +66,7 @@ const AdminDashboard = () => {
       <Helmet>
         <title>Admin Dashboard - Dealcross</title>
         <meta name="description" content="Admin dashboard overview for managing users, deals, disputes, and settings on Dealcross." />
-        <meta name="keywords" content="dealcross, admin, dashboard, manage, fraud, users, deals" />
+        <meta name="keywords" content="dealcross, admin, dashboard, metrics, fraud, users, analytics" />
         <meta name="author" content="Dealcross Team" />
       </Helmet>
 
@@ -96,7 +96,7 @@ const AdminDashboard = () => {
           </div>
 
           {/* Live Metrics */}
-          <div>
+          <section>
             <h2 className="text-xl font-semibold mb-4">Live System Metrics</h2>
             {loadingMetrics ? (
               <p className="text-sm text-yellow-400">Loading metrics...</p>
@@ -107,10 +107,10 @@ const AdminDashboard = () => {
                 ))}
               </div>
             )}
-          </div>
+          </section>
 
           {/* Recent Deals */}
-          <div>
+          <section>
             <h2 className="text-xl font-semibold mb-4">Recent Deals</h2>
             <div className="bg-gray-900 rounded-lg p-4">
               <div className="grid grid-cols-3 text-sm text-gray-400 mb-2">
@@ -126,25 +126,25 @@ const AdminDashboard = () => {
                 </div>
               ))}
             </div>
-          </div>
+          </section>
 
           {/* Fraud Alerts */}
-          <div className="bg-gray-900 p-4 rounded-lg shadow">
+          <section className="bg-gray-900 p-4 rounded-lg shadow">
             <h3 className="font-semibold mb-3 flex items-center gap-2">
               <FiAlertCircle /> Fraud Alerts
             </h3>
             <FraudList loading={loadingFraud} fraudReports={fraudReports} />
-          </div>
+          </section>
 
           {/* System Notifications */}
-          <div className="bg-gray-900 p-4 rounded-lg shadow">
+          <section className="bg-gray-900 p-4 rounded-lg shadow">
             <h3 className="font-semibold mb-3 flex items-center gap-2">
               <FiMessageSquare /> System Notifications
             </h3>
             <ul className="text-sm space-y-2">
               <li>System operational — {new Date().toLocaleTimeString()}</li>
             </ul>
-          </div>
+          </section>
         </main>
       </div>
     </>
