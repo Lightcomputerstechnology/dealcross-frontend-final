@@ -1,6 +1,6 @@
-// File: src/pages/TermsPage.jsx import React from 'react'; import { Helmet } from 'react-helmet';
+// // File: src/pages/TermsPage.jsx import React from 'react'; import { Helmet } from 'react-helmet';
 
-export default function TermsPage() { return ( <> <Helmet> <title>Terms of Service - Dealcross</title> <meta name="description" content="Read the full terms and conditions for using the Dealcross platform." /> <meta name="keywords" content="terms, conditions, agreement, policy, dealcross" /> <meta name="author" content="Dealcross Team" /> </Helmet>
+export default function TermsPage() { return ( <> <Helmet> <title>Terms of Service - Dealcross</title> <meta name="description" content="Read the full terms and conditions for using the Dealcross platform." /> <meta name="keywords" content="terms, conditions, agreement, policy, dealcross" /> <meta name="author" content="Dealcross Team" /> <meta property="og:title" content="Dealcross Terms of Service" /> <meta property="og:description" content="Understand your rights and responsibilities when using the Dealcross platform." /> <meta property="og:type" content="website" /> <meta property="og:url" content="https://dealcross.com/terms" /> <meta name="twitter:card" content="summary" /> <meta name="twitter:title" content="Terms of Service - Dealcross" /> <meta name="twitter:description" content="Review Dealcross usage terms and platform policies." /> </Helmet>
 
 <main className="min-h-screen px-6 py-12 bg-white dark:bg-gray-950 text-gray-900 dark:text-white">
     <div className="max-w-5xl mx-auto space-y-6">
