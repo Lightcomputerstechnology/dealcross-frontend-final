@@ -1,12 +1,12 @@
 // File: src/pages/StartDealPage.jsx import React, { useState } from 'react'; import axios from 'axios'; import { Helmet } from 'react-helmet';
 
-const StartDealPage = () => { const [role, setRole] = useState('buyer'); const [title, setTitle] = useState(''); const [email, setEmail] = useState(''); const [amount, setAmount] = useState(''); const [escrowType, setEscrowType] = useState('standard'); const [category, setCategory] = useState('product'); const [message, setMessage] = useState(''); const [expectedDate, setExpectedDate] = useState(''); const [files, setFiles] = useState([]); const [status, setStatus] = useState(null);
+const StartDealPage = () => { const [role, setRole] = useState('buyer'); const [title, setTitle] = useState(''); const [email, setEmail] = useState(''); const [amount, setAmount] = useState(''); const [escrowType, setEscrowType] = useState('standard'); const [category, setCategory] = useState('product'); const [message, setMessage] = useState(''); const [expectedDate, setExpectedDate] = useState(''); const [files, setFiles] = useState([]); const [status, setStatus] = useState(null); const [submitting, setSubmitting] = useState(false);
 
 const MAX_FILE_SIZE_MB = 10;
 
 const handleFileChange = (e) => { const selectedFiles = Array.from(e.target.files); const validFiles = selectedFiles.filter( (file) => file.size / 1024 / 1024 <= MAX_FILE_SIZE_MB ); setFiles(validFiles); };
 
-const handleSubmit = async (e) => { e.preventDefault(); const token = localStorage.getItem('token'); if (!token) { setStatus('Login required.'); return; }
+const handleSubmit = async (e) => { e.preventDefault(); setSubmitting(true); const token = localStorage.getItem('token'); if (!token) { setStatus('Login required.'); setSubmitting(false); return; }
 
 const formData = new FormData();
 formData.append('title', title);
@@ -46,6 +46,8 @@ try {
   }
 } catch (error) {
   setStatus(error.response?.data?.detail || 'Error creating deal.');
+} finally {
+  setSubmitting(false);
 }
 
 };
@@ -128,9 +130,7 @@ return ( <div className="min-h-screen bg-[#0f172a] text-white flex justify-cente
     </select>
 
     <div>
-      <label className="block mb-1 text-sm">
-        Expected Completion Date:
-      </label>
+      <label className="block mb-1 text-sm">Expected Completion Date:</label>
       <input
         type="date"
         value={expectedDate}
@@ -154,8 +154,9 @@ return ( <div className="min-h-screen bg-[#0f172a] text-white flex justify-cente
     <button
       type="submit"
       className="w-full py-2 bg-blue-600 hover:bg-blue-700 rounded font-semibold"
+      disabled={submitting}
     >
-      Create Deal
+      {submitting ? 'Submitting...' : 'Create Deal'}
     </button>
 
     {status && <p className="text-center text-yellow-400 mt-2">{status}</p>}
@@ -166,4 +167,4 @@ return ( <div className="min-h-screen bg-[#0f172a] text-white flex justify-cente
 
 export default StartDealPage;
 
-  
+            
