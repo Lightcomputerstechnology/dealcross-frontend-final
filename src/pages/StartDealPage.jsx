@@ -1,4 +1,4 @@
-// File: src/pages/StartDealPage.jsx import React, { useState } from 'react'; import axios from 'axios';
+// File: src/pages/StartDealPage.jsx import React, { useState } from 'react'; import axios from 'axios'; import { Helmet } from 'react-helmet';
 
 const StartDealPage = () => { const [role, setRole] = useState('buyer'); const [title, setTitle] = useState(''); const [email, setEmail] = useState(''); const [amount, setAmount] = useState(''); const [escrowType, setEscrowType] = useState('standard'); const [category, setCategory] = useState('product'); const [message, setMessage] = useState(''); const [expectedDate, setExpectedDate] = useState(''); const [files, setFiles] = useState([]); const [status, setStatus] = useState(null);
 
@@ -50,13 +50,16 @@ try {
 
 };
 
-return ( <div className="min-h-screen bg-[#0f172a] text-white flex justify-center items-center px-4 py-12"> <form
-onSubmit={handleSubmit}
-className="w-full max-w-lg bg-[#1e293b] p-6 rounded-lg shadow-lg space-y-4"
-encType="multipart/form-data"
-> <h2 className="text-xl font-semibold text-center">Start a Deal</h2>
+return ( <div className="min-h-screen bg-[#0f172a] text-white flex justify-center items-center px-4 py-12"> <Helmet> <title>Start a Deal - Dealcross</title> <meta name="description" content="Initiate a new escrow deal securely on Dealcross. Choose role, enter details, and upload proof." /> </Helmet>
 
-<div className="flex justify-center gap-4">
+<form
+    onSubmit={handleSubmit}
+    className="w-full max-w-lg bg-[#1e293b] p-6 rounded-lg shadow-lg space-y-4"
+    encType="multipart/form-data"
+  >
+    <h2 className="text-xl font-semibold text-center">Start a Deal</h2>
+
+    <div className="flex justify-center gap-4">
       {['buyer', 'seller'].map((r) => (
         <label key={r} className="flex items-center gap-2">
           <input
@@ -163,4 +166,4 @@ encType="multipart/form-data"
 
 export default StartDealPage;
 
-            
+  
