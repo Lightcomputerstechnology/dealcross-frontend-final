@@ -2,32 +2,33 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import PropTypes from 'prop-types';
 
-const SEOHead = ({
-  title = 'Dealcross',
-  description = 'Secure global transactions with escrow, wallet, and share trading.',
-  keywords = 'dealcross, escrow, secure payment, share trading, wallet, crypto, investment',
-  url = 'https://dealcross-frontend.onrender.com',
-  image = '/cover.png'
-}) => {
+const SEOHead = ({ title, description, keywords, author = 'Dealcross Team' }) => {
+  const defaultTitle = 'Dealcross - Secure Escrow Platform';
+  const defaultDescription =
+    'Dealcross is a secure financial platform enabling safe online transactions, share trading, and escrow services globally.';
+  const defaultKeywords =
+    'dealcross, escrow, secure transactions, share trading, wallet, fintech, dispute resolution';
+
   return (
     <Helmet>
-      <title>{title}</title>
-      <meta name="description" content={description} />
-      <meta name="keywords" content={keywords} />
-      <meta name="author" content="Dealcross Team" />
+      <title>{title || defaultTitle}</title>
+      <meta name="description" content={description || defaultDescription} />
+      <meta name="keywords" content={keywords || defaultKeywords} />
+      <meta name="author" content={author} />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-      {/* OpenGraph */}
-      <meta property="og:title" content={title} />
-      <meta property="og:description" content={description} />
+      {/* OpenGraph for social sharing */}
+      <meta property="og:title" content={title || defaultTitle} />
+      <meta property="og:description" content={description || defaultDescription} />
       <meta property="og:type" content="website" />
-      <meta property="og:image" content={image} />
-      <meta property="og:url" content={url} />
+      <meta property="og:image" content="/logo512.png" />
+      <meta property="og:url" content="https://dealcross.com" />
 
-      {/* Twitter Cards */}
+      {/* Twitter Card */}
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={title} />
-      <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={image} />
+      <meta name="twitter:title" content={title || defaultTitle} />
+      <meta name="twitter:description" content={description || defaultDescription} />
+      <meta name="twitter:image" content="/logo512.png" />
     </Helmet>
   );
 };
@@ -36,8 +37,7 @@ SEOHead.propTypes = {
   title: PropTypes.string,
   description: PropTypes.string,
   keywords: PropTypes.string,
-  url: PropTypes.string,
-  image: PropTypes.string,
+  author: PropTypes.string,
 };
 
 export default SEOHead;
