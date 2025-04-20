@@ -37,39 +37,67 @@ export default function AdminRealTimeMetrics() {
     <>
       <Helmet>
         <title>Real-Time Metrics - Dealcross Admin</title>
-        <meta name="description" content="Live analytics and system metrics for Dealcross administrators." />
+        <meta
+          name="description"
+          content="Live analytics and system metrics for Dealcross administrators."
+        />
       </Helmet>
 
-      <div className="min-h-screen bg-[#0f172a] text-white px-6 py-10">
-        <h2 className="text-2xl font-bold mb-2">Live Admin Metrics</h2>
-        {lastUpdated && (
-          <p className="text-sm text-gray-400 mb-4">Last updated: {lastUpdated}</p>
-        )}
+      <div className="min-h-screen bg-[#0f172a] text-white px-6 py-12">
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h2 className="text-3xl font-bold">Live Admin Metrics</h2>
+            {lastUpdated && (
+              <p className="text-sm text-gray-400 mt-1">
+                Last updated: {lastUpdated}
+              </p>
+            )}
+          </div>
+          <span className="px-3 py-1 bg-green-700 text-xs rounded-full animate-pulse text-white">
+            LIVE
+          </span>
+        </div>
+
         {status && <p className="text-yellow-400 mb-4">{status}</p>}
 
         {stats && (
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="bg-[#1e293b] p-6 rounded-lg shadow text-center">
-              <p className="text-sm text-gray-400">Active Users</p>
-              <h3 className="text-3xl font-bold mt-1">{stats.active_users}</h3>
-            </div>
-            <div className="bg-[#1e293b] p-6 rounded-lg shadow text-center">
-              <p className="text-sm text-gray-400">Live Deals</p>
-              <h3 className="text-3xl font-bold mt-1">{stats.live_deals}</h3>
-            </div>
-            <div className="bg-[#1e293b] p-6 rounded-lg shadow text-center">
-              <p className="text-sm text-gray-400">Recent Transactions</p>
-              <h3 className="text-3xl font-bold mt-1">{stats.recent_transactions}</h3>
-            </div>
-            <div className="bg-[#1e293b] p-6 rounded-lg shadow text-center">
-              <p className="text-sm text-gray-400">Fraud Warnings</p>
-              <h3 className={`text-3xl font-bold mt-1 ${stats.fraud_alerts > 0 ? 'text-red-400' : 'text-green-400'}`}>
-                {stats.fraud_alerts}
-              </h3>
-            </div>
+            {[
+              {
+                label: 'Active Users',
+                value: stats.active_users,
+                color: 'text-blue-300',
+              },
+              {
+                label: 'Live Deals',
+                value: stats.live_deals,
+                color: 'text-purple-300',
+              },
+              {
+                label: 'Recent Transactions',
+                value: stats.recent_transactions,
+                color: 'text-teal-300',
+              },
+              {
+                label: 'Fraud Warnings',
+                value: stats.fraud_alerts,
+                color:
+                  stats.fraud_alerts > 0 ? 'text-red-400' : 'text-green-400',
+              },
+            ].map((card, index) => (
+              <div
+                key={index}
+                className="bg-[#1e293b] p-6 rounded-xl shadow hover:shadow-lg transition hover:-translate-y-1 duration-300 border border-gray-700"
+              >
+                <p className="text-sm text-gray-400">{card.label}</p>
+                <h3 className={`text-4xl font-extrabold mt-2 ${card.color}`}>
+                  {card.value}
+                </h3>
+              </div>
+            ))}
           </div>
         )}
       </div>
     </>
   );
-              }
+                  }
