@@ -25,6 +25,8 @@ import LiveTradingChart from "@/pages/LiveTradingChart";
 
 // Admin & Investor Pages
 import AdminDashboard from "@/pages/AdminDashboard";
+import AdminDealActivityLog from "@/pages/AdminDealActivityLog";
+import AdminRealTimeMetrics from "@/pages/AdminRealTimeMetrics";
 import InvestorPanel from "@/pages/InvestorPanel";
 import InvestorProfile from "@/pages/InvestorProfile";
 import InvestorReports from "@/pages/InvestorReports";
@@ -97,6 +99,8 @@ export default function AppRoutes() {
 
         {/* Admin & Investor */}
         <Route path="admin" element={<AdminDashboard />} />
+        <Route path="admin/deal-activity-log" element={<AdminDealActivityLog />} />
+        <Route path="admin/real-metrics" element={<AdminRealTimeMetrics />} />
         <Route path="investor" element={<InvestorPanel />} />
         <Route path="investor-profile" element={<InvestorProfile />} />
         <Route path="investor-reports" element={<InvestorReports />} />
@@ -143,4 +147,4 @@ export default function AppRoutes() {
       </Route>
     </Routes>
   );
-    }
+  }
