@@ -1,63 +1,58 @@
+// src/components/AdminSidebarMobile.jsx
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  FiMenu, FiX, FiBarChart2, FiBriefcase, FiUsers, FiAlertCircle, FiSettings,
+  FiMenu, FiX, FiBarChart2, FiUsers, FiBriefcase,
+  FiAlertCircle, FiPieChart, FiFileText, FiShield, FiSettings
 } from 'react-icons/fi';
+import Logo from '@/assets/dealcross-logo.png';
 
-const MobileAdminSidebar = () => {
-  const [open, setOpen] = useState(false);
+const navLinks = [
+  { name: "Dashboard", path: "/admin", icon: FiBarChart2 },
+  { name: "Users", path: "/users", icon: FiUsers },
+  { name: "Deals", path: "/deals", icon: FiBriefcase },
+  { name: "Disputes", path: "/dispute-log", icon: FiAlertCircle },
+  { name: "Analytics", path: "/analytics", icon: FiPieChart },
+  { name: "Activity Log", path: "/deal-logs", icon: FiFileText },
+  { name: "Security", path: "/security-center", icon: FiShield },
+  { name: "Settings", path: "/settings", icon: FiSettings },
+];
+
+export default function AdminSidebarMobile() {
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
       {/* Toggle Button */}
       <button
-        onClick={() => setOpen(true)}
-        className="md:hidden fixed top-4 left-4 z-50 bg-blue-600 p-2 rounded text-white shadow"
+        onClick={() => setIsOpen(!isOpen)}
+        className="fixed top-4 left-4 z-50 text-white bg-gray-800 p-2 rounded-md shadow md:hidden"
       >
-        <FiMenu size={20} />
+        {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
       </button>
-
-      {/* Overlay */}
-      {open && (
-        <div
-          onClick={() => setOpen(false)}
-          className="fixed inset-0 bg-black bg-opacity-40 z-40"
-        />
-      )}
 
       {/* Sidebar Drawer */}
       <aside
-        className={`fixed top-0 left-0 w-64 h-full bg-[#1e293b] text-white transform z-50 transition-transform duration-300 ${
-          open ? 'translate-x-0' : '-translate-x-full'
-        }`}
+        className={`fixed top-0 left-0 h-full w-64 bg-[#1e293b] text-white shadow-lg z-40 transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:hidden`}
       >
-        <div className="flex justify-between items-center p-4 border-b border-gray-700">
-          <h2 className="text-xl font-bold">Admin Panel</h2>
-          <button onClick={() => setOpen(false)} className="text-gray-400 hover:text-white">
-            <FiX size={20} />
-          </button>
+        <div className="p-6 border-b border-gray-700 flex items-center gap-3">
+          <img src={Logo} alt="Dealcross" className="h-8 w-8" />
+          <h2 className="text-lg font-bold">Dealcross Admin</h2>
         </div>
 
-        <nav className="flex flex-col gap-4 p-4 text-sm">
-          <Link to="/admin" onClick={() => setOpen(false)} className="flex items-center gap-2 hover:text-blue-400">
-            <FiBarChart2 /> Dashboard
-          </Link>
-          <Link to="/deal-analytics" onClick={() => setOpen(false)} className="flex items-center gap-2 hover:text-blue-400">
-            <FiBriefcase /> Deals
-          </Link>
-          <Link to="/users" onClick={() => setOpen(false)} className="flex items-center gap-2 hover:text-blue-400">
-            <FiUsers /> Users
-          </Link>
-          <Link to="/dispute-log" onClick={() => setOpen(false)} className="flex items-center gap-2 hover:text-blue-400">
-            <FiAlertCircle /> Disputes
-          </Link>
-          <Link to="/settings" onClick={() => setOpen(false)} className="flex items-center gap-2 hover:text-blue-400">
-            <FiSettings /> Settings
-          </Link>
+        <nav className="p-4 space-y-3">
+          {navLinks.map((link) => (
+            <Link
+              key={link.path}
+              to={link.path}
+              onClick={() => setIsOpen(false)}
+              className="flex items-center gap-3 text-sm hover:text-blue-400"
+            >
+              <link.icon size={18} /> {link.name}
+            </Link>
+          ))}
         </nav>
       </aside>
     </>
   );
-};
-
-export default MobileAdminSidebar;
+}
