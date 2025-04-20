@@ -8,11 +8,14 @@ const AuditLogViewer = () => {
 
   const fetchLogs = async () => {
     try {
-      const response = await axios.get('https://d-final.onrender.com/admin/audit-logs');
+      const token = localStorage.getItem('token');
+      const response = await axios.get('https://d-final.onrender.com/admin/audit-logs', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setLogs(response.data);
-    } catch (error) {
-      console.error('Error fetching audit logs:', error);
-    } finally {
+      setLoading(false);
+    } catch (err) {
+      console.error('Failed to fetch audit logs:', err);
       setLoading(false);
     }
   };
@@ -24,22 +27,22 @@ const AuditLogViewer = () => {
   }, []);
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-2 text-sm">
       {loading ? (
-        <p className="text-yellow-400 text-sm">Loading audit logs...</p>
-      ) : logs.length === 0 ? (
-        <p className="text-gray-400 text-sm">No audit logs found.</p>
+        <p className="text-yellow-400">Loading logs...</p>
+      ) : logs.length > 0 ? (
+        logs.map((log, i) => (
+          <div key={i} className="border border-gray-700 rounded p-2 bg-[#1e293b]">
+            <p><strong>{log.admin}</strong> — {log.action}</p>
+            <p className="text-xs text-gray-400">{new Date(log.timestamp).toLocaleString()}</p>
+          </div>
+        ))
       ) : (
-        <ul className="text-sm text-gray-200 space-y-1">
-          {logs.map((log, index) => (
-            <li key={index} className="border-b border-gray-600 pb-1">
-              <span className="font-medium text-blue-400">{log.admin}</span> performed <strong>{log.action}</strong> on <span className="text-yellow-300">{log.target}</span> — {new Date(log.timestamp).toLocaleString()}
-            </li>
-          ))}
-        </ul>
+        <p className="text-gray-400">No audit logs available.</p>
       )}
     </div>
   );
 };
 
 export default AuditLogViewer;
+            
