@@ -1,3 +1,4 @@
+// src/pages/AdminRealTimeMetrics.jsx
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Helmet } from 'react-helmet';
@@ -5,6 +6,7 @@ import { Helmet } from 'react-helmet';
 export default function AdminRealTimeMetrics() {
   const [stats, setStats] = useState(null);
   const [status, setStatus] = useState('Loading...');
+  const [lastUpdated, setLastUpdated] = useState(null);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -20,13 +22,14 @@ export default function AdminRealTimeMetrics() {
         });
         setStats(res.data);
         setStatus(null);
+        setLastUpdated(new Date().toLocaleTimeString());
       } catch (err) {
         setStatus('Failed to fetch real-time metrics.');
       }
     };
 
     fetchStats();
-    const interval = setInterval(fetchStats, 15000); // update every 15s
+    const interval = setInterval(fetchStats, 15000);
     return () => clearInterval(interval);
   }, []);
 
@@ -38,12 +41,14 @@ export default function AdminRealTimeMetrics() {
       </Helmet>
 
       <div className="min-h-screen bg-[#0f172a] text-white px-6 py-10">
-        <h2 className="text-2xl font-bold mb-6">Live Admin Metrics</h2>
-
-        {status && <p className="text-yellow-400">{status}</p>}
+        <h2 className="text-2xl font-bold mb-2">Live Admin Metrics</h2>
+        {lastUpdated && (
+          <p className="text-sm text-gray-400 mb-4">Last updated: {lastUpdated}</p>
+        )}
+        {status && <p className="text-yellow-400 mb-4">{status}</p>}
 
         {stats && (
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             <div className="bg-[#1e293b] p-6 rounded-lg shadow text-center">
               <p className="text-sm text-gray-400">Active Users</p>
               <h3 className="text-3xl font-bold mt-1">{stats.active_users}</h3>
@@ -67,4 +72,4 @@ export default function AdminRealTimeMetrics() {
       </div>
     </>
   );
-}
+              }
