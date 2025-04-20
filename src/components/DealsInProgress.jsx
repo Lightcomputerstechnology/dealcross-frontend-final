@@ -3,54 +3,64 @@ import React, { useState, useEffect } from 'react';
 
 const deals = [
   {
-    title: 'iPhone 14 Pro Purchase',
-    amount: '$1,200',
-    status: 'In Escrow',
-  },
-  {
-    title: 'Helena paying for web dev',
+    title: 'Bryan (Buyer) ↔ Helena (Seller)',
+    description: 'Payment for full-stack web development project.',
     amount: '$4,200',
-    status: 'Locked',
+    status: 'Locked • California, USA',
   },
   {
-    title: 'Amazon Order Deal',
+    title: 'James ↔ Sarah',
+    description: 'Purchase of iPhone 14 Pro (New).',
+    amount: '$1,200',
+    status: 'In Escrow • Lagos, Nigeria',
+  },
+  {
+    title: 'Linda ↔ Amazon Agent',
+    description: 'Order placement for home electronics.',
     amount: '$300',
-    status: 'Pending',
+    status: 'Pending • Florida, USA',
   },
   {
-    title: 'Design Contract - Bryan',
+    title: 'Michael ↔ Creative Studio',
+    description: 'Logo + UI/UX design contract.',
     amount: '$1,000',
-    status: 'Secured',
+    status: 'Secured • Nairobi, Kenya',
   },
   {
-    title: 'Crypto Exchange Deal',
+    title: 'Ethan ↔ CryptoVendor',
+    description: 'USDT-to-BTC exchange with 24h release.',
     amount: '$5,000',
-    status: 'Locked',
+    status: 'Locked • Online Deal',
   },
   {
-    title: 'Used Car Purchase',
+    title: 'Jackson ↔ AutoMart',
+    description: 'Used Toyota Camry (2016) deal.',
     amount: '$6,800',
-    status: 'In Progress',
+    status: 'In Progress • Abuja, Nigeria',
   },
   {
-    title: 'Furniture Delivery',
+    title: 'Martha ↔ Woodify Co.',
+    description: 'Custom-made furniture set delivery.',
     amount: '$2,100',
-    status: 'Completed',
+    status: 'Completed • Accra, Ghana',
   },
   {
-    title: 'Freelance Video Edit',
+    title: 'Kevin ↔ PixelEdit',
+    description: 'Freelance video editing for ad campaign.',
     amount: '$400',
-    status: 'In Escrow',
+    status: 'In Escrow • Remote',
   },
   {
-    title: 'School Payment Contract',
+    title: 'Olivia ↔ Greenfield School',
+    description: 'Child’s school fee (Term 2).',
     amount: '$3,500',
-    status: 'Active',
+    status: 'Active • Johannesburg, SA',
   },
   {
-    title: 'Consulting Payment',
+    title: 'Sandra ↔ Coach Williams',
+    description: 'Consulting retainer (Business Coaching).',
     amount: '$1,800',
-    status: 'Escrowed',
+    status: 'Escrowed • London, UK',
   },
 ];
 
@@ -60,7 +70,7 @@ const DealsInProgress = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex(prev => (prev + 1) % deals.length);
-    }, 7000); // 7 seconds
+    }, 7000); // Rotate every 7 seconds
     return () => clearInterval(interval);
   }, []);
 
@@ -77,8 +87,9 @@ const DealsInProgress = () => {
           key={currentIndex}
           className="bg-blue-900 text-white rounded-2xl shadow-xl p-6 animate-[slideInFromRight_1s_ease-out]"
         >
-          <h3 className="text-xl font-semibold mb-2">{currentDeal.title}</h3>
-          <p className="text-lg">
+          <h3 className="text-lg sm:text-xl font-semibold mb-1">{currentDeal.title}</h3>
+          <p className="text-sm sm:text-base mb-2">{currentDeal.description}</p>
+          <p className="text-sm">
             <strong>Amount:</strong> {currentDeal.amount}
           </p>
           <p className="text-sm">
@@ -89,4 +100,5 @@ const DealsInProgress = () => {
     </section>
   );
 };
+
 export default DealsInProgress;
