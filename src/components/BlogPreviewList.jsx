@@ -1,4 +1,3 @@
-// src/components/BlogPreviewList.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
 
