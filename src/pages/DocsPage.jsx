@@ -1,6 +1,6 @@
-import React from 'react'; import { Helmet } from 'react-helmet'; import { FiDownloadCloud } from 'react-icons/fi';
+import React from 'react'; import { Helmet } from 'react-helmet'; import { FiDownloadCloud } from 'react-icons/fi'; import DocsViewer from '@/components/DocsViewer';
 
-const DocsPage = () => { return ( <> <Helmet> <title>Docs - Dealcross Platform Overview</title> <meta name="description" content="Explore the Dealcross platform documentation, including pitch decks and business overviews." /> <meta name="keywords" content="dealcross, pitchdeck, documentation, investment, whitepaper" /> <meta name="author" content="Dealcross Team" /> </Helmet>
+const DocsPage = () => { return ( <> <Helmet> <title>Dealcross Documentation</title> <meta name="description" content="Official documentation, pitch decks, and platform guides for Dealcross investors and users." /> <meta name="keywords" content="dealcross, docs, pitchdeck, business, overview, pdf, documentation" /> <meta name="author" content="Dealcross Team" /> <meta property="og:title" content="Dealcross Documentation" /> <meta property="og:description" content="View or download Dealcross pitch decks and documents." /> <meta property="og:type" content="website" /> <meta property="og:url" content="https://dealcross.com/docs" /> <meta name="twitter:card" content="summary" /> <meta name="twitter:title" content="Dealcross Documentation" /> <meta name="twitter:description" content="Review pitch decks and business materials from Dealcross." /> </Helmet>
 
 <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white px-4 py-10">
     <div className="max-w-5xl mx-auto">
@@ -10,16 +10,10 @@ const DocsPage = () => { return ( <> <Helmet> <title>Docs - Dealcross Platform O
       </p>
 
       {/* PDF Viewer */}
-      <div className="w-full mb-8">
-        <iframe
-          src="/docs/pitchdeck.pdf"
-          className="w-full h-[600px] border border-gray-300 dark:border-gray-700 rounded-md shadow"
-          title="Dealcross Docs Viewer"
-        ></iframe>
-      </div>
+      <DocsViewer filePath="/docs/pitchdeck.pdf" />
 
       {/* Download Button */}
-      <div className="text-center">
+      <div className="text-center mt-8">
         <a
           href="/docs/pitchdeck.pdf"
           download
