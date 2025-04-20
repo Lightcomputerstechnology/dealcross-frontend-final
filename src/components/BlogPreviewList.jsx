@@ -8,19 +8,19 @@ const blogPosts = [
     title: 'Why Dealcross Beats Other Platforms',
     link: '/why-dealcross',
     summary: 'Discover what makes Dealcross more secure and scalable.',
-    icon: <FaShieldAlt className="text-3xl text-blue-500" />,
+    icon: <FaShieldAlt className="text-blue-500 text-3xl" />,
   },
   {
     title: 'Understanding Dispute Resolution on Dealcross',
     link: '/dispute-guide',
     summary: 'See how our dispute system protects both buyers and sellers.',
-    icon: <FaGavel className="text-3xl text-yellow-500" />,
+    icon: <FaGavel className="text-yellow-500 text-3xl" />,
   },
   {
     title: 'Fast Payouts on Dealcross',
     link: '/fast-payouts',
     summary: 'Learn how funds are released quickly after deal success.',
-    icon: <FaMoneyCheckAlt className="text-3xl text-green-500" />,
+    icon: <FaMoneyCheckAlt className="text-green-500 text-3xl" />,
   },
 ];
 
@@ -30,14 +30,14 @@ const BlogPreviewList = () => {
       <div className="max-w-6xl mx-auto">
         <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">From the Blog</h2>
         <div className="grid md:grid-cols-3 gap-6">
-          {blogPosts.map((post, i) => (
+          {blogPosts.map((post, index) => (
             <Link
               to={post.link}
-              key={i}
+              key={index}
               className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow hover:shadow-lg transition border border-gray-200 dark:border-gray-700"
             >
-              <div className="mb-4">{post.icon}</div>
-              <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">
+              <div className="mb-3">{post.icon}</div>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">
                 {post.title}
               </h3>
               <p className="text-sm text-gray-600 dark:text-gray-400">{post.summary}</p>
