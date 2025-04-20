@@ -12,6 +12,7 @@ import {
   FiBriefcase,
   FiClipboard,
   FiMenu,
+  FiPieChart,
 } from 'react-icons/fi';
 
 import MetricsCard from '@/components/admin/MetricsCard';
@@ -19,6 +20,7 @@ import FraudList from '@/components/admin/FraudList';
 import AuditLogViewer from '@/components/admin/AuditLogViewer';
 import PendingDealList from '@/components/admin/PendingDealList';
 import UserControlList from '@/components/admin/UserControlList';
+import AdminCharts from '@/components/admin/AdminCharts';
 
 const AdminDashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -85,6 +87,7 @@ const AdminDashboard = () => {
             <Link to="/dispute-log" className="flex items-center gap-2 hover:text-blue-400"><FiAlertCircle /> Disputes</Link>
             <Link to="/settings" className="flex items-center gap-2 hover:text-blue-400"><FiSettings /> Settings</Link>
             <Link to="/admin-deal-log" className="flex items-center gap-2 hover:text-blue-400"><FiClipboard /> Deal Logs</Link>
+            <Link to="/analytics" className="flex items-center gap-2 hover:text-blue-400"><FiPieChart /> Charts</Link>
           </nav>
         </aside>
 
@@ -99,7 +102,6 @@ const AdminDashboard = () => {
             </button>
           </div>
 
-          {/* Metrics */}
           <section>
             <h2 className="text-xl font-semibold mb-4">Live System Metrics</h2>
             {loadingMetrics ? (
@@ -113,52 +115,31 @@ const AdminDashboard = () => {
             )}
           </section>
 
-          {/* Recent Deals */}
-          <section>
-            <h2 className="text-xl font-semibold mb-4">Recent Deals</h2>
-            <div className="bg-gray-900 rounded-lg p-4">
-              <div className="grid grid-cols-3 text-sm text-gray-400 mb-2">
-                <span>Deal</span>
-                <span>Amount</span>
-                <span>Expected</span>
-              </div>
-              {recentDeals.map((deal, i) => (
-                <div key={i} className="grid grid-cols-3 py-2 border-t border-gray-700">
-                  <span>{deal.title}</span>
-                  <span>${deal.amount.toLocaleString()}</span>
-                  <span className="text-yellow-400 text-sm">{deal.expected_completion}</span>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* Fraud Alerts */}
           <section className="bg-gray-900 p-4 rounded-lg shadow">
-            <h3 className="font-semibold mb-3 flex items-center gap-2">
-              <FiAlertCircle /> Fraud Alerts
-            </h3>
+            <h3 className="font-semibold mb-3">Fraud Alerts</h3>
             <FraudList loading={loadingFraud} fraudReports={fraudReports} />
           </section>
 
-          {/* Pending Approvals */}
           <section className="bg-gray-900 p-4 rounded-lg shadow">
             <h3 className="font-semibold mb-3">Pending Deal Approvals</h3>
             <PendingDealList />
           </section>
 
-          {/* User Admin Controls */}
           <section className="bg-gray-900 p-4 rounded-lg shadow">
             <h3 className="font-semibold mb-3">User Admin Controls</h3>
             <UserControlList />
           </section>
 
-          {/* Audit Logs */}
           <section className="bg-gray-900 p-4 rounded-lg shadow">
-            <h3 className="font-semibold mb-3">Admin Audit Logs</h3>
+            <h3 className="font-semibold mb-3">Audit Logs</h3>
             <AuditLogViewer />
           </section>
 
-          {/* Notifications */}
+          <section className="bg-gray-900 p-4 rounded-lg shadow">
+            <h3 className="font-semibold mb-3">Admin Chart Overview</h3>
+            <AdminCharts />
+          </section>
+
           <section className="bg-gray-900 p-4 rounded-lg shadow">
             <h3 className="font-semibold mb-3 flex items-center gap-2">
               <FiMessageSquare /> System Notifications
@@ -174,3 +155,4 @@ const AdminDashboard = () => {
 };
 
 export default AdminDashboard;
+    
