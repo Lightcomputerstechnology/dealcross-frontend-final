@@ -1,18 +1,65 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 
-export default function RefundPolicyPage() {
+export default function RefundPolicy() {
   return (
-    <main className="max-w-4xl mx-auto py-16 px-6 text-gray-900 dark:text-white">
-      <h1 className="text-3xl font-bold mb-6">Refund Policy</h1>
-      <p className="mb-4">
-        Refunds are processed in accordance with our escrow and dispute policies.
-      </p>
-      <ul className="list-disc pl-6 space-y-2">
-        <li>Refunds are granted when disputes are resolved in favor of the buyer.</li>
-        <li>All refund decisions are final and based on verified evidence.</li>
-        <li>Refunds are returned to your Dealcross wallet balance or original payment method.</li>
-        <li>Timeframe for refund processing is typically 1–5 business days.</li>
-      </ul>
-    </main>
+    <>
+      <Helmet>
+        <title>Refund Policy - Dealcross</title>
+        <meta name="description" content="Understand our policy regarding refunds and cancellations on Dealcross." />
+        <meta name="keywords" content="refund, cancellation, policy, dealcross" />
+        <meta name="author" content="Dealcross Team" />
+      </Helmet>
+
+      <main className="min-h-screen px-6 py-12 bg-white dark:bg-gray-950 text-gray-900 dark:text-white">
+        <div className="max-w-4xl mx-auto space-y-6">
+          <h1 className="text-4xl font-bold mb-4">Refund Policy</h1>
+
+          <section>
+            <h2 className="text-2xl font-semibold mb-2">1. Refund Eligibility</h2>
+            <p>
+              Refunds are issued only under specific conditions. These include canceled transactions,
+              resolution decisions in your favor, or technical payment failures.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-2xl font-semibold mb-2">2. Processing Time</h2>
+            <p>
+              Approved refunds are processed within 7–14 business days, depending on the original
+              payment method and financial institution.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-2xl font-semibold mb-2">3. Non-refundable Transactions</h2>
+            <p>
+              Once funds have been released to a seller or marked as completed, the transaction
+              becomes non-refundable unless fraud is proven.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-2xl font-semibold mb-2">4. Dispute Required</h2>
+            <p>
+              To request a refund, users must open a dispute within the transaction window. The
+              support team will review the case before approving any refund.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-2xl font-semibold mb-2">5. Contact Support</h2>
+            <p>
+              For refund inquiries, contact our support team through your dashboard or by emailing
+              support@dealcross.com.
+            </p>
+          </section>
+
+          <p className="text-sm text-gray-400 mt-10">
+            Last updated: April 2025
+          </p>
+        </div>
+      </main>
+    </>
   );
-}
+      }
