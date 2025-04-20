@@ -21,7 +21,7 @@ try {
 
 const isEmailValid = (email) => { const pattern = /^[^\s@]+@[^\s@]+.[^\s@]+$/; return pattern.test(email); };
 
-return ( <> <Helmet> <title>Forgot Password - Dealcross</title> <meta name="description" content="Reset your password by email if you’ve forgotten it." /> <meta name="keywords" content="forgot password, reset, email, dealcross" /> <meta name="author" content="Dealcross Team" /> </Helmet>
+return ( <> <Helmet> <title>Forgot Password - Dealcross</title> <meta name="description" content="Reset your password by email if you’ve forgotten it." /> <meta name="keywords" content="forgot password, reset, email, dealcross" /> <meta name="author" content="Dealcross Team" /> <meta property="og:title" content="Reset Your Password - Dealcross" /> <meta property="og:description" content="Forgot your password? Request a reset link from Dealcross." /> <meta property="og:type" content="website" /> <meta property="og:url" content="https://dealcross.com/forgot-password" /> <meta name="twitter:card" content="summary" /> <meta name="twitter:title" content="Forgot Password - Dealcross" /> <meta name="twitter:description" content="Reset your account securely through email." /> </Helmet>
 
 <main className="min-h-screen flex items-center justify-center px-6 py-10 bg-white dark:bg-gray-950 text-gray-900 dark:text-white">
     <form
@@ -40,7 +40,7 @@ return ( <> <Helmet> <title>Forgot Password - Dealcross</title> <meta name="desc
         onChange={(e) => setEmail(e.target.value)}
         placeholder="Email address"
         required
-        className="w-full px-4 py-2 rounded bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700"
+        className="w-full px-4 py-2 rounded bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 focus:outline-none"
       />
 
       {!isEmailValid(email) && email.length > 3 && (
@@ -70,4 +70,4 @@ return ( <> <Helmet> <title>Forgot Password - Dealcross</title> <meta name="desc
 
 ); }
 
-      
+        
