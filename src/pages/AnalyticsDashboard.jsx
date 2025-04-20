@@ -1,71 +1,69 @@
-import React, { useEffect, useState } from 'react';
+// File: src/pages/AnalyticsDashboard.jsx
+
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import { Helmet } from 'react-helmet';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+import AdminCharts from '@/components/admin/AdminCharts';
 
 const AnalyticsDashboard = () => {
-  const [stats, setStats] = useState(null);
-  const [status, setStatus] = useState('Loading analytics...');
-  const [lastUpdated, setLastUpdated] = useState(null);
+  const [metrics, setMetrics] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const chartRef = useRef(null);
 
-  const fetchStats = async () => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      setStatus('Admin login required.');
-      return;
-    }
-
+  const fetchMetrics = async () => {
     try {
-      const response = await axios.get('https://d-final.onrender.com/admin/analytics', {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-
-      setStats(response.data);
-      setStatus(null);
-      setLastUpdated(new Date().toLocaleTimeString());
-    } catch (error) {
-      setStatus('Failed to load analytics.');
+      const response = await axios.get('https://d-final.onrender.com/admin/metrics');
+      setMetrics(response.data || []);
+      setLoading(false);
+    } catch (err) {
+      console.error('Failed to fetch metrics:', err);
+      setLoading(false);
     }
   };
 
+  const exportToPDF = async () => {
+    const element = chartRef.current;
+    if (!element) return;
+
+    const canvas = await html2canvas(element);
+    const imgData = canvas.toDataURL('image/png');
+    const pdf = new jsPDF();
+    pdf.addImage(imgData, 'PNG', 10, 10, 190, 0);
+    pdf.save('dealcross_admin_metrics.pdf');
+  };
+
   useEffect(() => {
-    fetchStats();
-    const interval = setInterval(fetchStats, 20000); // every 20s
+    fetchMetrics();
+    const interval = setInterval(fetchMetrics, 20000);
     return () => clearInterval(interval);
   }, []);
 
   return (
     <div className="min-h-screen bg-[#0f172a] text-white px-6 py-10">
       <Helmet>
-        <title>Admin Analytics - Dealcross</title>
-        <meta name="description" content="View real-time admin analytics and statistics on Dealcross." />
-        <meta name="keywords" content="dealcross, analytics, admin, metrics, stats, dashboard" />
-        <meta name="author" content="Dealcross Team" />
+        <title>Analytics Dashboard - Dealcross</title>
+        <meta name="description" content="Detailed metrics and performance analytics for Dealcross admins." />
       </Helmet>
 
-      <h2 className="text-2xl font-bold mb-2">Admin Analytics</h2>
-      {lastUpdated && <p className="text-sm text-gray-400 mb-4">Last updated at: {lastUpdated}</p>}
-      {status && <p className="text-yellow-400 mb-4">{status}</p>}
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold">Analytics Dashboard</h1>
+        <button
+          onClick={exportToPDF}
+          className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-sm font-medium"
+        >
+          Export PDF
+        </button>
+      </div>
 
-      {stats && (
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="bg-[#1e293b] p-6 rounded-lg border border-blue-500 shadow text-center hover:scale-105 transition-transform">
-            <p className="text-sm text-gray-400">Registered Users</p>
-            <h3 className="text-3xl font-bold mt-1">{stats.users ?? '-'}</h3>
-          </div>
-          <div className="bg-[#1e293b] p-6 rounded-lg border border-green-500 shadow text-center hover:scale-105 transition-transform">
-            <p className="text-sm text-gray-400">Deals Created</p>
-            <h3 className="text-3xl font-bold mt-1">{stats.deals ?? '-'}</h3>
-          </div>
-          <div className="bg-[#1e293b] p-6 rounded-lg border border-yellow-400 shadow text-center hover:scale-105 transition-transform">
-            <p className="text-sm text-gray-400">Wallets Funded</p>
-            <h3 className="text-3xl font-bold mt-1">{stats.wallets_funded ?? '-'}</h3>
-          </div>
-          <div className="bg-[#1e293b] p-6 rounded-lg border border-red-500 shadow text-center hover:scale-105 transition-transform">
-            <p className="text-sm text-gray-400">Disputes Raised</p>
-            <h3 className="text-3xl font-bold mt-1 text-red-400">{stats.disputes ?? '-'}</h3>
-          </div>
-        </div>
-      )}
+      <div ref={chartRef}>
+        {loading ? (
+          <p className="text-yellow-400">Loading metrics...</p>
+        ) : (
+          <AdminCharts metrics={metrics} />
+        )}
+      </div>
     </div>
   );
 };
