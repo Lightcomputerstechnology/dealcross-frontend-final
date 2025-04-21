@@ -1,14 +1,18 @@
-import { createContext, useState, useContext } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
-export const NotificationContext = createContext();
+const NotificationContext = createContext();
 
 export const NotificationProvider = ({ children }) => {
-  const [notification, setNotification] = useState({ type: '', message: '', visible: false });
+  const [notification, setNotification] = useState({
+    message: '',
+    type: 'success',
+    visible: false,
+  });
 
-  const showNotification = (type, message) => {
-    setNotification({ type, message, visible: true });
+  const showNotification = (type = 'success', message = '') => {
+    setNotification({ message, type, visible: true });
     setTimeout(() => {
-      setNotification({ type: '', message: '', visible: false });
+      setNotification((prev) => ({ ...prev, visible: false }));
     }, 5000);
   };
 
