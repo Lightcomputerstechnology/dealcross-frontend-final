@@ -1,17 +1,22 @@
-// File: src/components/NotificationAlert.jsx
 import React, { useEffect, useState } from 'react';
 import { FiCheckCircle, FiXCircle, FiX } from 'react-icons/fi';
+import { useNotification } from '@/context/NotificationContext';
 
-const NotificationAlert = ({ type = 'success', message = '', duration = 4000 }) => {
-  const [visible, setVisible] = useState(true);
-  const isSuccess = type === 'success';
+const NotificationAlert = () => {
+  const { notification } = useNotification();
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setVisible(false), duration);
-    return () => clearTimeout(timer);
-  }, [duration]);
+    if (notification.visible) {
+      setVisible(true);
+      const timer = setTimeout(() => setVisible(false), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [notification]);
 
-  if (!visible) return null;
+  if (!visible || !notification.message) return null;
+
+  const isSuccess = notification.type === 'success';
 
   return (
     <div
@@ -28,7 +33,7 @@ const NotificationAlert = ({ type = 'success', message = '', duration = 4000 }) 
         ) : (
           <FiXCircle className="w-5 h-5 mr-2" />
         )}
-        <span className="font-medium">{message}</span>
+        <span className="font-medium">{notification.message}</span>
       </div>
       <button
         onClick={() => setVisible(false)}
