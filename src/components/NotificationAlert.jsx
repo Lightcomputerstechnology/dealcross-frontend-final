@@ -1,4 +1,3 @@
-// File: src/components/NotificationAlert.jsx
 import React, { useEffect, useState } from 'react';
 import { FiCheckCircle, FiXCircle, FiX } from 'react-icons/fi';
 import { useNotification } from '@/context/NotificationContext';
@@ -8,7 +7,15 @@ const NotificationAlert = () => {
   const [current, setCurrent] = useState(null);
   const [visible, setVisible] = useState(false);
 
-  // Sound effect
+  // === Preload audio files once on mount ===
+  useEffect(() => {
+    const successSound = new Audio('/src/assets/sounds/success.mp3');
+    const errorSound = new Audio('/src/assets/sounds/error.mp3');
+    successSound.load();
+    errorSound.load();
+  }, []);
+
+  // === Sound effect on trigger ===
   const playSound = (type) => {
     const sound = new Audio(
       type === 'success'
@@ -19,6 +26,7 @@ const NotificationAlert = () => {
     sound.play().catch(() => {});
   };
 
+  // === Show and auto-dismiss notification ===
   useEffect(() => {
     if (!visible && notificationQueue.length > 0) {
       const next = notificationQueue[0];
@@ -36,6 +44,7 @@ const NotificationAlert = () => {
   }, [notificationQueue, visible, popNotification]);
 
   if (!visible || !current) return null;
+
   const isSuccess = current.type === 'success';
 
   return (
@@ -48,7 +57,11 @@ const NotificationAlert = () => {
       }`}
     >
       <div className="flex items-center">
-        {isSuccess ? <FiCheckCircle className="w-5 h-5 mr-2" /> : <FiXCircle className="w-5 h-5 mr-2" />}
+        {isSuccess ? (
+          <FiCheckCircle className="w-5 h-5 mr-2" />
+        ) : (
+          <FiXCircle className="w-5 h-5 mr-2" />
+        )}
         <span className="font-medium">{current.message}</span>
       </div>
       <button
