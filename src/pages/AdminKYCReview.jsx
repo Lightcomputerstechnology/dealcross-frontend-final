@@ -1,33 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Helmet } from 'react-helmet';
+import NotificationAlert from '@/components/common/NotificationAlert'; // Ensure this file exists
 
 const AdminKYCReview = () => {
   const [kycList, setKycList] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [statusMessage, setStatusMessage] = useState('');
+  const [alert, setAlert] = useState({ type: '', message: '' });
 
   const fetchKycSubmissions = async () => {
     try {
       const res = await axios.get('https://d-final.onrender.com/admin/kyc-submissions');
       setKycList(res.data);
-      setLoading(false);
     } catch (err) {
       console.error('Failed to load KYC data:', err);
+      setAlert({ type: 'error', message: 'Error loading KYC submissions.' });
+    } finally {
       setLoading(false);
     }
   };
 
-  const updateStatus = async (id, status) => {
+  const updateStatus = async (id, newStatus) => {
     try {
-      await axios.put(`https://d-final.onrender.com/admin/kyc-status/${id}`, {
-        status: status,
+      await axios.put(`https://d-final.onrender.com/admin/kyc-status/${id}?status=${newStatus}`);
+      setAlert({
+        type: 'success',
+        message: `KYC ${id} marked as ${newStatus.toUpperCase()}.`,
       });
-      setStatusMessage(`KYC ${id} marked as ${status}`);
       fetchKycSubmissions();
     } catch (err) {
       console.error('Failed to update status:', err);
-      setStatusMessage('Update failed.');
+      setAlert({ type: 'error', message: 'Failed to update KYC status.' });
     }
   };
 
@@ -43,7 +46,10 @@ const AdminKYCReview = () => {
 
       <div className="min-h-screen bg-[#0f172a] text-white p-6">
         <h1 className="text-2xl font-bold mb-4">KYC Submissions Review</h1>
-        {statusMessage && <p className="mb-4 text-yellow-400">{statusMessage}</p>}
+
+        {alert.message && (
+          <NotificationAlert type={alert.type} message={alert.message} />
+        )}
 
         {loading ? (
           <p className="text-gray-400">Loading...</p>
@@ -60,6 +66,7 @@ const AdminKYCReview = () => {
                 <p><strong>Type:</strong> {kyc.document_type}</p>
                 <p><strong>Status:</strong> <span className="text-yellow-300">{kyc.status}</span></p>
                 <p className="truncate"><strong>URL:</strong> <a href={kyc.document_url} className="underline text-blue-400" target="_blank" rel="noopener noreferrer">View Document</a></p>
+
                 <div className="mt-3 space-x-2">
                   <button
                     onClick={() => updateStatus(kyc.id, 'approved')}
