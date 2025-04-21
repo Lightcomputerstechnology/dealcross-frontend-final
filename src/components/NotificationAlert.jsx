@@ -1,22 +1,42 @@
+// File: src/components/NotificationAlert.jsx
 import React, { useEffect, useState } from 'react';
 import { FiCheckCircle, FiXCircle, FiX } from 'react-icons/fi';
 import { useNotification } from '@/context/NotificationContext';
 
 const NotificationAlert = () => {
-  const { notification } = useNotification();
+  const { notificationQueue, popNotification } = useNotification();
+  const [current, setCurrent] = useState(null);
   const [visible, setVisible] = useState(false);
 
+  // Sound effect
+  const playSound = (type) => {
+    const sound = new Audio(
+      type === 'success'
+        ? '/src/assets/sounds/success.mp3'
+        : '/src/assets/sounds/error.mp3'
+    );
+    sound.volume = 0.6;
+    sound.play().catch(() => {});
+  };
+
   useEffect(() => {
-    if (notification.visible) {
+    if (!visible && notificationQueue.length > 0) {
+      const next = notificationQueue[0];
+      setCurrent(next);
       setVisible(true);
-      const timer = setTimeout(() => setVisible(false), 5000);
+      playSound(next.type);
+
+      const timer = setTimeout(() => {
+        setVisible(false);
+        popNotification();
+      }, 5000);
+
       return () => clearTimeout(timer);
     }
-  }, [notification]);
+  }, [notificationQueue, visible, popNotification]);
 
-  if (!visible || !notification.message) return null;
-
-  const isSuccess = notification.type === 'success';
+  if (!visible || !current) return null;
+  const isSuccess = current.type === 'success';
 
   return (
     <div
@@ -28,15 +48,14 @@ const NotificationAlert = () => {
       }`}
     >
       <div className="flex items-center">
-        {isSuccess ? (
-          <FiCheckCircle className="w-5 h-5 mr-2" />
-        ) : (
-          <FiXCircle className="w-5 h-5 mr-2" />
-        )}
-        <span className="font-medium">{notification.message}</span>
+        {isSuccess ? <FiCheckCircle className="w-5 h-5 mr-2" /> : <FiXCircle className="w-5 h-5 mr-2" />}
+        <span className="font-medium">{current.message}</span>
       </div>
       <button
-        onClick={() => setVisible(false)}
+        onClick={() => {
+          setVisible(false);
+          popNotification();
+        }}
         className="hover:opacity-60 transition"
       >
         <FiX className="w-4 h-4" />
