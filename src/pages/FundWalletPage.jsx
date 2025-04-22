@@ -1,21 +1,17 @@
-// src/pages/FundWalletPage.jsx
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { fundWallet } from '@/api';
 import { toast } from 'react-hot-toast';
+import useAuthRedirect from '@/hooks/useAuthRedirect';
 
 const FundWalletPage = () => {
+  useAuthRedirect(); // Protect this page
+
   const [amount, setAmount] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
   const handleFund = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem('token');
-
-    if (!token) {
-      toast.error('You must be logged in.');
-      return;
-    }
 
     if (!amount || parseFloat(amount) <= 0) {
       toast.error('Enter a valid amount.');
@@ -25,8 +21,7 @@ const FundWalletPage = () => {
     setSubmitting(true);
 
     try {
-      const result = await fundWallet({ amount: parseFloat(amount) });
-
+      await fundWallet({ amount: parseFloat(amount) });
       toast.success('Wallet funded successfully!');
       setAmount('');
     } catch (error) {
@@ -40,10 +35,7 @@ const FundWalletPage = () => {
     <>
       <Helmet>
         <title>Fund Wallet - Dealcross</title>
-        <meta
-          name="description"
-          content="Add funds to your Dealcross wallet securely using card, bank or crypto."
-        />
+        <meta name="description" content="Add funds to your Dealcross wallet securely using card, bank or crypto." />
         <meta name="keywords" content="dealcross, fund wallet, deposit, crypto, card, usdt" />
         <meta name="author" content="Dealcross Team" />
       </Helmet>
