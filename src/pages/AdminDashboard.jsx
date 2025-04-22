@@ -1,9 +1,9 @@
-// File: src/pages/AdminDashboard.jsx
+// src/pages/AdminDashboard.jsx
 
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import axios from 'axios';
+import { toast } from 'react-hot-toast';
 import {
   FiAlertCircle,
   FiMessageSquare,
@@ -20,7 +20,9 @@ import FraudList from '@/components/admin/FraudList';
 import AuditLogViewer from '@/components/admin/AuditLogViewer';
 import PendingDealList from '@/components/admin/PendingDealList';
 import UserControlList from '@/components/admin/UserControlList';
-import AdminCharts from '@/components/admin/AdminCharts'; // NEW chart panel
+import AdminCharts from '@/components/admin/AdminCharts';
+
+import { getAdminMetrics, getFraudReports, getCurrentUser } from '@/api';
 
 const AdminDashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -28,36 +30,53 @@ const AdminDashboard = () => {
   const [fraudReports, setFraudReports] = useState([]);
   const [loadingMetrics, setLoadingMetrics] = useState(true);
   const [loadingFraud, setLoadingFraud] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(null);
 
   const fetchMetrics = async () => {
     try {
-      const res = await axios.get('https://d-final.onrender.com/admin/metrics');
-      setMetrics(res.data);
+      const res = await getAdminMetrics();
+      setMetrics(res);
       setLoadingMetrics(false);
     } catch (err) {
-      console.error('Metrics error:', err);
       setLoadingMetrics(false);
     }
   };
 
   const fetchFraudReports = async () => {
     try {
-      const res = await axios.get('https://d-final.onrender.com/admin/fraud-reports');
-      setFraudReports(res.data);
+      const res = await getFraudReports();
+      setFraudReports(res);
       setLoadingFraud(false);
     } catch (err) {
-      console.error('Fraud error:', err);
       setLoadingFraud(false);
     }
   };
 
   useEffect(() => {
+    const verifyAdmin = async () => {
+      try {
+        const user = await getCurrentUser();
+        if (user.role !== 'admin') {
+          setIsAdmin(false);
+          toast.error('Access denied.');
+        } else {
+          setIsAdmin(true);
+        }
+      } catch {
+        toast.error('User verification failed.');
+        setIsAdmin(false);
+      }
+    };
+
+    verifyAdmin();
     fetchMetrics();
     fetchFraudReports();
+
     const interval = setInterval(() => {
       fetchMetrics();
       fetchFraudReports();
     }, 20000);
+
     return () => clearInterval(interval);
   }, []);
 
@@ -66,6 +85,10 @@ const AdminDashboard = () => {
     { title: 'Web Design Services', amount: 1200, expected_completion: '2025-04-30' },
     { title: 'Vehicle Sale', amount: 3800, expected_completion: '2025-05-15' },
   ];
+
+  if (isAdmin === false) {
+    return <div className="p-10 text-red-500 text-center text-lg">Access denied.</div>;
+  }
 
   return (
     <>
@@ -95,6 +118,18 @@ const AdminDashboard = () => {
               <FiMenu className="w-6 h-6" />
             </button>
           </div>
+
+          <button
+            onClick={() => {
+              setLoadingMetrics(true);
+              setLoadingFraud(true);
+              fetchMetrics();
+              fetchFraudReports();
+            }}
+            className="mb-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
+          >
+            Refresh Dashboard
+          </button>
 
           {/* Metrics */}
           <section>
