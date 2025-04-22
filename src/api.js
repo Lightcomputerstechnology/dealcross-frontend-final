@@ -17,9 +17,18 @@ API.interceptors.request.use((config) => {
 
 // Global error handler
 const handleError = (error) => {
-  const message = error?.response?.data?.detail || 'An error occurred.';
-  throw new Error(message);
+  console.error('API Error:', error);
+  if (error.response) {
+    const message = error.response.data?.detail || 'An error occurred.';
+    throw new Error(message);
+  } else if (error.request) {
+    throw new Error('No response from server. Please check your connection.');
+  } else {
+    throw new Error('Request setup failed.');
+  }
 };
+
+// All other API functions remain unchanged...
 
 // ========== AUTH ==========
 export const register = async (data) => {
@@ -275,3 +284,4 @@ export const rejectDeal = async (id, note) => {
     handleError(err);
   }
 };
+  
