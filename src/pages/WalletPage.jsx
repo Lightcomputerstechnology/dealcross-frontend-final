@@ -1,23 +1,18 @@
-// src/pages/WalletPage.jsx
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
-import { getWalletBalance } from '@/api'; // New API import
+import { getWalletBalance } from '@/api';
 import { toast } from 'react-hot-toast';
+import useAuthRedirect from '@/hooks/useAuthRedirect';
 
 const WalletPage = () => {
+  useAuthRedirect(); // Protect this page
+
   const [balance, setBalance] = useState(null);
   const [status, setStatus] = useState('Loading...');
 
   useEffect(() => {
     const fetchWallet = async () => {
-      const token = localStorage.getItem('token');
-
-      if (!token) {
-        setStatus('Login required.');
-        return;
-      }
-
       try {
         const data = await getWalletBalance();
         setBalance(data.balance);
