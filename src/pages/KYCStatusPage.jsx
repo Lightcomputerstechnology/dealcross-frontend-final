@@ -1,4 +1,6 @@
-// src/pages/KYCStatusPage.jsx import React, { useEffect, useState } from 'react'; import { Helmet } from 'react-helmet'; import { getKYCStatus } from '@/api'; import { toast } from 'react-hot-toast'; import html2canvas from 'html2canvas'; import jsPDF from 'jspdf'; import { FiFileText } from 'react-icons/fi';
+// File: src/pages/KYCStatusPage.jsx
+
+import React, { useEffect, useState } from 'react'; import { Helmet } from 'react-helmet'; import { getKYCStatus } from '@/api'; import { toast } from 'react-hot-toast'; import html2canvas from 'html2canvas'; import jsPDF from 'jspdf'; import { FiFileText } from 'react-icons/fi';
 
 const KYCStatusPage = () => { const [kycData, setKycData] = useState([]); const [loading, setLoading] = useState(true);
 
@@ -38,13 +40,22 @@ return ( <> <Helmet> <title>KYC Status - Dealcross</title> </Helmet>
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <h1 className="text-2xl sm:text-3xl font-bold">KYC Status</h1>
         <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
-          <button onClick={fetchStatus} className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 focus:ring-2 focus:ring-blue-400 px-4 py-2 rounded-md text-white text-sm transition-all duration-300">
+          <button
+            onClick={fetchStatus}
+            className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 focus:ring-2 focus:ring-blue-400 px-4 py-2 rounded-md text-white text-sm transition-all duration-300"
+          >
             Refresh
           </button>
-          <button onClick={exportCSV} className="w-full sm:w-auto bg-green-600 hover:bg-green-700 focus:ring-2 focus:ring-green-400 px-4 py-2 rounded-md text-white text-sm transition-all duration-300">
+          <button
+            onClick={exportCSV}
+            className="w-full sm:w-auto bg-green-600 hover:bg-green-700 focus:ring-2 focus:ring-green-400 px-4 py-2 rounded-md text-white text-sm transition-all duration-300"
+          >
             Export CSV
           </button>
-          <button onClick={exportPDF} className="w-full sm:w-auto bg-red-600 hover:bg-red-700 focus:ring-2 focus:ring-red-400 px-4 py-2 rounded-md text-white text-sm transition-all duration-300">
+          <button
+            onClick={exportPDF}
+            className="w-full sm:w-auto bg-red-600 hover:bg-red-700 focus:ring-2 focus:ring-red-400 px-4 py-2 rounded-md text-white text-sm transition-all duration-300"
+          >
             Export PDF
           </button>
         </div>
@@ -95,7 +106,15 @@ return ( <> <Helmet> <title>KYC Status - Dealcross</title> </Helmet>
                       View
                     </a>
                   </td>
-                  <td className={`px-2 font-semibold ${item.status === 'approved' ? 'text-green-500' : item.status === 'rejected' ? 'text-red-500' : 'text-yellow-400'}`}>
+                  <td
+                    className={`px-2 font-semibold ${
+                      item.status === 'approved'
+                        ? 'text-green-500'
+                        : item.status === 'rejected'
+                        ? 'text-red-500'
+                        : 'text-yellow-400'
+                    }`}
+                  >
                     {item.status}
                   </td>
                   <td className="px-2">{new Date(item.submitted_at).toLocaleString()}</td>
@@ -124,4 +143,4 @@ return ( <> <Helmet> <title>KYC Status - Dealcross</title> </Helmet>
 
 export default KYCStatusPage;
 
-                                                                                                                                
+  
