@@ -44,6 +44,9 @@ const WalletPage = () => {
             <>
               <p className="text-sm text-gray-400">Available Balance</p>
               <h1 className="text-4xl font-bold">USD {balance.toFixed(2)}</h1>
+              {balance === 0 && (
+                <p className="mt-2 text-yellow-400">Your wallet is empty. Fund now to get started.</p>
+              )}
             </>
           ) : (
             <p className="text-yellow-400">{status}</p>
