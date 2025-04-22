@@ -33,18 +33,18 @@ html2canvas(section).then((canvas) => {
 
 return ( <> <Helmet> <title>KYC Status - Dealcross</title> </Helmet>
 
-<div className="min-h-screen bg-gray-100 dark:bg-gray-950 text-gray-900 dark:text-white py-10 px-4">
-    <div className="max-w-5xl mx-auto bg-white dark:bg-gray-900 p-8 rounded shadow-lg space-y-6">
-      <div className="flex flex-wrap justify-between items-center">
-        <h1 className="text-2xl font-bold">KYC Status</h1>
-        <div className="flex gap-2 mt-4 md:mt-0">
-          <button onClick={fetchStatus} className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-md text-white text-sm">
+<div className="min-h-screen bg-gray-100 dark:bg-gray-950 text-gray-900 dark:text-white py-10 px-4 sm:px-6">
+    <div className="max-w-5xl mx-auto bg-white dark:bg-gray-900 p-6 sm:p-8 rounded shadow-lg space-y-6 animate-fade-in">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <h1 className="text-2xl sm:text-3xl font-bold">KYC Status</h1>
+        <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+          <button onClick={fetchStatus} className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 focus:ring-2 focus:ring-blue-400 px-4 py-2 rounded-md text-white text-sm transition-all duration-300">
             Refresh
           </button>
-          <button onClick={exportCSV} className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-md text-white text-sm">
+          <button onClick={exportCSV} className="w-full sm:w-auto bg-green-600 hover:bg-green-700 focus:ring-2 focus:ring-green-400 px-4 py-2 rounded-md text-white text-sm transition-all duration-300">
             Export CSV
           </button>
-          <button onClick={exportPDF} className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-md text-white text-sm">
+          <button onClick={exportPDF} className="w-full sm:w-auto bg-red-600 hover:bg-red-700 focus:ring-2 focus:ring-red-400 px-4 py-2 rounded-md text-white text-sm transition-all duration-300">
             Export PDF
           </button>
         </div>
@@ -60,29 +60,32 @@ return ( <> <Helmet> <title>KYC Status - Dealcross</title> </Helmet>
           </p>
           <a
             href="/kyc-upload"
-            className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-md font-medium transition"
+            className="inline-block bg-blue-600 hover:bg-blue-700 focus:ring-2 focus:ring-blue-400 text-white px-5 py-2 rounded-md font-medium transition-all duration-300"
           >
             Upload KYC Documents
           </a>
         </div>
       ) : (
         <div id="kyc-table-export" className="overflow-x-auto">
-          <table className="w-full text-left text-sm">
+          <table className="w-full text-left text-sm border-collapse">
             <thead>
               <tr className="border-b border-gray-700 text-gray-500 uppercase text-xs">
-                <th className="py-2">User ID</th>
-                <th>Document Type</th>
-                <th>Document</th>
-                <th>Status</th>
-                <th>Submitted At</th>
+                <th className="py-2 px-2">User ID</th>
+                <th className="px-2">Document Type</th>
+                <th className="px-2">Document</th>
+                <th className="px-2">Status</th>
+                <th className="px-2">Submitted At</th>
               </tr>
             </thead>
             <tbody>
-              {kycData.map((item) => (
-                <tr key={item.id} className="border-t border-gray-700">
-                  <td className="py-2">{item.user_id}</td>
-                  <td>{item.document_type}</td>
-                  <td>
+              {kycData.map((item, idx) => (
+                <tr
+                  key={item.id}
+                  className={`border-t border-gray-700 ${idx % 2 === 0 ? 'bg-gray-50 dark:bg-gray-800' : ''}`}
+                >
+                  <td className="py-2 px-2">{item.user_id}</td>
+                  <td className="px-2">{item.document_type}</td>
+                  <td className="px-2">
                     <a
                       href={item.document_url}
                       className="text-blue-500 underline"
@@ -92,10 +95,10 @@ return ( <> <Helmet> <title>KYC Status - Dealcross</title> </Helmet>
                       View
                     </a>
                   </td>
-                  <td className={`font-semibold ${item.status === 'approved' ? 'text-green-500' : item.status === 'rejected' ? 'text-red-500' : 'text-yellow-400'}`}>
+                  <td className={`px-2 font-semibold ${item.status === 'approved' ? 'text-green-500' : item.status === 'rejected' ? 'text-red-500' : 'text-yellow-400'}`}>
                     {item.status}
                   </td>
-                  <td>{new Date(item.submitted_at).toLocaleString()}</td>
+                  <td className="px-2">{new Date(item.submitted_at).toLocaleString()}</td>
                 </tr>
               ))}
             </tbody>
@@ -103,6 +106,17 @@ return ( <> <Helmet> <title>KYC Status - Dealcross</title> </Helmet>
         </div>
       )}
     </div>
+
+    <style>{`
+      .animate-fade-in {
+        animation: fadeIn 0.8s ease-in-out;
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+    `}</style>
   </div>
 </>
 
@@ -110,4 +124,4 @@ return ( <> <Helmet> <title>KYC Status - Dealcross</title> </Helmet>
 
 export default KYCStatusPage;
 
-                                                                                                                                           
+                                                                                                                                
