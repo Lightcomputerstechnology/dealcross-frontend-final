@@ -1,4 +1,5 @@
 // src/pages/AdminCharts.jsx
+
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import {
@@ -12,8 +13,10 @@ const AdminCharts = () => {
   const [data, setData] = useState([]);
   const [status, setStatus] = useState('Loading charts...');
   const [isAdmin, setIsAdmin] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const fetchData = async () => {
+    setLoading(true);
     try {
       const user = await getCurrentUser();
       if (user.role !== 'admin') {
@@ -29,6 +32,8 @@ const AdminCharts = () => {
     } catch (err) {
       setStatus('Failed to load admin data.');
       toast.error(err.message || 'Chart loading error');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -44,7 +49,18 @@ const AdminCharts = () => {
       </Helmet>
 
       <div className="min-h-screen bg-[#0f172a] text-white px-6 py-10">
-        <h1 className="text-2xl font-bold mb-6">Admin Visual Analytics</h1>
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-2xl font-bold">Admin Visual Analytics</h1>
+          {isAdmin && (
+            <button
+              onClick={fetchData}
+              disabled={loading}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
+            >
+              {loading ? 'Refreshing...' : 'Refresh Charts'}
+            </button>
+          )}
+        </div>
 
         {isAdmin === false && (
           <p className="text-red-400 font-medium text-center mt-6">
