@@ -1,8 +1,9 @@
-// File: src/pages/WalletPage.jsx
+// src/pages/WalletPage.jsx
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
+import { getWalletBalance } from '@/api'; // New API import
+import { toast } from 'react-hot-toast';
 
 const WalletPage = () => {
   const [balance, setBalance] = useState(null);
@@ -18,14 +19,13 @@ const WalletPage = () => {
       }
 
       try {
-        const response = await axios.get('https://d-final.onrender.com/wallet/balance', {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-
-        setBalance(response.data.balance);
+        const data = await getWalletBalance();
+        setBalance(data.balance);
         setStatus(null);
-      } catch (error) {
-        setStatus(error.response?.data?.detail || 'Unable to fetch wallet balance.');
+      } catch (err) {
+        const msg = err.message || 'Unable to fetch wallet balance.';
+        setStatus(msg);
+        toast.error(msg);
       }
     };
 
