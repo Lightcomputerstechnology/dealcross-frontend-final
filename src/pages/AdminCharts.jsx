@@ -1,24 +1,34 @@
-// File: src/pages/AdminCharts.jsx
+// src/pages/AdminCharts.jsx
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { Helmet } from 'react-helmet';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   LineChart, Line
 } from 'recharts';
+import { getAdminChartData, getCurrentUser } from '@/api';
+import { toast } from 'react-hot-toast';
 
 const AdminCharts = () => {
   const [data, setData] = useState([]);
   const [status, setStatus] = useState('Loading charts...');
+  const [isAdmin, setIsAdmin] = useState(null);
 
   const fetchData = async () => {
     try {
-      const res = await axios.get('https://d-final.onrender.com/admin/metrics/chart');
-      setData(res.data);
+      const user = await getCurrentUser();
+      if (user.role !== 'admin') {
+        setIsAdmin(false);
+        toast.error('Access denied. Admins only.');
+        return;
+      }
+
+      setIsAdmin(true);
+      const result = await getAdminChartData();
+      setData(result);
       setStatus(null);
     } catch (err) {
-      console.error('Failed to fetch chart data:', err);
-      setStatus('Failed to load chart data.');
+      setStatus('Failed to load admin data.');
+      toast.error(err.message || 'Chart loading error');
     }
   };
 
@@ -36,11 +46,17 @@ const AdminCharts = () => {
       <div className="min-h-screen bg-[#0f172a] text-white px-6 py-10">
         <h1 className="text-2xl font-bold mb-6">Admin Visual Analytics</h1>
 
-        {status && <p className="text-yellow-400">{status}</p>}
+        {isAdmin === false && (
+          <p className="text-red-400 font-medium text-center mt-6">
+            Access Denied: This page is for admins only.
+          </p>
+        )}
 
-        {!status && (
+        {status && isAdmin !== false && <p className="text-yellow-400">{status}</p>}
+
+        {!status && isAdmin && (
           <div className="space-y-12">
-            {/* Bar Chart: Deals Created */}
+            {/* Deals Created */}
             <div>
               <h3 className="text-lg font-semibold mb-4">Deals Created (Last 7 Days)</h3>
               <ResponsiveContainer width="100%" height={300}>
@@ -54,7 +70,7 @@ const AdminCharts = () => {
               </ResponsiveContainer>
             </div>
 
-            {/* Line Chart: User Registrations */}
+            {/* User Registrations */}
             <div>
               <h3 className="text-lg font-semibold mb-4">User Signups</h3>
               <ResponsiveContainer width="100%" height={300}>
@@ -65,6 +81,48 @@ const AdminCharts = () => {
                   <Tooltip />
                   <Line type="monotone" dataKey="users" stroke="#4ade80" strokeWidth={2} />
                 </LineChart>
+              </ResponsiveContainer>
+            </div>
+
+            {/* KYC Approvals */}
+            <div>
+              <h3 className="text-lg font-semibold mb-4">KYC Approved</h3>
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={data}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="label" />
+                  <YAxis />
+                  <Tooltip />
+                  <Bar dataKey="kycApproved" fill="#10b981" />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+
+            {/* Disputes */}
+            <div>
+              <h3 className="text-lg font-semibold mb-4">Disputes Filed</h3>
+              <ResponsiveContainer width="100%" height={300}>
+                <LineChart data={data}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="label" />
+                  <YAxis />
+                  <Tooltip />
+                  <Line type="monotone" dataKey="disputes" stroke="#f59e0b" strokeWidth={2} />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+
+            {/* Escrow Volume */}
+            <div>
+              <h3 className="text-lg font-semibold mb-4">Escrow Volume</h3>
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={data}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="label" />
+                  <YAxis />
+                  <Tooltip />
+                  <Bar dataKey="escrowVolume" fill="#6366f1" />
+                </BarChart>
               </ResponsiveContainer>
             </div>
           </div>
