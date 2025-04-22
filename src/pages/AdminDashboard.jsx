@@ -1,5 +1,3 @@
-// src/pages/AdminDashboard.jsx
-
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
@@ -22,22 +20,25 @@ import PendingDealList from '@/components/admin/PendingDealList';
 import UserControlList from '@/components/admin/UserControlList';
 import AdminCharts from '@/components/admin/AdminCharts';
 
-import { getAdminMetrics, getFraudReports, getCurrentUser } from '@/api';
+import { getAdminMetrics, getFraudReports } from '@/api';
+import useAuthRedirect from '@/hooks/useAuthRedirect';
 
 const AdminDashboard = () => {
+  useAuthRedirect({ adminOnly: true }); // Secure this dashboard
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [metrics, setMetrics] = useState([]);
   const [fraudReports, setFraudReports] = useState([]);
   const [loadingMetrics, setLoadingMetrics] = useState(true);
   const [loadingFraud, setLoadingFraud] = useState(true);
-  const [isAdmin, setIsAdmin] = useState(null);
 
   const fetchMetrics = async () => {
     try {
       const res = await getAdminMetrics();
       setMetrics(res);
-      setLoadingMetrics(false);
     } catch (err) {
+      toast.error('Failed to fetch metrics.');
+    } finally {
       setLoadingMetrics(false);
     }
   };
@@ -46,29 +47,14 @@ const AdminDashboard = () => {
     try {
       const res = await getFraudReports();
       setFraudReports(res);
-      setLoadingFraud(false);
     } catch (err) {
+      toast.error('Failed to fetch fraud reports.');
+    } finally {
       setLoadingFraud(false);
     }
   };
 
   useEffect(() => {
-    const verifyAdmin = async () => {
-      try {
-        const user = await getCurrentUser();
-        if (user.role !== 'admin') {
-          setIsAdmin(false);
-          toast.error('Access denied.');
-        } else {
-          setIsAdmin(true);
-        }
-      } catch {
-        toast.error('User verification failed.');
-        setIsAdmin(false);
-      }
-    };
-
-    verifyAdmin();
     fetchMetrics();
     fetchFraudReports();
 
@@ -85,10 +71,6 @@ const AdminDashboard = () => {
     { title: 'Web Design Services', amount: 1200, expected_completion: '2025-04-30' },
     { title: 'Vehicle Sale', amount: 3800, expected_completion: '2025-05-15' },
   ];
-
-  if (isAdmin === false) {
-    return <div className="p-10 text-red-500 text-center text-lg">Access denied.</div>;
-  }
 
   return (
     <>
