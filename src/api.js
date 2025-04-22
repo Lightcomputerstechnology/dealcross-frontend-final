@@ -1,4 +1,3 @@
-// src/api.js
 import axios from 'axios';
 
 // Base API config
@@ -9,20 +8,20 @@ const API = axios.create({
   },
 });
 
-// Attach auth token automatically
+// Attach auth token
 API.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
   if (token) config.headers.Authorization = `Bearer ${token}`;
   return config;
 });
 
-// Unified error handler
+// Global error handler
 const handleError = (error) => {
   const message = error?.response?.data?.detail || 'An error occurred.';
   throw new Error(message);
 };
 
-// =================== AUTH ===================
+// ========== AUTH ==========
 export const register = async (data) => {
   try {
     const res = await API.post('/auth/register', data);
@@ -50,7 +49,16 @@ export const forgotPassword = async (email) => {
   }
 };
 
-// =================== WALLET ===================
+export const getCurrentUser = async () => {
+  try {
+    const res = await API.get('/auth/me');
+    return res.data;
+  } catch (err) {
+    handleError(err);
+  }
+};
+
+// ========== WALLET ==========
 export const fundWallet = async (data) => {
   try {
     const res = await API.post('/wallet/fund', data);
@@ -71,14 +79,14 @@ export const getWalletBalance = async () => {
 
 export const getWalletHistory = async () => {
   try {
-    const res = await API.get('/wallet/history');
+    const res = await API.get('/wallet/transactions');
     return res.data;
   } catch (err) {
     handleError(err);
   }
 };
 
-// =================== DEALS ===================
+// ========== DEALS ==========
 export const startDeal = async (data) => {
   try {
     const res = await API.post('/deals/start', data);
@@ -124,7 +132,7 @@ export const raiseDispute = async (dealId) => {
   }
 };
 
-// =================== KYC ===================
+// ========== KYC ==========
 export const submitKYC = async (formData) => {
   try {
     const res = await API.post('/kyc/submit', formData, {
@@ -145,7 +153,7 @@ export const getKYCStatus = async () => {
   }
 };
 
-// =================== ADMIN ===================
+// ========== ADMIN: KYC ==========
 export const getKYCRequests = async () => {
   try {
     const res = await API.get('/admin/kyc-requests');
@@ -173,6 +181,35 @@ export const rejectKYC = async (id) => {
   }
 };
 
+// ========== ADMIN: USERS ==========
+export const getAllUsers = async () => {
+  try {
+    const res = await API.get('/admin/users');
+    return res.data;
+  } catch (err) {
+    handleError(err);
+  }
+};
+
+export const banUser = async (id) => {
+  try {
+    const res = await API.post(`/admin/users/${id}/ban`);
+    return res.data;
+  } catch (err) {
+    handleError(err);
+  }
+};
+
+export const unbanUser = async (id) => {
+  try {
+    const res = await API.post(`/admin/users/${id}/unban`);
+    return res.data;
+  } catch (err) {
+    handleError(err);
+  }
+};
+
+// ========== ADMIN: AUDIT ==========
 export const getAuditLogs = async () => {
   try {
     const res = await API.get('/admin/audit-logs');
@@ -182,9 +219,57 @@ export const getAuditLogs = async () => {
   }
 };
 
-export const getAllUsers = async () => {
+// ========== ADMIN: FRAUD ==========
+export const getFraudReports = async () => {
   try {
-    const res = await API.get('/admin/users');
+    const res = await API.get('/admin/fraud-reports');
+    return res.data;
+  } catch (err) {
+    handleError(err);
+  }
+};
+
+// ========== ADMIN: METRICS ==========
+export const getAdminMetrics = async () => {
+  try {
+    const res = await API.get('/admin/metrics');
+    return res.data;
+  } catch (err) {
+    handleError(err);
+  }
+};
+
+export const getAdminChartData = async (days = 7) => {
+  try {
+    const res = await API.get(`/admin/metrics/chart?days=${days}`);
+    return res.data;
+  } catch (err) {
+    handleError(err);
+  }
+};
+
+// ========== ADMIN: PENDING DEALS ==========
+export const getPendingDeals = async () => {
+  try {
+    const res = await API.get('/admin/pending-deals');
+    return res.data;
+  } catch (err) {
+    handleError(err);
+  }
+};
+
+export const approveDeal = async (id, note) => {
+  try {
+    const res = await API.post(`/admin/deals/${id}/approve`, { note });
+    return res.data;
+  } catch (err) {
+    handleError(err);
+  }
+};
+
+export const rejectDeal = async (id, note) => {
+  try {
+    const res = await API.post(`/admin/deals/${id}/reject`, { note });
     return res.data;
   } catch (err) {
     handleError(err);
