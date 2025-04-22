@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'; import { Helmet } from 'react-helmet'; import { getKYCRequests, approveKYC, rejectKYC } from '@/api'; import { toast } from 'react-hot-toast'; import { FiUserCheck, FiUserX } from 'react-icons/fi';
+import React, { useEffect, useState } from 'react'; import { Helmet } from 'react-helmet'; import { getKYCRequests, approveKYC, rejectKYC } from '@/api'; import { toast } from 'react-hot-toast'; import { FiUserCheck, FiUserX } from 'react-icons/fi'; import { useRequireAdmin } from '@/context/UserContext';
 
-const AdminKYCApprovalPage = () => { const [kycRequests, setKycRequests] = useState([]); const [loading, setLoading] = useState(true);
+const AdminKYCApprovalPage = () => { const { user } = useRequireAdmin(); const [kycRequests, setKycRequests] = useState([]); const [loading, setLoading] = useState(true);
 
 const fetchKYCRequests = async () => { setLoading(true); try { const data = await getKYCRequests(); setKycRequests(data); } catch (err) { toast.error(err.message || 'Failed to load KYC requests.'); } finally { setLoading(false); } };
 
@@ -90,3 +90,4 @@ return ( <> <Helmet> <title>Admin KYC Approvals - Dealcross</title> </Helmet>
 
 export default AdminKYCApprovalPage;
 
+    
