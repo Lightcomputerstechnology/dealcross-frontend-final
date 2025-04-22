@@ -1,9 +1,11 @@
-// File: src/pages/AdminAnalyticsPage.jsx
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import AdminCharts from '@/components/admin/AdminCharts';
+import useAuthRedirect from '@/hooks/useAuthRedirect';
 
 const AdminAnalyticsPage = () => {
+  useAuthRedirect({ adminOnly: true }); // Enforce admin-only access
+
   return (
     <>
       <Helmet>
