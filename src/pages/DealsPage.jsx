@@ -1,7 +1,9 @@
+// src/pages/DealsPage.jsx
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { LogIn } from 'react-feather';
+import { getMyDeals } from '@/api'; // new
+import { toast } from 'react-hot-toast';
 
 const DealsPage = () => {
   const [deals, setDeals] = useState([]);
@@ -19,14 +21,10 @@ const DealsPage = () => {
 
       setIsLoggedIn(true);
       try {
-        const response = await axios.get('https://d-final.onrender.com/deals/my-deals', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setDeals(response.data || []);
+        const data = await getMyDeals();
+        setDeals(data || []);
       } catch (error) {
-        console.error('Error fetching deals:', error);
+        toast.error(error.message || 'Error fetching deals.');
       } finally {
         setLoading(false);
       }
