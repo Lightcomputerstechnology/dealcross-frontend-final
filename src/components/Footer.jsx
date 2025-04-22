@@ -1,4 +1,4 @@
-// src/components/Footer.jsx
+// File: src/components/Footer.jsx
 import React from 'react';
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
@@ -10,36 +10,36 @@ const Footer = () => {
         
         {/* Social Icons */}
         <div className="flex justify-center md:justify-start space-x-4">
-          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
             <FaFacebookF className="text-gray-500 hover:text-blue-600" />
           </a>
-          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
             <FaTwitter className="text-gray-500 hover:text-blue-400" />
           </a>
-          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
             <FaInstagram className="text-gray-500 hover:text-pink-500" />
           </a>
-          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
             <FaLinkedinIn className="text-gray-500 hover:text-blue-700" />
           </a>
         </div>
 
         {/* Footer Links */}
-        <div className="flex flex-wrap justify-center space-x-4 text-sm text-gray-600 dark:text-gray-400">
+        <div className="flex flex-wrap justify-center md:justify-center gap-3 text-sm text-gray-600 dark:text-gray-400">
           <Link to="/about" className="hover:underline">About</Link>
           <Link to="/contact" className="hover:underline">Contact</Link>
-          <Link to="/privacy-policy" className="hover:underline">Privacy</Link>
+          <Link to="/privacy-policy" className="hover:underline">Privacy Policy</Link>
           <Link to="/docs" className="hover:underline">Docs</Link>
           <Link to="/faq" className="hover:underline">FAQ</Link>
           <Link to="/blog" className="hover:underline">Blog</Link>
           <Link to="/referral" className="hover:underline">Referral</Link>
-          <Link to="/terms" className="hover:underline">Terms</Link>
-          <Link to="/refund" className="hover:underline">Refund</Link>
+          <Link to="/terms" className="hover:underline">Terms of Service</Link>
+          <Link to="/refund-policy" className="hover:underline">Refund Policy</Link>
         </div>
 
         {/* Copyright */}
         <div className="text-gray-500 text-sm text-center md:text-right">
-          © {new Date().getFullYear()} Dealcross. All rights reserved.
+          &copy; {new Date().getFullYear()} Dealcross. All rights reserved.
         </div>
       </div>
     </footer>
