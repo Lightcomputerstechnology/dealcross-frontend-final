@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'; import { Helmet } from 'react-helmet'; import { getMyDeals } from '@/api'; import { toast } from 'react-hot-toast'; import useAuthRedirect from '@/hooks/useAuthRedirect';
+import React, { useEffect, useState } from 'react'; import { Helmet } from 'react-helmet'; import { getMyDeals } from '@/api'; import { toast } from 'react-hot-toast'; import useAuthRedirect from '@/hooks/useAuthRedirect'; import { FiFolderPlus } from 'react-icons/fi';
 
 const DealsPage = () => { useAuthRedirect(); // Protect this page for authenticated users
 
@@ -19,8 +19,9 @@ return ( <> <Helmet> <title>My Deals - Dealcross</title> </Helmet>
       {loading ? (
         <p className="text-lg animate-pulse text-center text-yellow-400">Loading deals...</p>
       ) : deals.length === 0 ? (
-        <div className="text-center py-10">
-          <p className="text-gray-500 dark:text-gray-400 text-lg mb-4">
+        <div className="text-center py-10 space-y-4">
+          <FiFolderPlus className="mx-auto text-5xl text-blue-500" />
+          <p className="text-gray-500 dark:text-gray-400 text-lg">
             No active deals found. Start a new one to secure your transactions.
           </p>
           <a
@@ -60,4 +61,3 @@ return ( <> <Helmet> <title>My Deals - Dealcross</title> </Helmet>
 ); };
 
 export default DealsPage;
-
