@@ -1,22 +1,18 @@
-// src/pages/TransactionHistory.jsx
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { FaArrowDown, FaArrowUp, FaExchangeAlt } from 'react-icons/fa';
 import { getWalletHistory } from '@/api';
 import { toast } from 'react-hot-toast';
+import useAuthRedirect from '@/hooks/useAuthRedirect';
 
 const TransactionHistory = () => {
+  useAuthRedirect(); // Protect this page
+
   const [transactions, setTransactions] = useState([]);
   const [status, setStatus] = useState('Loading...');
 
   useEffect(() => {
     const fetchTransactions = async () => {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        setStatus('Please log in to view your transactions.');
-        return;
-      }
-
       try {
         const data = await getWalletHistory();
         if (data.length === 0) {
