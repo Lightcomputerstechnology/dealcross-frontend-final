@@ -1,4 +1,4 @@
-// src/pages/KYCStatusPage.jsx import React, { useEffect, useState } from 'react'; import { Helmet } from 'react-helmet'; import { getKYCStatus } from '@/api'; import { toast } from 'react-hot-toast'; import html2canvas from 'html2canvas'; import jsPDF from 'jspdf';
+// src/pages/KYCStatusPage.jsx import React, { useEffect, useState } from 'react'; import { Helmet } from 'react-helmet'; import { getKYCStatus } from '@/api'; import { toast } from 'react-hot-toast'; import html2canvas from 'html2canvas'; import jsPDF from 'jspdf'; import { FiFileText } from 'react-icons/fi';
 
 const KYCStatusPage = () => { const [kycData, setKycData] = useState([]); const [loading, setLoading] = useState(true);
 
@@ -38,13 +38,13 @@ return ( <> <Helmet> <title>KYC Status - Dealcross</title> </Helmet>
       <div className="flex flex-wrap justify-between items-center">
         <h1 className="text-2xl font-bold">KYC Status</h1>
         <div className="flex gap-2 mt-4 md:mt-0">
-          <button onClick={fetchStatus} className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-white text-sm">
+          <button onClick={fetchStatus} className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-md text-white text-sm">
             Refresh
           </button>
-          <button onClick={exportCSV} className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded text-white text-sm">
+          <button onClick={exportCSV} className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-md text-white text-sm">
             Export CSV
           </button>
-          <button onClick={exportPDF} className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded text-white text-sm">
+          <button onClick={exportPDF} className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-md text-white text-sm">
             Export PDF
           </button>
         </div>
@@ -53,8 +53,9 @@ return ( <> <Helmet> <title>KYC Status - Dealcross</title> </Helmet>
       {loading ? (
         <p className="text-yellow-400 text-center">Loading...</p>
       ) : kycData.length === 0 ? (
-        <div className="text-center py-10">
-          <p className="text-gray-500 dark:text-gray-400 text-lg mb-4">
+        <div className="text-center py-10 space-y-4">
+          <FiFileText className="mx-auto text-5xl text-blue-500" />
+          <p className="text-gray-500 dark:text-gray-400 text-lg">
             No KYC documents submitted yet. Complete your KYC to get verified.
           </p>
           <a
@@ -109,4 +110,4 @@ return ( <> <Helmet> <title>KYC Status - Dealcross</title> </Helmet>
 
 export default KYCStatusPage;
 
-                                                                                                                                
+                                                                                                                                           
