@@ -1,10 +1,11 @@
-// src/layouts/SiteLayout.jsx
 import React from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Logo from "@/assets/dealcross-logo.png";
-import SEOHead from "@/components/SEOHead"; // NEW import
+import SEOHead from "@/components/SEOHead";
+import PromoBanner from "@/components/PromoBanner"; // NEW
+import BackToTopButton from "@/components/BackToTopButton"; // NEW
 
 const SiteLayout = () => {
   return (
@@ -17,12 +18,14 @@ const SiteLayout = () => {
       />
 
       <div className="relative z-10 flex flex-col min-h-screen">
-        <SEOHead /> {/* NEW: Global SEO meta fallback */}
+        <SEOHead />
+        <PromoBanner /> {/* NEW */}
         <Navbar />
         <main className="flex-grow">
           <Outlet />
         </main>
         <Footer />
+        <BackToTopButton /> {/* NEW */}
       </div>
     </div>
   );
