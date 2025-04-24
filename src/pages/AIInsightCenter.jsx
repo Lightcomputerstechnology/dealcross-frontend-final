@@ -1,7 +1,8 @@
-import React from 'react';
-import { FiTrendingUp, FiShieldOff, FiPieChart } from 'react-icons/fi';
+import React, { useState } from 'react';
+import { FiTrendingUp, FiShieldOff, FiPieChart, FiRefreshCw } from 'react-icons/fi';
+import { motion } from 'framer-motion';
 
-const insights = [
+const initialInsights = [
   {
     icon: <FiTrendingUp size={22} />,
     title: 'Rising Deal Categories',
@@ -20,20 +21,42 @@ const insights = [
 ];
 
 const AIInsightCenter = () => {
+  const [insights, setInsights] = useState(initialInsights);
+  const [lastUpdated, setLastUpdated] = useState(new Date());
+
+  const refreshInsights = () => {
+    // For now, just reset timestamp (simulate fetch)
+    setLastUpdated(new Date());
+  };
+
   return (
     <div className="min-h-screen bg-[#0f172a] text-white px-6 py-10">
-      <h2 className="text-2xl font-bold mb-6">AI Insight Center</h2>
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-2xl font-bold">AI Insight Center</h2>
+        <button
+          onClick={refreshInsights}
+          className="flex items-center gap-2 text-blue-400 hover:text-blue-500 transition"
+        >
+          <FiRefreshCw /> Refresh
+        </button>
+      </div>
+      <p className="text-sm text-gray-400 mb-4">
+        Last updated: {lastUpdated.toLocaleString()}
+      </p>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {insights.map((item, index) => (
-          <div
+          <motion.div
             key={index}
             className="bg-[#1e293b] p-6 rounded-lg shadow-lg space-y-2"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.2 }}
           >
             <div className="text-blue-400">{item.icon}</div>
             <h3 className="text-lg font-semibold">{item.title}</h3>
             <p className="text-sm text-gray-400">{item.description}</p>
-          </div>
+          </motion.div>
         ))}
       </div>
     </div>
