@@ -1,6 +1,7 @@
+// File: src/api.js
+
 import axios from 'axios';
 
-// Base API config
 const API = axios.create({
   baseURL: 'https://d-final.onrender.com',
   headers: {
@@ -28,21 +29,21 @@ const handleError = (error) => {
   }
 };
 
-// All other API functions remain unchanged...
-
 // ========== AUTH ==========
-export const register = async (data) => {
+export const register = async (data) => {  // ✅ Corrected endpoint
   try {
-    const res = await API.post('/auth/register', data);
+    const res = await API.post('/auth/signup', data);
     return res.data;
   } catch (err) {
     handleError(err);
   }
 };
 
-export const login = async (data) => {
+export const login = async (formData) => {
   try {
-    const res = await API.post('/auth/login', data);
+    const res = await API.post('/auth/login', formData, {
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },  // ✅ Required for login
+    });
     return res.data;
   } catch (err) {
     handleError(err);
@@ -144,18 +145,16 @@ export const raiseDispute = async (dealId) => {
 // ========== KYC ==========
 export const submitKYC = async (formData) => {
   try {
-    const res = await API.post('/kyc/submit', formData, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    });
+    const res = await API.post('/kyc/submit', formData);
     return res.data;
   } catch (err) {
     handleError(err);
   }
 };
 
-export const getKYCStatus = async () => {
+export const getKYCStatus = async () => {  // ✅ Corrected endpoint
   try {
-    const res = await API.get('/kyc/status');
+    const res = await API.get('/kyc/user');
     return res.data;
   } catch (err) {
     handleError(err);
@@ -163,27 +162,27 @@ export const getKYCStatus = async () => {
 };
 
 // ========== ADMIN: KYC ==========
-export const getKYCRequests = async () => {
+export const getKYCRequests = async () => {  // ✅ Corrected endpoint
   try {
-    const res = await API.get('/admin/kyc-requests');
+    const res = await API.get('/kyc/requests');
     return res.data;
   } catch (err) {
     handleError(err);
   }
 };
 
-export const approveKYC = async (id) => {
+export const approveKYC = async (id) => {  // ✅ Corrected endpoint
   try {
-    const res = await API.post(`/admin/kyc-approve/${id}`);
+    const res = await API.post(`/kyc/${id}/approve`);
     return res.data;
   } catch (err) {
     handleError(err);
   }
 };
 
-export const rejectKYC = async (id) => {
+export const rejectKYC = async (id) => {  // ✅ Corrected endpoint
   try {
-    const res = await API.post(`/admin/kyc-reject/${id}`);
+    const res = await API.post(`/kyc/${id}/reject`);
     return res.data;
   } catch (err) {
     handleError(err);
@@ -200,24 +199,6 @@ export const getAllUsers = async () => {
   }
 };
 
-export const banUser = async (id) => {
-  try {
-    const res = await API.post(`/admin/users/${id}/ban`);
-    return res.data;
-  } catch (err) {
-    handleError(err);
-  }
-};
-
-export const unbanUser = async (id) => {
-  try {
-    const res = await API.post(`/admin/users/${id}/unban`);
-    return res.data;
-  } catch (err) {
-    handleError(err);
-  }
-};
-
 // ========== ADMIN: AUDIT ==========
 export const getAuditLogs = async () => {
   try {
@@ -228,60 +209,14 @@ export const getAuditLogs = async () => {
   }
 };
 
-// ========== ADMIN: FRAUD ==========
-export const getFraudReports = async () => {
-  try {
-    const res = await API.get('/admin/fraud-reports');
-    return res.data;
-  } catch (err) {
-    handleError(err);
-  }
-};
-
 // ========== ADMIN: METRICS ==========
-export const getAdminMetrics = async () => {
+export const getAdminMetrics = async () => {  // ✅ Corrected endpoint
   try {
-    const res = await API.get('/admin/metrics');
+    const res = await API.get('/admin/dashboard-metrics');
     return res.data;
   } catch (err) {
     handleError(err);
   }
 };
 
-export const getAdminChartData = async (days = 7) => {
-  try {
-    const res = await API.get(`/admin/metrics/chart?days=${days}`);
-    return res.data;
-  } catch (err) {
-    handleError(err);
-  }
-};
-
-// ========== ADMIN: PENDING DEALS ==========
-export const getPendingDeals = async () => {
-  try {
-    const res = await API.get('/admin/pending-deals');
-    return res.data;
-  } catch (err) {
-    handleError(err);
-  }
-};
-
-export const approveDeal = async (id, note) => {
-  try {
-    const res = await API.post(`/admin/deals/${id}/approve`, { note });
-    return res.data;
-  } catch (err) {
-    handleError(err);
-  }
-};
-
-export const rejectDeal = async (id, note) => {
-  try {
-    const res = await API.post(`/admin/deals/${id}/reject`, { note });
-    return res.data;
-  } catch (err) {
-    handleError(err);
-  }
-};
-  
+export default API;
