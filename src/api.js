@@ -28,6 +28,8 @@ export const confirmPairing = async (pairingId) => { try { const res = await API
 
 export const getConfirmedPairing = async () => { try { const res = await API.get('/deals/confirmed-pairing'); return res.data; } catch (err) { handleError(err); } };
 
+export const getPendingPairings = async () => { try { const res = await API.get('/deals/pairings/pending'); return res.data; } catch (err) { handleError(err); } };
+
 // ========== DEALS ========== export const getMyDeals = async () => { try { const res = await API.get('/deals/tracker'); return res.data.data; } catch (err) { handleError(err); } };
 
 export const fundDeal = async (dealId) => { try { const res = await API.post(/deals/${dealId}/fund); return res.data; } catch (err) { handleError(err); } };
