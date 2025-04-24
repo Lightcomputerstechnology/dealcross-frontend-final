@@ -1,7 +1,8 @@
-// src/pages/FraudAlertsPage.jsx
+// File: src/pages/FraudAlertsPage.jsx
+
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Badge } from '@/components/ui/Badge';
+import Badge from '@/components/ui/Badge';  // ✅ Corrected import
 import { Button } from '@/components/ui/button';
 import { FiCheckCircle, FiAlertTriangle, FiDownloadCloud, FiRefreshCw } from 'react-icons/fi';
 import { toast } from 'react-hot-toast';
@@ -95,7 +96,7 @@ ${rows.map(r => r.join(',')).join('\n')}`;
                 <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">User ID: {alert.user_id} | {new Date(alert.created_at).toLocaleString()}</p>
               </div>
               <div className="flex items-center space-x-3">
-                <Badge variant={alert.status === 'resolved' ? 'success' : 'destructive'}>
+                <Badge color={alert.status === 'resolved' ? 'green' : 'red'}> {/* ✅ Corrected */}
                   {alert.status === 'resolved' ? <FiCheckCircle className="mr-1" /> : <FiAlertTriangle className="mr-1" />}
                   {alert.status}
                 </Badge>
@@ -109,5 +110,4 @@ ${rows.map(r => r.join(',')).join('\n')}`;
       )}
     </div>
   );
-                }
-        
+                                    }
