@@ -1,7 +1,7 @@
 // src/pages/FraudAlertsPage.jsx
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Badge } from '@/components/ui/badge';
+import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/button';
 import { FiCheckCircle, FiAlertTriangle, FiDownloadCloud, FiRefreshCw } from 'react-icons/fi';
 import { toast } from 'react-hot-toast';
