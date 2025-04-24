@@ -25,10 +25,8 @@
     "recharts": "^2.7.2",
     "html2canvas": "^1.4.1",
     "jszip": "^3.10.1",
-    "jspdf-autotable": "^3.5.28",
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.5.28"
-  }
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.0.0",
