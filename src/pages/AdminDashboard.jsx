@@ -1,17 +1,11 @@
+// File: src/pages/AdminDashboard.jsx
+
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { toast } from 'react-hot-toast';
-import {
-  FiAlertCircle,
-  FiMessageSquare,
-  FiBarChart2,
-  FiUsers,
-  FiSettings,
-  FiBriefcase,
-  FiClipboard,
-  FiMenu,
-} from 'react-icons/fi';
+import CountUp from 'react-countup';
+import { FiAlertCircle, FiMessageSquare, FiBarChart2, FiUsers, FiSettings, FiBriefcase, FiClipboard, FiMenu } from 'react-icons/fi';
 
 import MetricsCard from '@/components/admin/MetricsCard';
 import FraudList from '@/components/admin/FraudList';
@@ -24,18 +18,20 @@ import { getAdminMetrics, getFraudReports } from '@/api';
 import useAuthRedirect from '@/hooks/useAuthRedirect';
 
 const AdminDashboard = () => {
-  useAuthRedirect({ adminOnly: true }); // Secure this dashboard
+  useAuthRedirect({ adminOnly: true });
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [metrics, setMetrics] = useState([]);
   const [fraudReports, setFraudReports] = useState([]);
   const [loadingMetrics, setLoadingMetrics] = useState(true);
   const [loadingFraud, setLoadingFraud] = useState(true);
+  const [lastRefreshed, setLastRefreshed] = useState(null);
 
   const fetchMetrics = async () => {
     try {
       const res = await getAdminMetrics();
       setMetrics(res);
+      setLastRefreshed(new Date());
     } catch (err) {
       toast.error('Failed to fetch metrics.');
     } finally {
@@ -57,31 +53,27 @@ const AdminDashboard = () => {
   useEffect(() => {
     fetchMetrics();
     fetchFraudReports();
-
     const interval = setInterval(() => {
       fetchMetrics();
       fetchFraudReports();
     }, 20000);
-
     return () => clearInterval(interval);
   }, []);
-
-  const recentDeals = [
-    { title: 'Equipment Purchase', amount: 5000, expected_completion: '2025-06-10' },
-    { title: 'Web Design Services', amount: 1200, expected_completion: '2025-04-30' },
-    { title: 'Vehicle Sale', amount: 3800, expected_completion: '2025-05-15' },
-  ];
 
   return (
     <>
       <Helmet>
         <title>Admin Dashboard - Dealcross</title>
         <meta name="description" content="Admin dashboard overview for Dealcross system and user control." />
+        <meta property="og:title" content="Admin Dashboard - Dealcross" />
+        <meta property="og:description" content="Monitor platform activities, user controls, fraud alerts, and more." />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
       </Helmet>
 
       <div className="flex min-h-screen bg-[#0f172a] text-white">
         {/* Sidebar */}
-        <aside className={`fixed md:static w-64 bg-[#1e293b] p-6 space-y-6 z-30 transition-transform duration-300 ease-in-out ${sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}`}>
+        <aside className={`fixed md:static w-64 bg-[#1e293b] p-6 space-y-6 z-30 transform transition-transform duration-300 ease-in-out ${sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}`}>
           <h2 className="text-2xl font-bold mb-6">Dealcross</h2>
           <nav className="space-y-4 text-sm">
             <Link to="/admin" className="flex items-center gap-2 hover:text-blue-400"><FiBarChart2 /> Dashboard</Link>
@@ -110,7 +102,7 @@ const AdminDashboard = () => {
             }}
             className="mb-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
           >
-            Refresh Dashboard
+            Refresh Dashboard {lastRefreshed && <span className="text-xs ml-2">(Last: {lastRefreshed.toLocaleTimeString()})</span>}
           </button>
 
           {/* Metrics */}
@@ -121,7 +113,7 @@ const AdminDashboard = () => {
             ) : (
               <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                 {metrics.map((m) => (
-                  <MetricsCard key={m.id} type={m.type} value={m.value} timestamp={m.timestamp} />
+                  <MetricsCard key={m.id} type={m.type} value={<CountUp end={m.value} duration={2} />} timestamp={m.timestamp} />
                 ))}
               </div>
             )}
@@ -133,25 +125,6 @@ const AdminDashboard = () => {
             <AdminCharts />
           </section>
 
-          {/* Recent Deals */}
-          <section>
-            <h2 className="text-xl font-semibold mb-4">Recent Deals</h2>
-            <div className="bg-gray-900 rounded-lg p-4">
-              <div className="grid grid-cols-3 text-sm text-gray-400 mb-2">
-                <span>Deal</span>
-                <span>Amount</span>
-                <span>Expected</span>
-              </div>
-              {recentDeals.map((deal, i) => (
-                <div key={i} className="grid grid-cols-3 py-2 border-t border-gray-700">
-                  <span>{deal.title}</span>
-                  <span>${deal.amount.toLocaleString()}</span>
-                  <span className="text-yellow-400 text-sm">{deal.expected_completion}</span>
-                </div>
-              ))}
-            </div>
-          </section>
-
           {/* Fraud Alerts */}
           <section className="bg-gray-900 p-4 rounded-lg shadow">
             <h3 className="font-semibold mb-3 flex items-center gap-2">
@@ -160,31 +133,10 @@ const AdminDashboard = () => {
             <FraudList loading={loadingFraud} fraudReports={fraudReports} />
           </section>
 
-          {/* Admin Controls */}
-          <section className="bg-gray-900 p-4 rounded-lg shadow">
-            <h3 className="font-semibold mb-3">Pending Deal Approvals</h3>
-            <PendingDealList />
-          </section>
-
-          <section className="bg-gray-900 p-4 rounded-lg shadow">
-            <h3 className="font-semibold mb-3">User Admin Controls</h3>
-            <UserControlList />
-          </section>
-
           {/* Audit Logs */}
           <section className="bg-gray-900 p-4 rounded-lg shadow">
             <h3 className="font-semibold mb-3">Admin Audit Logs</h3>
             <AuditLogViewer />
-          </section>
-
-          {/* Notifications */}
-          <section className="bg-gray-900 p-4 rounded-lg shadow">
-            <h3 className="font-semibold mb-3 flex items-center gap-2">
-              <FiMessageSquare /> System Notifications
-            </h3>
-            <ul className="text-sm space-y-2">
-              <li>System operational — {new Date().toLocaleTimeString()}</li>
-            </ul>
           </section>
         </main>
       </div>
@@ -193,3 +145,4 @@ const AdminDashboard = () => {
 };
 
 export default AdminDashboard;
+      
