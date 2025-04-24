@@ -1,102 +1,96 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { FiBell, FiCheckCircle } from 'react-icons/fi';
+// File: src/pages/AdminRoleManagementPage.jsx
+
+import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
+import { FiUserCheck, FiUserX, FiRefreshCw } from 'react-icons/fi';
 import { toast } from 'react-hot-toast';
+import axios from 'axios';
 
-const AdminNotificationsPage = () => {
-  const [notifications, setNotifications] = useState([]);
+const AdminRoleManagementPage = () => {
+  const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
-  const fetchNotifications = async () => {
+  const fetchUsers = async () => {
+    setLoading(true);
     try {
-      const token = localStorage.getItem('token'); // Add token for secure requests
-      const response = await axios.get('https://d-final.onrender.com/admin/notifications', {
+      const token = localStorage.getItem('token');
+      const res = await axios.get('https://d-final.onrender.com/admin/users', {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setNotifications(response.data.data);
-      setError(null);
+      setUsers(res.data.data);
     } catch (err) {
-      setError('Failed to load notifications.');
-      toast.error('Failed to load notifications.');
+      toast.error('Failed to load user roles.');
     } finally {
       setLoading(false);
     }
   };
 
-  useEffect(() => {
-    fetchNotifications();
-    const interval = setInterval(fetchNotifications, 30000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const markAsRead = async (id) => {
+  const handleRoleChange = async (userId, newRole) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.put(`https://d-final.onrender.com/admin/notifications/${id}/mark-read`, {}, {
+      await axios.post(`https://d-final.onrender.com/admin/update-role/${userId}`, { role: newRole }, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      toast.success('Notification marked as read.');
-      setNotifications((prev) =>
-        prev.map((n) => (n.id === id ? { ...n, read: true } : n))
-      );
+      toast.success('Role updated successfully!');
+      fetchUsers();
     } catch (err) {
-      setError('Failed to mark as read.');
-      toast.error('Failed to mark as read.');
+      toast.error('Failed to update role.');
     }
   };
 
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
   return (
-    <>
+    <div className="min-h-screen bg-[#0f172a] text-white px-6 py-10">
       <Helmet>
-        <title>Admin Notifications - Dealcross</title>
-        <meta name="description" content="View and manage admin notifications on Dealcross." />
+        <title>Admin Role Management - Dealcross</title>
+        <meta name="description" content="Manage user roles and permissions within Dealcross admin panel." />
       </Helmet>
 
-      <div className="max-w-6xl mx-auto px-4 py-6 text-white">
-        <h1 className="text-2xl font-bold mb-4 flex items-center gap-2">
-          <FiBell /> Admin Notifications
-        </h1>
-
-        {loading ? (
-          <p className="text-yellow-400">Loading notifications...</p>
-        ) : error ? (
-          <p className="text-red-400">{error}</p>
-        ) : notifications.length === 0 ? (
-          <p className="text-gray-400">No notifications available.</p>
-        ) : (
-          <div className="space-y-4">
-            {notifications.map((notif) => (
-              <div
-                key={notif.id}
-                className={`p-4 rounded-lg border ${
-                  notif.read
-                    ? 'border-gray-600 bg-gray-800'
-                    : 'border-blue-500 bg-blue-900'
-                } flex justify-between items-center`}
-              >
-                <div>
-                  <p className="font-semibold">{notif.message}</p>
-                  <p className="text-sm text-gray-400">
-                    {new Date(notif.timestamp).toLocaleString()}
-                  </p>
-                </div>
-                {!notif.read && (
-                  <button
-                    onClick={() => markAsRead(notif.id)}
-                    className="text-blue-400 hover:text-blue-500 flex items-center gap-1"
-                  >
-                    Mark as read <FiCheckCircle />
-                  </button>
-                )}
-              </div>
-            ))}
-          </div>
-        )}
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-2xl font-bold">Role Management</h2>
+        <button
+          onClick={fetchUsers}
+          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded"
+        >
+          <FiRefreshCw /> Refresh
+        </button>
       </div>
-    </>
+
+      {loading ? (
+        <p className="text-yellow-400">Loading users...</p>
+      ) : users.length === 0 ? (
+        <p className="text-gray-400">No users found.</p>
+      ) : (
+        <div className="space-y-4">
+          {users.map((user) => (
+            <div
+              key={user.id}
+              className="bg-[#1e293b] p-4 rounded-lg flex justify-between items-center shadow"
+            >
+              <div>
+                <h4 className="font-semibold">{user.username}</h4>
+                <p className="text-sm text-gray-400">{user.email}</p>
+                <p className="text-xs text-gray-500">Current Role: {user.role}</p>
+              </div>
+              <select
+                value={user.role}
+                onChange={(e) => handleRoleChange(user.id, e.target.value)}
+                className="bg-gray-800 text-white px-2 py-1 rounded"
+              >
+                <option value="user">User</option>
+                <option value="moderator">Moderator</option>
+                <option value="auditor">Auditor</option>
+                <option value="admin">Admin</option>
+              </select>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
   );
 };
 
-export default AdminNotificationsPage;
+export default AdminRoleManagementPage;
