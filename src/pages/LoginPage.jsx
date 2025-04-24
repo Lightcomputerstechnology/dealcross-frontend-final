@@ -1,32 +1,61 @@
-const handleLogin = async (e) => {
-  e.preventDefault();
+// File: src/pages/LoginPage.jsx
 
-  if (!email || !password) {
-    setError('Please enter both email and password.');
-    return;
-  }
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { login } from '@/api';  // ✅ Use api.js
 
-  try {
-    const formData = new URLSearchParams();
-    formData.append('username', email); // Use 'username' (FastAPI expects)
-    formData.append('password', password);
+export default function LoginPage() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [status, setStatus] = useState(null);
+  const navigate = useNavigate();
 
-    const response = await fetch('https://d-final.onrender.com/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, // Important!
-      body: formData,
-    });
-
-    if (!response.ok) {
-      const data = await response.json();
-      setError(data.detail || 'Invalid credentials.');
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!email || !password) {
+      setStatus('Please enter both email and password.');
       return;
     }
+    setStatus('Processing...');
+    try {
+      const formData = new URLSearchParams();
+      formData.append('username', email);
+      formData.append('password', password);
 
-    const result = await response.json();
-    localStorage.setItem('token', result.access_token);  // Save token (after backend upgrade)
-    window.location.href = '/deals'; // Redirect to deals page
-  } catch (err) {
-    setError('Login failed. Please check your network and try again.');
-  }
-};
+      const result = await login(formData);
+      localStorage.setItem('token', result.access_token);
+      setStatus('Login successful!');
+      navigate('/wallet');  // Redirect after login
+    } catch (err) {
+      setStatus(err.message || 'Login failed.');
+    }
+  };
+
+  return (
+    <div className="p-4 max-w-md mx-auto">
+      <h2 className="text-xl font-bold mb-4">Login</h2>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="w-full p-2 border rounded"
+          required
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="w-full p-2 border rounded"
+          required
+        />
+        <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded">
+          Login
+        </button>
+      </form>
+      {status && <p className="mt-4 text-center text-sm text-red-500">{status}</p>}
+    </div>
+  );
+}
