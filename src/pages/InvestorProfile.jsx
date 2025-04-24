@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 
 const InvestorProfile = () => {
   const investor = {
@@ -14,9 +15,20 @@ const InvestorProfile = () => {
     ],
   };
 
+  const trustBadgeColor = {
+    'Gold Tier': 'bg-yellow-500 text-black',
+    'Silver Tier': 'bg-gray-400 text-black',
+    'Bronze Tier': 'bg-orange-400 text-black',
+  }[investor.trustLevel] || 'bg-gray-600';
+
   return (
     <div className="min-h-screen bg-[#0f172a] text-white px-6 py-10">
-      <div className="max-w-3xl mx-auto bg-[#1e293b] p-6 rounded-lg shadow-md">
+      <motion.div
+        className="max-w-3xl mx-auto bg-[#1e293b] p-6 rounded-lg shadow-md"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
         {/* Header */}
         <div className="flex items-center gap-4 mb-6">
           <div className="w-16 h-16 rounded-full bg-gray-700 flex items-center justify-center text-2xl font-bold">
@@ -24,11 +36,13 @@ const InvestorProfile = () => {
           </div>
           <div>
             <h2 className="text-xl font-semibold">{investor.name}</h2>
-            <p className="text-sm text-gray-400">{investor.trustLevel}</p>
+            <span className={`inline-block px-2 py-0.5 text-xs rounded ${trustBadgeColor}`}>
+              {investor.trustLevel}
+            </span>
           </div>
         </div>
 
-        {/* Portfolio */}
+        {/* Portfolio Info */}
         <div className="space-y-4 text-sm mb-6">
           <div className="flex justify-between border-b border-gray-700 pb-2">
             <span className="text-gray-400">Email:</span>
@@ -47,17 +61,31 @@ const InvestorProfile = () => {
         {/* Shares */}
         <div>
           <h3 className="text-lg font-semibold mb-2">Share Holdings</h3>
-          <div className="bg-gray-800 rounded-lg divide-y divide-gray-700">
+          <motion.div
+            className="bg-gray-800 rounded-lg divide-y divide-gray-700"
+            initial="hidden"
+            animate="visible"
+            variants={{
+              visible: {
+                transition: { staggerChildren: 0.15 },
+              },
+            }}
+          >
             {investor.shares.map((item, index) => (
-              <div key={index} className="flex justify-between p-4">
+              <motion.div
+                key={index}
+                className="flex justify-between p-4"
+                initial={{ opacity: 0, x: 30 }}
+                animate={{ opacity: 1, x: 0 }}
+              >
                 <div>
                   <p className="font-medium">{item.company}</p>
                   <p className="text-xs text-gray-400">{item.amount}</p>
                 </div>
                 <p className="text-right font-semibold">{item.value}</p>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
 
         {/* Edit Button */}
@@ -66,7 +94,7 @@ const InvestorProfile = () => {
             Edit Investor Info
           </button>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };
