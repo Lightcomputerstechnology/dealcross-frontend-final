@@ -4,7 +4,7 @@ export default function Navbar() { const [open, setOpen] = useState(false); cons
 
 useEffect(() => { const handleScroll = () => { setScrolled(window.scrollY > 10); }; window.addEventListener('scroll', handleScroll); return () => window.removeEventListener('scroll', handleScroll); }, []);
 
-return ( <nav className={bg-white dark:bg-gray-900 relative z-50 ${scrolled ? 'shadow-lg' : ''} transition-shadow duration-300}> <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between"> {/* Logo */} <Link to="/" className="flex items-center"> <img src={Logo} alt="Dealcross" className="h-8 w-auto mr-2" /> <span className="text-xl font-bold text-gray-900 dark:text-white">Dealcross</span> </Link>
+return ( <nav className={ "bg-white dark:bg-gray-900 relative z-50 transition-shadow duration-300 " + (scrolled ? "shadow-lg" : "") } > <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between"> {/* Logo */} <Link to="/" className="flex items-center"> <img src={Logo} alt="Dealcross" className="h-8 w-auto mr-2" /> <span className="text-xl font-bold text-gray-900 dark:text-white">Dealcross</span> </Link>
 
 {/* Desktop Nav */}
     <div className="hidden md:flex space-x-6">
@@ -89,4 +89,4 @@ return ( <nav className={bg-white dark:bg-gray-900 relative z-50 ${scrolled ? 's
 
 ); }
 
-             
+          
