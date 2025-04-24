@@ -6,6 +6,7 @@ import { getMyDeals } from '@/api';
 import { toast } from 'react-hot-toast';
 import useAuthRedirect from '@/hooks/useAuthRedirect';
 import { FiFolderPlus } from 'react-icons/fi';
+import DealActions from '@/components/DealActions';  // ✅ Import DealActions
 
 const DealsPage = () => {
   useAuthRedirect();
@@ -74,6 +75,10 @@ const DealsPage = () => {
                   <p className="text-xs text-gray-400 dark:text-gray-500">
                     {deal.created_at}
                   </p>
+                  <DealActions  // ✅ Action buttons
+                    dealId={deal.deal_id}
+                    status={deal.status.label.toLowerCase()}
+                  />
                 </div>
               ))}
             </div>
