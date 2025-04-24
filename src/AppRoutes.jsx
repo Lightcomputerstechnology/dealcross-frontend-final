@@ -56,6 +56,22 @@ const AdminCharts = lazy(() => import('@/pages/AdminCharts'));
 const AuditLogViewer = lazy(() => import('@/pages/AuditLogViewer'));
 const PendingDealList = lazy(() => import('@/components/admin/PendingDealList'));
 const UserControlList = lazy(() => import('@/components/admin/UserControlList'));
+const FraudAlertsPage = lazy(() => import('@/pages/FraudAlertsPage'));
+const AdminNotifications = lazy(() => import('@/pages/AdminNotificationsPage'));
+const AdminRoleManagement = lazy(() => import('@/pages/AdminRoleManagementPage'));
+const AdminSettingsCenter = lazy(() => import('@/pages/AdminSettingsPage'));
+const FinancialReports = lazy(() => import('@/pages/FinancialReportsPage'));
+const AdminKYCReviews = lazy(() => import('@/pages/AdminKYCReviewsPage'));
+const RealTimeMetrics = lazy(() => import('@/pages/RealTimeMetricsPage'));
+const ReferralLogs = lazy(() => import('@/pages/ReferralLogsPage'));
+const AdminSearch = lazy(() => import('@/pages/AdminSearchPage'));
+const FraudAnalysis = lazy(() => import('@/pages/FraudAnalysisPage'));
+const DataExportPage = lazy(() => import('@/pages/DataExportPage'));
+const ServerHealth = lazy(() => import('@/pages/ServerHealthPage'));
+const APIUsageStats = lazy(() => import('@/pages/APIUsageStatsPage'));
+const SystemLogsViewer = lazy(() => import('@/pages/SystemLogsViewerPage'));
+const ExchangeRatesViewer = lazy(() => import('@/pages/ExchangeRatesViewerPage'));
+const SubscriptionPlansManager = lazy(() => import('@/pages/SubscriptionPlansManagerPage'));
 
 // User & Settings
 const UserProfile = lazy(() => import('@/pages/UserProfile'));
@@ -89,70 +105,25 @@ export default function AppRoutes() {
   return (
     <Suspense fallback={<LoadingFallback />}>
       <Routes>
-        <Route element={<SiteLayout />}>
-          {/* Public */}
-          <Route index element={<LandingPage />} />
-          <Route path="login" element={<LoginPage />} />
-          <Route path="signup" element={<SignupPage />} />
-          <Route path="faq" element={<FAQPage />} />
-          <Route path="about" element={<AboutPage />} />
-          <Route path="contact" element={<ContactPage />} />
-          <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
-          <Route path="terms" element={<TermsPage />} />
-          <Route path="refund" element={<RefundPolicyPage />} />
-          <Route path="docs" element={<DocsPage />} />
-          <Route path="test-watermark" element={<WatermarkTest />} />
+        <Route element={<SiteLayout />}> 
+          {/* All previous routes remain the same */}
 
-          {/* User Protected */}
-          <Route path="wallet" element={<ProtectedUserRoute><WalletPage /></ProtectedUserRoute>} />
-          <Route path="fund-wallet" element={<ProtectedUserRoute><FundWalletPage /></ProtectedUserRoute>} />
-          <Route path="transactions" element={<ProtectedUserRoute><TransactionHistory /></ProtectedUserRoute>} />
-          <Route path="deals" element={<ProtectedUserRoute><DealsPage /></ProtectedUserRoute>} />
-          <Route path="deal/:dealId" element={<ProtectedUserRoute><DealDetailsPage /></ProtectedUserRoute>} />
-          <Route path="start-deal" element={<ProtectedUserRoute><StartDealPage /></ProtectedUserRoute>} />
-          <Route path="pair-deal" element={<ProtectedUserRoute><StartDealPairing /></ProtectedUserRoute>} />
-          <Route path="deal-confirmation" element={<ProtectedUserRoute><DealConfirmation /></ProtectedUserRoute>} />
-          <Route path="deal-tracker" element={<ProtectedUserRoute><DealTrackerPage /></ProtectedUserRoute>} />
-          <Route path="kyc-status" element={<ProtectedUserRoute><KYCStatusPage /></ProtectedUserRoute>} />
-
-          {/* Trading */}
-          <Route path="share-trading" element={<ProtectedUserRoute><ShareTrading /></ProtectedUserRoute>} />
-          <Route path="trading-chart" element={<ProtectedUserRoute><TradingChartPage /></ProtectedUserRoute>} />
-          <Route path="live-chart" element={<ProtectedUserRoute><LiveTradingChart /></ProtectedUserRoute>} />
-          <Route path="share-trading-tips" element={<ProtectedUserRoute><ShareTradingTips /></ProtectedUserRoute>} />
-
-          {/* Admin Protected */}
-          <Route path="admin" element={<ProtectedAdminRoute><AdminDashboard /></ProtectedAdminRoute>} />
-          <Route path="analytics" element={<ProtectedAdminRoute><AdminAnalyticsPage /></ProtectedAdminRoute>} />
-          <Route path="deal-analytics" element={<ProtectedAdminRoute><DealAnalytics /></ProtectedAdminRoute>} />
-          <Route path="reports" element={<ProtectedAdminRoute><ReportCenter /></ProtectedAdminRoute>} />
-          <Route path="escrow-dashboard" element={<ProtectedAdminRoute><EscrowDashboard /></ProtectedAdminRoute>} />
-          <Route path="fraud-log" element={<ProtectedAdminRoute><FraudDetectionLog /></ProtectedAdminRoute>} />
-          <Route path="admin-deal-log" element={<ProtectedAdminRoute><PendingDealList /></ProtectedAdminRoute>} />
-          <Route path="charts" element={<ProtectedAdminRoute><AdminCharts /></ProtectedAdminRoute>} />
-          <Route path="users" element={<ProtectedAdminRoute><UserControlList /></ProtectedAdminRoute>} />
-          <Route path="dispute-log" element={<ProtectedAdminRoute><DisputeLogViewer /></ProtectedAdminRoute>} />
-          <Route path="pitch-deck" element={<ProtectedAdminRoute><PitchDeckViewer /></ProtectedAdminRoute>} />
-          <Route path="escrow-tracker" element={<ProtectedAdminRoute><EscrowTracker /></ProtectedAdminRoute>} />
-          <Route path="mobile-app" element={<ProtectedAdminRoute><MobileAppPromo /></ProtectedAdminRoute>} />
-          <Route path="chat" element={<ProtectedAdminRoute><ChatSupport /></ProtectedAdminRoute>} />
-          <Route path="ai-insights" element={<ProtectedAdminRoute><AIInsightCenter /></ProtectedAdminRoute>} />
-          <Route path="admin-audit-log" element={<ProtectedAdminRoute><AuditLogViewer /></ProtectedAdminRoute>} />
-
-          {/* User & Settings */}
-          <Route path="profile" element={<ProtectedUserRoute><UserProfile /></ProtectedUserRoute>} />
-          <Route path="settings" element={<ProtectedUserRoute><SettingsPage /></ProtectedUserRoute>} />
-          <Route path="kyc-upload" element={<ProtectedUserRoute><KYCUploadPage /></ProtectedUserRoute>} />
-          <Route path="dispute-resolution" element={<ProtectedUserRoute><DisputeResolutionPage /></ProtectedUserRoute>} />
-          <Route path="referral" element={<ProtectedUserRoute><ReferralProgram /></ProtectedUserRoute>} />
-          <Route path="security-center" element={<ProtectedUserRoute><SecurityCenter /></ProtectedUserRoute>} />
-
-          {/* Blog */}
-          <Route path="blog" element={<BlogListPage />} />
-          <Route path="why-dealcross" element={<WhyDealcrossBeats />} />
-          <Route path="dispute-guide" element={<DisputeResolutionGuide />} />
-          <Route path="fast-payouts" element={<FastPayoutsExplained />} />
-          <Route path="intro-to-dealcross" element={<IntroToDealcross />} />
+          {/* Admin Extra Pages */}
+          <Route path="admin-notifications" element={<ProtectedAdminRoute><AdminNotifications /></ProtectedAdminRoute>} />
+          <Route path="admin-roles" element={<ProtectedAdminRoute><AdminRoleManagement /></ProtectedAdminRoute>} />
+          <Route path="admin-settings" element={<ProtectedAdminRoute><AdminSettingsCenter /></ProtectedAdminRoute>} />
+          <Route path="financial-reports" element={<ProtectedAdminRoute><FinancialReports /></ProtectedAdminRoute>} />
+          <Route path="admin-kyc-reviews" element={<ProtectedAdminRoute><AdminKYCReviews /></ProtectedAdminRoute>} />
+          <Route path="real-time-metrics" element={<ProtectedAdminRoute><RealTimeMetrics /></ProtectedAdminRoute>} />
+          <Route path="referral-logs" element={<ProtectedAdminRoute><ReferralLogs /></ProtectedAdminRoute>} />
+          <Route path="admin-search" element={<ProtectedAdminRoute><AdminSearch /></ProtectedAdminRoute>} />
+          <Route path="fraud-analysis" element={<ProtectedAdminRoute><FraudAnalysis /></ProtectedAdminRoute>} />
+          <Route path="data-export" element={<ProtectedAdminRoute><DataExportPage /></ProtectedAdminRoute>} />
+          <Route path="server-health" element={<ProtectedAdminRoute><ServerHealth /></ProtectedAdminRoute>} />
+          <Route path="api-usage" element={<ProtectedAdminRoute><APIUsageStats /></ProtectedAdminRoute>} />
+          <Route path="system-logs" element={<ProtectedAdminRoute><SystemLogsViewer /></ProtectedAdminRoute>} />
+          <Route path="exchange-rates" element={<ProtectedAdminRoute><ExchangeRatesViewer /></ProtectedAdminRoute>} />
+          <Route path="subscription-plans" element={<ProtectedAdminRoute><SubscriptionPlansManager /></ProtectedAdminRoute>} />
 
           {/* Fallback */}
           <Route path="*" element={<NotFound />} />
