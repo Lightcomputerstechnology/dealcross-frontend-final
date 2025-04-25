@@ -8,13 +8,16 @@ const AdminKYCReview = () => {
   const [loading, setLoading] = useState(true);
   const [alert, setAlert] = useState({ type: '', message: '' });
 
-  const fetchKycSubmissions = async () => {
+  const fetchKycRequests = async () => {
     try {
-      const res = await axios.get('https://d-final.onrender.com/admin/kyc-submissions');
-      setKycList(res.data);
+      const token = localStorage.getItem('token');
+      const res = await axios.get('https://d-final.onrender.com/admin/kyc-requests', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setKycList(res.data || []);
     } catch (err) {
-      console.error('Failed to load KYC data:', err);
-      setAlert({ type: 'error', message: 'Error loading KYC submissions.' });
+      console.error('Failed to load KYC requests:', err);
+      setAlert({ type: 'error', message: 'Error loading KYC requests.' });
     } finally {
       setLoading(false);
     }
@@ -22,12 +25,16 @@ const AdminKYCReview = () => {
 
   const updateStatus = async (id, newStatus) => {
     try {
-      await axios.put(`https://d-final.onrender.com/admin/kyc-status/${id}?status=${newStatus}`);
+      const token = localStorage.getItem('token');
+      await axios.patch(`https://d-final.onrender.com/admin/kyc-requests/${id}`, 
+        { status: newStatus },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
       setAlert({
         type: 'success',
         message: `KYC ${id} marked as ${newStatus.toUpperCase()}.`,
       });
-      fetchKycSubmissions();
+      fetchKycRequests();
     } catch (err) {
       console.error('Failed to update status:', err);
       setAlert({ type: 'error', message: 'Failed to update KYC status.' });
@@ -35,7 +42,7 @@ const AdminKYCReview = () => {
   };
 
   useEffect(() => {
-    fetchKycSubmissions();
+    fetchKycRequests();
   }, []);
 
   return (
@@ -45,7 +52,7 @@ const AdminKYCReview = () => {
       </Helmet>
 
       <div className="min-h-screen bg-[#0f172a] text-white p-6">
-        <h1 className="text-2xl font-bold mb-4">KYC Submissions Review</h1>
+        <h1 className="text-2xl font-bold mb-4">KYC Requests Review</h1>
 
         {alert.message && (
           <NotificationAlert type={alert.type} message={alert.message} />
@@ -54,7 +61,7 @@ const AdminKYCReview = () => {
         {loading ? (
           <p className="text-gray-400">Loading...</p>
         ) : kycList.length === 0 ? (
-          <p className="text-gray-400">No KYC submissions found.</p>
+          <p className="text-gray-400">No KYC requests found.</p>
         ) : (
           <div className="space-y-6">
             {kycList.map((kyc) => (
