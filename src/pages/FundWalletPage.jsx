@@ -3,14 +3,19 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { toast } from 'react-hot-toast';
-import { fundWallet } from '@/api';  // ✅ Use api.js
+import {
+  fundWalletCard,
+  fundWalletBank,
+  fundWalletCrypto
+} from '@/api';  // ✅ Use updated API functions
 import useAuthRedirect from '@/hooks/useAuthRedirect';
 
 const FundWalletPage = () => {
   useAuthRedirect();
 
   const [amount, setAmount] = useState('');
-  const [method, setMethod] = useState('card');  // Dropdown kept for future use
+  const [method, setMethod] = useState('card');  // card, bank, crypto
+  const [cryptoType, setCryptoType] = useState('usdt');  // For crypto payments
   const [submitting, setSubmitting] = useState(false);
 
   const handleFund = async (e) => {
@@ -21,8 +26,14 @@ const FundWalletPage = () => {
     }
     setSubmitting(true);
     try {
-      await fundWallet({ amount: parseFloat(amount) });  // ✅ Only sending amount
-      toast.success('Wallet funded successfully!');
+      if (method === 'card') {
+        await fundWalletCard(parseFloat(amount));
+      } else if (method === 'bank') {
+        await fundWalletBank(parseFloat(amount));
+      } else if (method === 'crypto') {
+        await fundWalletCrypto(parseFloat(amount), cryptoType);
+      }
+      toast.success('Wallet funding initiated!');
       setAmount('');
     } catch (err) {
       toast.error(err.message || 'Funding failed.');
@@ -50,10 +61,23 @@ const FundWalletPage = () => {
             onChange={(e) => setMethod(e.target.value)}
             className="w-full px-4 py-2 rounded bg-gray-800 border border-gray-600"
           >
-            <option value="card">Card</option>
-            <option value="bank">Bank</option>
-            <option value="crypto">Crypto</option>
+            <option value="card">Card (Flutterwave, Paystack, Stripe)</option>
+            <option value="bank">Bank Transfer (Flutterwave, Paystack)</option>
+            <option value="crypto">Crypto (Bitcoin, USDT)</option>
           </select>
+
+          {/* Show crypto type selector if crypto is selected */}
+          {method === 'crypto' && (
+            <select
+              value={cryptoType}
+              onChange={(e) => setCryptoType(e.target.value)}
+              className="w-full px-4 py-2 rounded bg-gray-800 border border-gray-600"
+            >
+              <option value="usdt">USDT</option>
+              <option value="bitcoin">Bitcoin</option>
+            </select>
+          )}
+
           <button
             type="submit"
             disabled={submitting}
