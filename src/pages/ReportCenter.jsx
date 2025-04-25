@@ -1,19 +1,32 @@
-// File: src/pages/ReportCenter.jsx
-
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { FiFileText, FiDownload } from 'react-icons/fi';
-
-const reports = [
-  { title: 'Deal dispute flagged by user emilyrose', type: 'Deal Issue', date: 'April 16, 2025' },
-  { title: 'User johnx reported delayed payout', type: 'Payment Delay', date: 'April 15, 2025' },
-  { title: 'User adebowale flagged suspicious buyer', type: 'User Behavior', date: 'April 14, 2025' },
-  { title: 'System alert: multiple failed logins', type: 'System Alert', date: 'April 13, 2025' },
-  { title: 'User sarah flagged fraudulent document', type: 'Document Issue', date: 'April 12, 2025' },
-];
+import axios from 'axios';
+import { toast } from 'react-hot-toast';
 
 const ReportCenter = () => {
+  const [reports, setReports] = useState([]);
   const [filter, setFilter] = useState('All');
+  const [loading, setLoading] = useState(true);
+
+  const fetchReports = async () => {
+    setLoading(true);
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.get('https://d-final.onrender.com/admin/reports', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setReports(response.data || []);
+    } catch (err) {
+      toast.error('Failed to load reports.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchReports();
+  }, []);
 
   const filteredReports = filter === 'All' ? reports : reports.filter((r) => r.type === filter);
 
@@ -65,11 +78,13 @@ const ReportCenter = () => {
         </div>
 
         {/* Report List */}
-        <div className="space-y-4">
-          {filteredReports.length === 0 ? (
-            <p className="text-gray-400">No reports found.</p>
-          ) : (
-            filteredReports.map((report, index) => (
+        {loading ? (
+          <p className="text-yellow-400">Loading reports...</p>
+        ) : filteredReports.length === 0 ? (
+          <p className="text-gray-400">No reports found.</p>
+        ) : (
+          <div className="space-y-4">
+            {filteredReports.map((report, index) => (
               <div
                 key={index}
                 className="bg-[#1e293b] p-4 rounded-lg shadow-md flex justify-between items-start hover:shadow-lg transition"
@@ -80,9 +95,9 @@ const ReportCenter = () => {
                 </div>
                 <p className="text-sm text-gray-400">{report.date}</p>
               </div>
-            ))
-          )}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </>
   );
