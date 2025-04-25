@@ -1,65 +1,84 @@
 // File: src/pages/UpgradePage.jsx
 
-import React, { useState } from 'react'; import { Helmet } from 'react-helmet'; import { toast } from 'react-hot-toast'; import { FiCreditCard, FiDollarSign, FiBitcoin, FiArrowRight } from 'react-icons/fi';
+import React, { useState } from 'react';
+import { Helmet } from 'react-helmet';
+import { toast } from 'react-hot-toast';
+import { upgradeSubscription } from '@/api';  // ✅ Backend API endpoint
+import useAuthRedirect from '@/hooks/useAuthRedirect';
 
-const UpgradePage = () => { const [selectedPlan, setSelectedPlan] = useState(null); const [selectedPayment, setSelectedPayment] = useState(null);
+const UpgradePage = () => {
+  useAuthRedirect();  // Protect page for logged-in users
 
-const plans = [ { id: 'pro', name: 'Pro', price: 20, benefits: ['Lower fees', 'Priority KYC', 'Investor tools'] }, { id: 'business', name: 'Business', price: 50, benefits: ['All Pro features', 'Business analytics', 'Higher limits'] } ];
+  const [plan, setPlan] = useState('pro');
+  const [method, setMethod] = useState('card');
+  const [cryptoType, setCryptoType] = useState('usdt');
+  const [submitting, setSubmitting] = useState(false);
 
-const payments = [ { id: 'stripe', name: 'Stripe (Card)', icon: <FiCreditCard /> }, { id: 'paystack', name: 'Paystack', icon: <FiDollarSign /> }, { id: 'flutterwave', name: 'Flutterwave', icon: <FiDollarSign /> }, { id: 'btc', name: 'Bitcoin (BTC)', icon: <FiBitcoin /> }, { id: 'usdt', name: 'USDT (Tether)', icon: <FiDollarSign /> }, ];
+  const handleUpgrade = async (e) => {
+    e.preventDefault();
+    setSubmitting(true);
+    try {
+      await upgradeSubscription({ plan, method, cryptoType });
+      toast.success('Upgrade initiated! Please complete your payment.');
+    } catch (err) {
+      toast.error(err.message || 'Upgrade failed.');
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
-const handleUpgrade = () => { if (!selectedPlan || !selectedPayment) { toast.error('Select a plan and payment method'); return; } toast.success(Proceeding with ${selectedPlan} via ${selectedPayment}); // TODO: Implement actual payment integration here };
+  return (
+    <>
+      <Helmet><title>Upgrade Plan - Dealcross</title></Helmet>
+      <div className="min-h-screen bg-[#0f172a] text-white flex justify-center items-center px-4 py-12">
+        <form onSubmit={handleUpgrade} className="w-full max-w-sm bg-[#1e293b] p-6 rounded-lg shadow space-y-4">
+          <h2 className="text-xl font-bold text-center">Upgrade Your Plan</h2>
 
-return ( <> <Helmet> <title>Upgrade - Dealcross</title> </Helmet> <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white px-4 py-10"> <div className="max-w-4xl mx-auto space-y-10"> <h1 className="text-3xl font-bold text-center">Upgrade Your Account</h1>
+          <label className="block text-sm">Choose Plan</label>
+          <select
+            value={plan}
+            onChange={(e) => setPlan(e.target.value)}
+            className="w-full px-4 py-2 rounded bg-gray-800 border border-gray-600"
+          >
+            <option value="pro">Investor Pro</option>
+            <option value="business">Business Pro</option>
+          </select>
 
-{/* Plans */}
-      <section>
-        <h2 className="text-xl font-semibold mb-4">Choose Your Plan</h2>
-        <div className="grid sm:grid-cols-2 gap-6">
-          {plans.map((plan) => (
-            <div
-              key={plan.id}
-              className={`p-6 border rounded-lg cursor-pointer ${selectedPlan === plan.id ? 'border-blue-600' : 'border-gray-300 dark:border-gray-700'}`}
-              onClick={() => setSelectedPlan(plan.id)}
+          <label className="block text-sm">Payment Method</label>
+          <select
+            value={method}
+            onChange={(e) => setMethod(e.target.value)}
+            className="w-full px-4 py-2 rounded bg-gray-800 border border-gray-600"
+          >
+            <option value="card">Card</option>
+            <option value="bank">Bank Transfer</option>
+            <option value="crypto">Crypto (Bitcoin, USDT)</option>
+          </select>
+
+          {method === 'crypto' && (
+            <select
+              value={cryptoType}
+              onChange={(e) => setCryptoType(e.target.value)}
+              className="w-full px-4 py-2 rounded bg-gray-800 border border-gray-600"
             >
-              <h3 className="text-lg font-bold mb-2">{plan.name}</h3>
-              <p className="text-2xl font-semibold mb-4">${plan.price}</p>
-              <ul className="text-sm space-y-1">
-                {plan.benefits.map((benefit, i) => <li key={i}>- {benefit}</li>)}
-              </ul>
-            </div>
-          ))}
-        </div>
-      </section>
+              <option value="usdt">USDT</option>
+              <option value="bitcoin">Bitcoin</option>
+            </select>
+          )}
 
-      {/* Payment Methods */}
-      <section>
-        <h2 className="text-xl font-semibold mb-4">Select Payment Method</h2>
-        <div className="grid sm:grid-cols-3 gap-6">
-          {payments.map((method) => (
-            <div
-              key={method.id}
-              className={`p-4 flex items-center gap-3 border rounded-lg cursor-pointer ${selectedPayment === method.id ? 'border-blue-600' : 'border-gray-300 dark:border-gray-700'}`}
-              onClick={() => setSelectedPayment(method.id)}
-            >
-              {method.icon}
-              <span>{method.name}</span>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <button
-        onClick={handleUpgrade}
-        className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg mx-auto"
-      >
-        Proceed to Payment <FiArrowRight />
-      </button>
-    </div>
-  </div>
-</>
-
-); };
+          <button
+            type="submit"
+            disabled={submitting}
+            className={`w-full py-2 rounded font-semibold transition ${
+              submitting ? 'bg-gray-600 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'
+            }`}
+          >
+            {submitting ? 'Processing...' : 'Upgrade Now'}
+          </button>
+        </form>
+      </div>
+    </>
+  );
+};
 
 export default UpgradePage;
-
