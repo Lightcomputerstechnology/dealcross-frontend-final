@@ -1,8 +1,6 @@
-// File: src/pages/ServerHealthPage.jsx
-
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { FiRefreshCw, FiCheckCircle, FiXCircle, FiActivity } from 'react-icons/fi';
+import { FiRefreshCw, FiActivity } from 'react-icons/fi';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 
@@ -14,7 +12,7 @@ const ServerHealthPage = () => {
   const fetchHealth = async () => {
     setLoading(true);
     try {
-      const response = await axios.get('https://d-final.onrender.com/health'); // Replace with your backend health endpoint
+      const response = await axios.get('https://d-final.onrender.com/health'); // Backend health endpoint
       setHealthData(response.data);
       setLastChecked(new Date());
     } catch (err) {
@@ -26,18 +24,20 @@ const ServerHealthPage = () => {
 
   useEffect(() => {
     fetchHealth();
+    const interval = setInterval(fetchHealth, 60000); // Auto-refresh every 60 seconds
+    return () => clearInterval(interval);
   }, []);
 
-  const renderStatus = (status) =>
-    status ? (
-      <span className="flex items-center gap-2 text-green-400">
-        <FiCheckCircle /> Online
-      </span>
-    ) : (
-      <span className="flex items-center gap-2 text-red-400">
-        <FiXCircle /> Offline
-      </span>
-    );
+  const renderStatus = (status) => (
+    <span className={`flex items-center gap-2 font-medium`}>
+      <span
+        className={`w-3 h-3 rounded-full ${
+          status ? 'bg-green-400' : 'bg-red-400'
+        }`}
+      ></span>
+      {status ? 'Online' : 'Offline'}
+    </span>
+  );
 
   return (
     <>
@@ -56,7 +56,7 @@ const ServerHealthPage = () => {
             disabled={loading}
             className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded"
           >
-            <FiRefreshCw /> {loading ? 'Refreshing...' : 'Refresh'}
+            <FiRefreshCw className={loading ? 'animate-spin' : ''} /> {loading ? 'Refreshing...' : 'Refresh'}
           </button>
         </div>
 
