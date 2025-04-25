@@ -1,46 +1,41 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { FiTrendingUp, FiShieldOff, FiPieChart, FiRefreshCw } from 'react-icons/fi';
+import axios from 'axios';
+import { toast } from 'react-hot-toast';
 import { motion } from 'framer-motion';
 
-const initialInsights = [
-  {
-    icon: <FiTrendingUp size={22} />,
-    title: 'Rising Deal Categories',
-    description: 'Freelance design, crypto mentorship, and affiliate marketing are trending.',
-    category: 'Deals',
-    confidence: 92,
-  },
-  {
-    icon: <FiShieldOff size={22} />,
-    title: 'Fraud Spike Alerts',
-    description: '50% of fraud attempts are now linked to ID document forgery.',
-    category: 'Fraud',
-    confidence: 88,
-  },
-  {
-    icon: <FiPieChart size={22} />,
-    title: 'Top Share Opportunities',
-    description: 'Tesla, Nvidia, and Apple offer strong short-term ROI in Q2.',
-    category: 'Shares',
-    confidence: 95,
-  },
-];
+const iconMapper = {
+  'trending-up': <FiTrendingUp size={22} />,
+  'shield-off': <FiShieldOff size={22} />,
+  'pie-chart': <FiPieChart size={22} />,
+};
 
 const AIInsightCenter = () => {
-  const [insights, setInsights] = useState(initialInsights);
+  const [insights, setInsights] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [lastUpdated, setLastUpdated] = useState(new Date());
   const [filter, setFilter] = useState('All');
 
-  const refreshInsights = () => {
-    // Simulate AI refresh with confidence variation
-    const refreshed = insights.map(item => ({
-      ...item,
-      confidence: Math.floor(Math.random() * 11) + 85, // 85-95%
-    }));
-    setInsights(refreshed);
-    setLastUpdated(new Date());
+  const fetchInsights = async () => {
+    setLoading(true);
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.get('https://d-final.onrender.com/investor/insights', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setInsights(response.data || []);
+      setLastUpdated(new Date());
+    } catch (err) {
+      toast.error('Failed to load AI insights.');
+    } finally {
+      setLoading(false);
+    }
   };
+
+  useEffect(() => {
+    fetchInsights();
+  }, []);
 
   const filteredInsights = filter === 'All' ? insights : insights.filter(i => i.category === filter);
 
@@ -55,7 +50,7 @@ const AIInsightCenter = () => {
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">AI Insight Center</h2>
           <button
-            onClick={refreshInsights}
+            onClick={fetchInsights}
             className="flex items-center gap-2 text-blue-400 hover:text-blue-500 transition"
           >
             <FiRefreshCw /> Refresh
@@ -78,24 +73,28 @@ const AIInsightCenter = () => {
           Last updated: {lastUpdated.toLocaleString()}
         </p>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredInsights.map((item, index) => (
-            <motion.div
-              key={index}
-              className="bg-[#1e293b] p-6 rounded-lg shadow-lg space-y-2"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.2 }}
-            >
-              <div className="text-blue-400">{item.icon}</div>
-              <h3 className="text-lg font-semibold">{item.title}</h3>
-              <p className="text-sm text-gray-400">{item.description}</p>
-              <p className="text-xs text-green-400">
-                Confidence: {item.confidence}%
-              </p>
-            </motion.div>
-          ))}
-        </div>
+        {loading ? (
+          <p className="text-yellow-400">Loading insights...</p>
+        ) : (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredInsights.map((item, index) => (
+              <motion.div
+                key={index}
+                className="bg-[#1e293b] p-6 rounded-lg shadow-lg space-y-2"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.2 }}
+              >
+                <div className="text-blue-400">{iconMapper[item.icon]}</div>
+                <h3 className="text-lg font-semibold">{item.title}</h3>
+                <p className="text-sm text-gray-400">{item.description}</p>
+                <p className="text-xs text-green-400">
+                  Confidence: {item.confidence}%
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        )}
       </div>
     </>
   );
