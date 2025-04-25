@@ -1,65 +1,83 @@
-// File: src/pages/UpgradePlanPage.jsx
-
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
+import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 
 const UpgradePlanPage = () => {
-  const [selectedPlan, setSelectedPlan] = useState('pro');
+  const [plans, setPlans] = useState([]);
+  const [selectedPlan, setSelectedPlan] = useState(null);
   const [paymentMethod, setPaymentMethod] = useState('card');
   const [submitting, setSubmitting] = useState(false);
+  const [loadingPlans, setLoadingPlans] = useState(true);
+
+  const fetchPlans = async () => {
+    setLoadingPlans(true);
+    try {
+      const token = localStorage.getItem('token');
+      const res = await axios.get('https://d-final.onrender.com/admin/subscription-plans', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setPlans(res.data.data || []);
+    } catch (err) {
+      toast.error('Failed to load subscription plans.');
+    } finally {
+      setLoadingPlans(false);
+    }
+  };
 
   const handleUpgrade = async () => {
+    if (!selectedPlan) {
+      toast.error('Please select a plan.');
+      return;
+    }
     setSubmitting(true);
     try {
-      // Mock payment action (replace with actual payment trigger later)
-      toast.success(`Payment initiated for ${selectedPlan.toUpperCase()} via ${paymentMethod.toUpperCase()}`);
+      const token = localStorage.getItem('token');
+      const res = await axios.post(
+        `https://d-final.onrender.com/subscriptions/upgrade`,
+        { plan_id: selectedPlan.id, payment_method: paymentMethod },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      toast.success(res.data.message || 'Upgrade successful!');
     } catch (err) {
-      toast.error('Upgrade failed. Try again.');
+      toast.error(err.response?.data?.detail || 'Upgrade failed.');
     } finally {
       setSubmitting(false);
     }
   };
 
+  useEffect(() => {
+    fetchPlans();
+  }, []);
+
   return (
     <>
-      <Helmet><title>Upgrade Plan - Dealcross</title></Helmet>
+      <Helmet>
+        <title>Upgrade Plan - Dealcross</title>
+      </Helmet>
       <div className="min-h-screen bg-[#0f172a] text-white flex flex-col items-center px-4 py-12 space-y-8">
         <h1 className="text-3xl font-bold">Upgrade Your Plan</h1>
 
-        {/* Plans */}
-        <div className="grid md:grid-cols-2 gap-6 w-full max-w-4xl">
-          {/* PRO Plan */}
-          <div
-            className={`border rounded-lg p-6 cursor-pointer ${selectedPlan === 'pro' ? 'border-blue-500' : 'border-gray-600'}`}
-            onClick={() => setSelectedPlan('pro')}
-          >
-            <h2 className="text-2xl font-semibold mb-2">Pro Plan</h2>
-            <p className="text-gray-400 mb-4">$10/month</p>
-            <ul className="space-y-2 text-sm text-gray-300">
-              <li>✔ Lower escrow fees (2%)</li>
-              <li>✔ Share buyer fee reduced to 1.5%</li>
-              <li>✔ Seller fee drops to 0.75%</li>
-              <li>✔ Priority KYC processing</li>
-              <li>✔ Access to analytics tools</li>
-            </ul>
+        {loadingPlans ? (
+          <p className="text-yellow-400">Loading plans...</p>
+        ) : (
+          <div className="grid md:grid-cols-2 gap-6 w-full max-w-4xl">
+            {plans.map((plan) => (
+              <div
+                key={plan.id}
+                className={`border rounded-lg p-6 cursor-pointer ${
+                  selectedPlan?.id === plan.id ? 'border-blue-500' : 'border-gray-600'
+                }`}
+                onClick={() => setSelectedPlan(plan)}
+              >
+                <h2 className="text-2xl font-semibold mb-2">{plan.name}</h2>
+                <p className="text-gray-400 mb-4">${plan.price} / {plan.duration} days</p>
+                <p className="text-sm text-gray-300">{plan.description}</p>
+              </div>
+            ))}
           </div>
-
-          {/* BUSINESS Plan */}
-          <div
-            className={`border rounded-lg p-6 cursor-pointer ${selectedPlan === 'business' ? 'border-blue-500' : 'border-gray-600'}`}
-            onClick={() => setSelectedPlan('business')}
-          >
-            <h2 className="text-2xl font-semibold mb-2">Business Plan</h2>
-            <p className="text-gray-400 mb-4">$25/month</p>
-            <ul className="space-y-2 text-sm text-gray-300">
-              <li>✔ All Pro benefits</li>
-              <li>✔ Higher share limits</li>
-              <li>✔ Dedicated support</li>
-            </ul>
-          </div>
-        </div>
+        )}
 
         {/* Payment Method */}
         <div className="w-full max-w-md">
@@ -70,7 +88,6 @@ const UpgradePlanPage = () => {
             className="w-full px-4 py-2 rounded bg-gray-800 border border-gray-600"
           >
             <option value="card">Card (Stripe)</option>
-            <option value="paystack">Paystack</option>
             <option value="flutterwave">Flutterwave</option>
             <option value="bitcoin">Bitcoin</option>
             <option value="usdt">USDT (Tether)</option>
@@ -85,10 +102,12 @@ const UpgradePlanPage = () => {
             submitting ? 'bg-gray-600 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'
           }`}
         >
-          {submitting ? 'Processing...' : `Upgrade to ${selectedPlan.toUpperCase()}`}
+          {submitting ? 'Processing...' : `Upgrade Now`}
         </button>
 
-        <Link to="/" className="text-blue-400 text-sm underline">Back to Dashboard</Link>
+        <Link to="/" className="text-blue-400 text-sm underline">
+          Back to Dashboard
+        </Link>
       </div>
     </>
   );
