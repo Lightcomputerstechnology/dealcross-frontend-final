@@ -1,12 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { FiAlertTriangle, FiRefreshCw } from 'react-icons/fi';
-
-const fraudLogs = [
-  { type: 'VPN Login Detected', user: 'mikejohnson', time: '5 mins ago', severity: 'High' },
-  { type: 'Fake ID Uploaded', user: 'lucaslee', time: '12 mins ago', severity: 'Medium' },
-  { type: 'Multiple Accounts Linked', user: 'rebecca_x', time: '1 hour ago', severity: 'High' },
-];
+import axios from 'axios';
+import { toast } from 'react-hot-toast';
 
 const getBadgeColor = (severity) => {
   switch (severity) {
@@ -22,15 +18,27 @@ const getBadgeColor = (severity) => {
 };
 
 const FraudDetectionLog = () => {
-  const [loading, setLoading] = useState(false);
-  const [logs, setLogs] = useState(fraudLogs);
+  const [loading, setLoading] = useState(true);
+  const [logs, setLogs] = useState([]);
 
-  const refreshLogs = () => {
+  const fetchLogs = async () => {
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false); // Simulate API refresh
-    }, 1000);
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.get('https://d-final.onrender.com/admin/fraud-alerts', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setLogs(response.data || []);
+    } catch (err) {
+      toast.error('Failed to load fraud alerts.');
+    } finally {
+      setLoading(false);
+    }
   };
+
+  useEffect(() => {
+    fetchLogs();
+  }, []);
 
   return (
     <>
@@ -45,15 +53,17 @@ const FraudDetectionLog = () => {
             <FiAlertTriangle className="text-red-500" /> Fraud Detection Log
           </h2>
           <button
-            onClick={refreshLogs}
+            onClick={fetchLogs}
             className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
           >
-            <FiRefreshCw className={loading ? 'animate-spin' : ''} /> Refresh
+            <FiRefreshCw className={loading ? 'animate-spin' : ''} /> {loading ? 'Refreshing...' : 'Refresh'}
           </button>
         </div>
 
         {loading ? (
-          <p className="text-yellow-400">Refreshing logs...</p>
+          <p className="text-yellow-400">Loading fraud alerts...</p>
+        ) : logs.length === 0 ? (
+          <p className="text-gray-400">No fraud alerts found.</p>
         ) : (
           <div className="space-y-4">
             {logs.map((log, index) => (
@@ -62,17 +72,14 @@ const FraudDetectionLog = () => {
                 className="bg-[#1e293b] p-4 rounded-lg flex justify-between items-start shadow"
               >
                 <div>
-                  <h4 className="text-lg font-semibold">{log.type}</h4>
+                  <h4 className="text-lg font-semibold">{log.alert_type}</h4>
                   <p className="text-sm text-gray-400">
-                    User: <span className="text-white">{log.user}</span> — {log.time}
+                    User ID: <span className="text-white">{log.user_id}</span> — {new Date(log.created_at).toLocaleString()}
                   </p>
+                  <p className="text-xs text-gray-500 mt-1">{log.description}</p>
                 </div>
-                <span
-                  className={`text-xs px-3 py-1 rounded-full font-medium ${getBadgeColor(
-                    log.severity
-                  )}`}
-                >
-                  {log.severity}
+                <span className={`text-xs px-3 py-1 rounded-full font-medium ${getBadgeColor('High')}`}>
+                  High
                 </span>
               </div>
             ))}
