@@ -1,58 +1,39 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { FiRefreshCw } from 'react-icons/fi';
+import { toast } from 'react-hot-toast';
+import useAuthRedirect from '@/hooks/useAuthRedirect';
 
 const AdminControls = () => {
-  const userLogs = [
-    {
-      name: 'Alice Okoro',
-      email: 'alice@example.com',
-      activity: 'Funded Wallet - ₦15,000',
-      type: 'fund',
-      date: '2025-04-24T10:15:00',
-    },
-    {
-      name: 'John Doe',
-      email: 'john@example.com',
-      activity: 'Started a Deal with Seller',
-      type: 'deal',
-      date: '2025-04-23T16:32:00',
-    },
-    {
-      name: 'Ifeoma Charles',
-      email: 'ifeoma@example.com',
-      activity: 'Dispute Raised on Deal #7854',
-      type: 'dispute',
-      date: '2025-04-22T11:45:00',
-    },
-    {
-      name: 'Ahmed Musa',
-      email: 'ahmed@example.com',
-      activity: 'Updated Profile Picture',
-      type: 'profile',
-      date: '2025-04-21T09:28:00',
-    },
-  ];
+  useAuthRedirect({ adminOnly: true }); // Protect admin access
 
+  const [logs, setLogs] = useState([]);
   const [search, setSearch] = useState('');
+  const [loading, setLoading] = useState(true);
 
-  const filteredLogs = userLogs.filter(
-    (log) =>
-      log.name.toLowerCase().includes(search.toLowerCase()) ||
-      log.email.toLowerCase().includes(search.toLowerCase()) ||
-      log.activity.toLowerCase().includes(search.toLowerCase())
-  );
-
-  const getActivityColor = (type) => {
-    switch (type) {
-      case 'fund':
-        return 'text-green-400';
-      case 'deal':
-        return 'text-blue-400';
-      case 'dispute':
-        return 'text-red-400';
-      default:
-        return 'text-gray-300';
+  const fetchLogs = async () => {
+    setLoading(true);
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.get('https://d-final.onrender.com/admin/user-logs', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setLogs(response.data || []);
+    } catch (error) {
+      toast.error('Failed to load user logs.');
+    } finally {
+      setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchLogs();
+  }, []);
+
+  const filteredLogs = logs.filter(
+    (log) =>
+      log.action.toLowerCase().includes(search.toLowerCase())
+  );
 
   const relativeTime = (date) => {
     const delta = Math.floor((new Date() - new Date(date)) / 1000);
@@ -64,7 +45,15 @@ const AdminControls = () => {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white p-6">
-      <h2 className="text-3xl font-bold mb-6">Admin Controls – User Activity Logs</h2>
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-3xl font-bold">Admin Controls – User Activity Logs</h2>
+        <button
+          onClick={fetchLogs}
+          className="flex items-center gap-1 bg-blue-600 hover:bg-blue-700 px-3 py-2 rounded"
+        >
+          <FiRefreshCw /> Refresh
+        </button>
+      </div>
 
       {/* Search */}
       <div className="mb-4">
@@ -77,31 +66,36 @@ const AdminControls = () => {
         />
       </div>
 
-      <div className="overflow-x-auto rounded-lg shadow border border-gray-700">
-        <table className="min-w-full bg-gray-800 text-left">
-          <thead className="bg-gray-700 text-gray-300">
-            <tr>
-              <th className="px-4 py-3">User</th>
-              <th className="px-4 py-3">Email</th>
-              <th className="px-4 py-3">Recent Activity</th>
-              <th className="px-4 py-3">Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredLogs.map((log, index) => (
-              <tr key={index} className="border-b border-gray-700 hover:bg-gray-700/40">
-                <td className="px-4 py-3">{log.name}</td>
-                <td className="px-4 py-3">{log.email}</td>
-                <td className={`px-4 py-3 ${getActivityColor(log.type)}`}>{log.activity}</td>
-                <td className="px-4 py-3 text-sm text-gray-400">
-                  {new Date(log.date).toLocaleString()}<br />
-                  <span className="text-xs">{relativeTime(log.date)}</span>
-                </td>
+      {loading ? (
+        <p className="text-gray-400">Loading logs...</p>
+      ) : filteredLogs.length === 0 ? (
+        <p className="text-yellow-400">No logs found.</p>
+      ) : (
+        <div className="overflow-x-auto rounded-lg shadow border border-gray-700">
+          <table className="min-w-full bg-gray-800 text-left">
+            <thead className="bg-gray-700 text-gray-300">
+              <tr>
+                <th className="px-4 py-3">Action</th>
+                <th className="px-4 py-3">Performed By (User ID)</th>
+                <th className="px-4 py-3">Date</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {filteredLogs.map((log) => (
+                <tr key={log.id} className="border-b border-gray-700 hover:bg-gray-700/40">
+                  <td className="px-4 py-3">{log.action}</td>
+                  <td className="px-4 py-3">{log.performed_by}</td>
+                  <td className="px-4 py-3 text-sm text-gray-400">
+                    {new Date(log.timestamp).toLocaleString()}
+                    <br />
+                    <span className="text-xs">{relativeTime(log.timestamp)}</span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 };
