@@ -46,4 +46,14 @@ export const upgradeSubscriptionCard = async (plan) => { try { const res = await
 export const upgradeSubscriptionBank = async (plan) => { try { const res = await API.post('/subscriptions/upgrade/bank', { plan }); return res.data; } catch (err) { handleError(err); } };
 export const upgradeSubscriptionCrypto = async (plan, cryptoType) => { try { const res = await API.post('/subscriptions/upgrade/crypto', { plan, crypto_type: cryptoType }); return res.data; } catch (err) { handleError(err); } };
 
+// ========== ADMIN: AUDIT LOGS ==========
+export const getAuditLogs = async () => {
+  try {
+    const res = await API.get('/admin/audit-logs'); // ✅ Connects to correct endpoint
+    return res.data;
+  } catch (err) {
+    handleError(err);
+  }
+};
+
 export default API;
