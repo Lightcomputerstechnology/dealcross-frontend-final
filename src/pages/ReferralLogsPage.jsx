@@ -1,5 +1,3 @@
-// File: src/pages/ReferralLogsPage.jsx
-
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { FiUserPlus, FiRefreshCw } from 'react-icons/fi';
@@ -15,10 +13,10 @@ const ReferralLogsPage = () => {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('https://d-final.onrender.com/referrals/logs', {
+      const response = await axios.get('https://d-final.onrender.com/admin/referral-logs', {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setLogs(response.data);
+      setLogs(response.data || []);
       setError(null);
     } catch (err) {
       setError('Failed to load referral logs.');
