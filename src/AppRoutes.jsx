@@ -1,5 +1,3 @@
-// File: src/AppRoutes.jsx
-
 import React, { Suspense, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import SiteLayout from '@/layouts/SiteLayout';
@@ -30,6 +28,7 @@ const WalletPage = lazy(() => import('@/pages/WalletPage'));
 const FundWalletPage = lazy(() => import('@/pages/FundWalletPage'));
 const TransactionHistory = lazy(() => import('@/pages/TransactionHistory'));
 const KYCStatusPage = lazy(() => import('@/pages/KYCStatusPage'));
+const WalletHistoryPage = lazy(() => import('@/pages/WalletHistoryPage'));  // Added
 
 // Trading Pages
 const ShareTrading = lazy(() => import('@/pages/ShareTrading'));
@@ -105,10 +104,74 @@ export default function AppRoutes() {
   return (
     <Suspense fallback={<LoadingFallback />}>
       <Routes>
-        <Route element={<SiteLayout />}> 
-          {/* All previous routes remain the same */}
+        <Route element={<SiteLayout />}>
+          {/* Public Routes */}
+          <Route path="/" element={<LandingPage />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="signup" element={<SignupPage />} />
+          <Route path="about" element={<AboutPage />} />
+          <Route path="contact" element={<ContactPage />} />
+          <Route path="faq" element={<FAQPage />} />
+          <Route path="privacy" element={<PrivacyPolicyPage />} />
+          <Route path="terms" element={<TermsPage />} />
+          <Route path="refund" element={<RefundPolicyPage />} />
+          <Route path="docs" element={<DocsPage />} />
+          <Route path="watermark" element={<WatermarkTest />} />
 
-          {/* Admin Extra Pages */}
+          {/* User Routes */}
+          <Route path="deals" element={<ProtectedUserRoute><DealsPage /></ProtectedUserRoute>} />
+          <Route path="deal/:id" element={<ProtectedUserRoute><DealDetailsPage /></ProtectedUserRoute>} />
+          <Route path="start-deal" element={<ProtectedUserRoute><StartDealPage /></ProtectedUserRoute>} />
+          <Route path="pair-deal" element={<ProtectedUserRoute><StartDealPairing /></ProtectedUserRoute>} />
+          <Route path="confirm-deal" element={<ProtectedUserRoute><DealConfirmation /></ProtectedUserRoute>} />
+          <Route path="deal-tracker" element={<ProtectedUserRoute><DealTrackerPage /></ProtectedUserRoute>} />
+          <Route path="wallet" element={<ProtectedUserRoute><WalletPage /></ProtectedUserRoute>} />
+          <Route path="fund-wallet" element={<ProtectedUserRoute><FundWalletPage /></ProtectedUserRoute>} />
+          <Route path="transaction-history" element={<ProtectedUserRoute><TransactionHistory /></ProtectedUserRoute>} />
+          <Route path="kyc-status" element={<ProtectedUserRoute><KYCStatusPage /></ProtectedUserRoute>} />
+          <Route path="wallet-history" element={<ProtectedUserRoute><WalletHistoryPage /></ProtectedUserRoute>} /> {/* New Route */}
+
+          {/* Trading Routes */}
+          <Route path="share-trading" element={<ProtectedUserRoute><ShareTrading /></ProtectedUserRoute>} />
+          <Route path="share-tips" element={<ProtectedUserRoute><ShareTradingTips /></ProtectedUserRoute>} />
+          <Route path="trading-chart" element={<ProtectedUserRoute><TradingChartPage /></ProtectedUserRoute>} />
+          <Route path="live-chart" element={<ProtectedUserRoute><LiveTradingChart /></ProtectedUserRoute>} />
+
+          {/* User Profile & Settings */}
+          <Route path="profile" element={<ProtectedUserRoute><UserProfile /></ProtectedUserRoute>} />
+          <Route path="settings" element={<ProtectedUserRoute><SettingsPage /></ProtectedUserRoute>} />
+          <Route path="kyc-upload" element={<ProtectedUserRoute><KYCUploadPage /></ProtectedUserRoute>} />
+          <Route path="disputes" element={<ProtectedUserRoute><DisputeResolutionPage /></ProtectedUserRoute>} />
+          <Route path="referral" element={<ProtectedUserRoute><ReferralProgram /></ProtectedUserRoute>} />
+          <Route path="security" element={<ProtectedUserRoute><SecurityCenter /></ProtectedUserRoute>} />
+
+          {/* Blog Routes */}
+          <Route path="blog" element={<BlogListPage />} />
+          <Route path="blog/why-dealcross" element={<WhyDealcrossBeats />} />
+          <Route path="blog/dispute-guide" element={<DisputeResolutionGuide />} />
+          <Route path="blog/fast-payouts" element={<FastPayoutsExplained />} />
+          <Route path="blog/intro" element={<IntroToDealcross />} />
+
+          {/* Admin Routes */}
+          <Route path="admin-dashboard" element={<ProtectedAdminRoute><AdminDashboard /></ProtectedAdminRoute>} />
+          <Route path="admin-analytics" element={<ProtectedAdminRoute><AdminAnalyticsPage /></ProtectedAdminRoute>} />
+          <Route path="deal-analytics" element={<ProtectedAdminRoute><DealAnalytics /></ProtectedAdminRoute>} />
+          <Route path="report-center" element={<ProtectedAdminRoute><ReportCenter /></ProtectedAdminRoute>} />
+          <Route path="escrow-dashboard" element={<ProtectedAdminRoute><EscrowDashboard /></ProtectedAdminRoute>} />
+          <Route path="fraud-log" element={<ProtectedAdminRoute><FraudDetectionLog /></ProtectedAdminRoute>} />
+          <Route path="user-management" element={<ProtectedAdminRoute><UserManagement /></ProtectedAdminRoute>} />
+          <Route path="dispute-log" element={<ProtectedAdminRoute><DisputeLogViewer /></ProtectedAdminRoute>} />
+          <Route path="pitch-deck" element={<ProtectedAdminRoute><PitchDeckViewer /></ProtectedAdminRoute>} />
+          <Route path="escrow-tracker" element={<ProtectedAdminRoute><EscrowTracker /></ProtectedAdminRoute>} />
+          <Route path="mobile-promo" element={<ProtectedAdminRoute><MobileAppPromo /></ProtectedAdminRoute>} />
+          <Route path="chat-support" element={<ProtectedAdminRoute><ChatSupport /></ProtectedAdminRoute>} />
+          <Route path="ai-insight" element={<ProtectedAdminRoute><AIInsightCenter /></ProtectedAdminRoute>} />
+          <Route path="admin-deals" element={<ProtectedAdminRoute><AdminDealLog /></ProtectedAdminRoute>} />
+          <Route path="admin-charts" element={<ProtectedAdminRoute><AdminCharts /></ProtectedAdminRoute>} />
+          <Route path="audit-log" element={<ProtectedAdminRoute><AuditLogViewer /></ProtectedAdminRoute>} />
+          <Route path="pending-deals" element={<ProtectedAdminRoute><PendingDealList /></ProtectedAdminRoute>} />
+          <Route path="user-controls" element={<ProtectedAdminRoute><UserControlList /></ProtectedAdminRoute>} />
+          <Route path="fraud-alerts" element={<ProtectedAdminRoute><FraudAlertsPage /></ProtectedAdminRoute>} />
           <Route path="admin-notifications" element={<ProtectedAdminRoute><AdminNotifications /></ProtectedAdminRoute>} />
           <Route path="admin-roles" element={<ProtectedAdminRoute><AdminRoleManagement /></ProtectedAdminRoute>} />
           <Route path="admin-settings" element={<ProtectedAdminRoute><AdminSettingsCenter /></ProtectedAdminRoute>} />
@@ -131,5 +194,4 @@ export default function AppRoutes() {
       </Routes>
     </Suspense>
   );
-  }
-  
+}
