@@ -109,4 +109,15 @@ export const getAdminMetrics = async () => {
   }
 };
 
+
+// ========== ADMIN FRAUD REPORTS ==========
+export const getFraudReports = async () => {
+  try {
+    const res = await API.get('/admin/fraud-reports');
+    return res.data;
+  } catch (err) {
+    handleError(err);
+  }
+};
+
 export default API;
