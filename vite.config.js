@@ -22,6 +22,7 @@ export default defineConfig({
   },
   define: {
     'process.env': {},
+    __REACT_DEVTOOLS_GLOBAL_HOOK__: 'true', // ✅ added for meaningful console errors
   },
   envPrefix: 'VITE_',
 });
