@@ -85,16 +85,3 @@ const FraudList = ({ loading, fraudReports, onRefresh }) => {
     </div>
   );
 };
-
-FraudList.propTypes = {
-  loading: PropTypes.bool.isRequired,
-  fraudReports: PropTypes.arrayOf(
-    PropTypes.shape({
-      message: PropTypes.string.isRequired,
-      timestamp: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-  onRefresh: PropTypes.func, // now optional
-};
-
-export default FraudList;
