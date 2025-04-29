@@ -7,15 +7,17 @@ export default defineConfig({
   resolve: {
     alias: { '@': path.resolve(__dirname, './src') },
   },
-
-  // ensure prop-types is pre-bundled
   optimizeDeps: {
-    include: ['prop-types']
+    // force‐include only what we need, skip react-feather
+    include: ['prop-types'],
+    exclude: ['react-feather']
   },
-
   build: {
     outDir: 'dist',
-    sourcemap: true,
+    // turn off sourcemaps to reduce memory pressure
+    sourcemap: false,
+    // use esbuild minifier (lighter than terser)
+    minify: 'esbuild',
   },
   define: {
     'process.env': {}
