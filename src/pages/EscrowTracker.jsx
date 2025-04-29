@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Helmet } from 'react-helmet';
 import { toast } from 'react-hot-toast';
-import { Badge } from '@/components/ui/Badge'; // If you use a custom badge component
+import Badge from '@/components/ui/Badge'; // If you use a custom badge component
 
 const EscrowTracker = () => {
   const [deals, setDeals] = useState([]);
