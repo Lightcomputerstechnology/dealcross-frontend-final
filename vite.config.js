@@ -18,7 +18,7 @@ export default defineConfig({
     sourcemap: true,
   },
   define: {
-    'process.env': {}, // Prevents reference errors in some packages
+    'process.env': {},
   },
-  envPrefix: 'VITE_', // Enables usage of VITE_API_URL and similar
+  envPrefix: 'VITE_',
 });
