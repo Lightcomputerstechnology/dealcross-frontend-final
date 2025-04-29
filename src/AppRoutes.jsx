@@ -5,7 +5,14 @@ import { Routes, Route } from 'react-router-dom';
 export default function AppRoutes() {
   return (
     <Routes>
-      <Route path="/" element={<h1 className="text-white p-10">Test Page Works!</h1>} />
+      <Route
+        path="/"
+        element={
+          <div style={{ padding: '50px', color: 'red', fontSize: '24px' }}>
+            Tailwind is NOT loading. This is raw inline CSS.
+          </div>
+        }
+      />
     </Routes>
   );
 }
