@@ -9,7 +9,7 @@ export default defineConfig({
     alias: { '@': path.resolve(__dirname, './src') },
   },
   optimizeDeps: {
-    // Exclude unused packages
+    include: ['react-csv'], // ✅ Force react-csv to be bundled
     exclude: ['react-feather', 'prop-types'],
   },
   build: {
