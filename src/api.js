@@ -1,7 +1,9 @@
+// src/api.js
+
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: 'https://d-final.onrender.com',
+  baseURL: 'https://dealcross-backend-final-vsf4.onrender.com',
   headers: { 'Content-Type': 'application/json' },
 });
 
@@ -37,96 +39,28 @@ export const fundWalletBank = async (amount) => { try { const res = await API.po
 export const fundWalletCrypto = async (amount, cryptoType) => { try { const res = await API.post('/wallet/fund/crypto', { amount, crypto_type: cryptoType }); return res.data; } catch (err) { handleError(err); } };
 export const getWalletBalance = async () => { try { const res = await API.get('/wallet/balance'); return res.data; } catch (err) { handleError(err); } };
 export const getWalletHistory = async () => { try { const res = await API.get('/wallet/transactions'); return res.data; } catch (err) { handleError(err); } };
-// ========== WALLET SUMMARY ==========
-export const getWalletSummary = async () => {
-  try {
-    const res = await API.get('/wallet/summary');
-    return res.data;
-  } catch (err) {
-    handleError(err);
-  }
-};
-
+export const getWalletSummary = async () => { try { const res = await API.get('/wallet/summary'); return res.data; } catch (err) { handleError(err); } };
 
 // ========== KYC ==========
-export const getKYCStatus = async () => {
-  try {
-    const res = await API.get('/kyc/my-status');
-    return res.data;
-  } catch (err) {
-    handleError(err);
-  }
-};
-
+export const getKYCStatus = async () => { try { const res = await API.get('/kyc/my-status'); return res.data; } catch (err) { handleError(err); } };
 
 // ========== DEALS ==========
 export const getMyDeals = async () => { try { const res = await API.get('/deals/tracker'); return res.data.data; } catch (err) { handleError(err); } };
-export const getConfirmedPairing = async () => {
-  try {
-    const res = await API.get('/deals/pairing/confirmed');
-    return res.data;
-  } catch (err) {
-    handleError(err);
-  }
-};
+export const getConfirmedPairing = async () => { try { const res = await API.get('/deals/pairing/confirmed'); return res.data; } catch (err) { handleError(err); } };
+export const fundDeal = async (dealId) => { try { const res = await API.post(`/deals/${dealId}/fund`); return res.data; } catch (err) { handleError(err); } };
+export const deliverDeal = async (dealId, deliveryData) => { try { const res = await API.post(`/deals/${dealId}/deliver`, deliveryData); return res.data; } catch (err) { handleError(err); } };
+export const releaseDeal = async (dealId) => { try { const res = await API.post(`/deals/${dealId}/release`); return res.data; } catch (err) { handleError(err); } };
+export const disputeDeal = async (dealId, reason) => { try { const res = await API.post(`/disputes/`, { deal_id: dealId, reason }); return res.data; } catch (err) { handleError(err); } };
 
-// ========== NEW (FIX) DEAL ACTIONS ==========
-export const fundDeal = async (dealId) => { 
-  try { const res = await API.post(`/deals/${dealId}/fund`); return res.data; } 
-  catch (err) { handleError(err); } 
-};
-
-export const deliverDeal = async (dealId, deliveryData) => { 
-  try { const res = await API.post(`/deals/${dealId}/deliver`, deliveryData); return res.data; } 
-  catch (err) { handleError(err); } 
-};
-
-export const releaseDeal = async (dealId) => { 
-  try { const res = await API.post(`/deals/${dealId}/release`); return res.data; } 
-  catch (err) { handleError(err); } 
-};
-
-export const disputeDeal = async (dealId, reason) => { 
-  try { const res = await API.post(`/disputes/`, { deal_id: dealId, reason }); return res.data; } 
-  catch (err) { handleError(err); } 
-};
-
-// ========== UPGRADE ==========
-export const upgradeSubscriptionCard = async (plan) => { try { const res = await API.post('/subscriptions/upgrade/card', { plan }); return res.data; } catch (err) { handleError(err); } };
-export const upgradeSubscriptionBank = async (plan) => { try { const res = await API.post('/subscriptions/upgrade/bank', { plan }); return res.data; } catch (err) { handleError(err); } };
-export const upgradeSubscriptionCrypto = async (plan, cryptoType) => { try { const res = await API.post('/subscriptions/upgrade/crypto', { plan, crypto_type: cryptoType }); return res.data; } catch (err) { handleError(err); } };
+// ========== ADMIN USERS ==========
+export const getAllUsers = async () => { try { const res = await API.get('/admin/all-users'); return res.data; } catch (err) { handleError(err); } };
+export const banUser = async (userId, reason) => { try { const res = await API.put(`/admin/ban-user/${userId}`, { reason }); return res.data; } catch (err) { handleError(err); } };
+export const unbanUser = async (userId) => { try { const res = await API.put(`/admin/unban-user/${userId}`); return res.data; } catch (err) { handleError(err); } };
+export const approveUser = async (userId, note) => { try { const res = await API.post(`/admin/approve-user/${userId}`, { note }); return res.data; } catch (err) { handleError(err); } };
 
 // ========== ADMIN ==========
 export const getAuditLogs = async () => { try { const res = await API.get('/admin/audit-logs'); return res.data; } catch (err) { handleError(err); } };
-// ========== ADMIN USERS ==========
-export const getAllUsers = async () => {
-  try {
-    const res = await API.get('/admin/all-users');
-    return res.data;
-  } catch (err) {
-    handleError(err);
-  }
-};
-
-// ========== ADMIN METRICS ==========
-export const getAdminMetrics = async () => {
-  try {
-    const res = await API.get('/admin-metrics');
-    return res.data;
-  } catch (err) {
-    handleError(err);
-  }
-};
-
-
-// ========== ADMIN FRAUD REPORTS ==========
-export const getFraudReports = async () => {
-  try {
-    const res = await API.get('/admin/fraud-reports');
-    return res.data;
-  } catch (err) {
-    handleError(err);
-  }
-};
+export const getFraudReports = async () => { try { const res = await API.get('/admin/fraud-reports'); return res.data; } catch (err) { handleError(err); } };
+export const getAdminMetrics = async () => { try { const res = await API.get('/admin-metrics'); return res.data; } catch (err) { handleError(err); } };
 
 export default API;
