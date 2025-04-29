@@ -1,3 +1,5 @@
+// File: src/components/MetricsCard.jsx
+
 const MetricsCard = ({ type, value, timestamp }) => {
   return (
     <div className="bg-gray-800 p-4 rounded-lg shadow text-center animate-fade-in">
@@ -8,11 +10,4 @@ const MetricsCard = ({ type, value, timestamp }) => {
   );
 };
 
-MetricsCard.propTypes = {
-  type: PropTypes.string.isRequired,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  timestamp: PropTypes.string.isRequired,
-};
-
 export default MetricsCard;
-    
