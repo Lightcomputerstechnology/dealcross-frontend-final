@@ -1,4 +1,4 @@
-// File: vite.config.js
+// vite.config.js
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
@@ -9,7 +9,7 @@ export default defineConfig({
     alias: { '@': path.resolve(__dirname, './src') },
   },
   optimizeDeps: {
-    include: ['react-csv'], // ✅ include explicitly
+    include: ['react-csv'],
     exclude: ['react-feather', 'prop-types'],
   },
   build: {
@@ -17,7 +17,7 @@ export default defineConfig({
     sourcemap: false,
     minify: 'esbuild',
     commonjsOptions: {
-      include: [/node_modules/, /react-csv/], // ✅ force inclusion for build
+      include: [/node_modules/, /react-csv/], // ✅ explicitly include
     },
   },
   define: {
