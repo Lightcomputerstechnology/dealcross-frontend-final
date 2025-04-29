@@ -18,9 +18,4 @@ const Badge = ({ color = 'blue', children }) => {
   return <span className={badgeClasses}>{children}</span>;
 };
 
-Badge.propTypes = {
-  color: PropTypes.oneOf(['blue', 'green', 'yellow', 'red', 'gray']),
-  children: PropTypes.node.isRequired,
-};
-
 export default Badge;
