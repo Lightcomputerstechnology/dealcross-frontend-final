@@ -1,3 +1,4 @@
+// src/components/SEOHead.jsx
 import React from 'react';
 import { Helmet } from 'react-helmet';
 
@@ -28,13 +29,6 @@ const SEOHead = ({
       <meta name="twitter:image" content="/logo.png" />
     </Helmet>
   );
-};
-
-SEOHead.propTypes = {
-  title: PropTypes.string,
-  description: PropTypes.string,
-  keywords: PropTypes.string,
-  author: PropTypes.string,
 };
 
 export default SEOHead;
