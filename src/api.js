@@ -37,6 +37,15 @@ export const fundWalletBank = async (amount) => { try { const res = await API.po
 export const fundWalletCrypto = async (amount, cryptoType) => { try { const res = await API.post('/wallet/fund/crypto', { amount, crypto_type: cryptoType }); return res.data; } catch (err) { handleError(err); } };
 export const getWalletBalance = async () => { try { const res = await API.get('/wallet/balance'); return res.data; } catch (err) { handleError(err); } };
 export const getWalletHistory = async () => { try { const res = await API.get('/wallet/transactions'); return res.data; } catch (err) { handleError(err); } };
+// ========== WALLET SUMMARY ==========
+export const getWalletSummary = async () => {
+  try {
+    const res = await API.get('/wallet/summary');
+    return res.data;
+  } catch (err) {
+    handleError(err);
+  }
+};
 
 // ========== DEALS ==========
 export const getMyDeals = async () => { try { const res = await API.get('/deals/tracker'); return res.data.data; } catch (err) { handleError(err); } };
