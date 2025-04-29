@@ -47,6 +47,18 @@ export const getWalletSummary = async () => {
   }
 };
 
+
+// ========== KYC ==========
+export const getKYCStatus = async () => {
+  try {
+    const res = await API.get('/kyc/my-status');
+    return res.data;
+  } catch (err) {
+    handleError(err);
+  }
+};
+
+
 // ========== DEALS ==========
 export const getMyDeals = async () => { try { const res = await API.get('/deals/tracker'); return res.data.data; } catch (err) { handleError(err); } };
 export const getConfirmedPairing = async () => {
