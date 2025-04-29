@@ -1,4 +1,5 @@
 // src/components/admin/FraudList.jsx
+export default FraudList;
 import React, { useState } from 'react';
 import { CSVLink } from 'react-csv';
 
