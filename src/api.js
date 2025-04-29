@@ -61,6 +61,34 @@ export const upgradeSubscriptionCrypto = async (plan, cryptoType) => { try { con
 // ========== ADMIN USERS ==========
 export const getAllUsers = async () => { try { const res = await API.get('/admin/all-users'); return res.data; } catch (err) { handleError(err); } };
 
+// ========== ADMIN USER ACTIONS ==========
+export const banUser = async (userId, reason) => {
+  try {
+    const res = await API.put(`/admin/ban-user/${userId}`, { reason });
+    return res.data;
+  } catch (err) {
+    handleError(err);
+  }
+};
+
+export const unbanUser = async (userId) => {
+  try {
+    const res = await API.put(`/admin/unban-user/${userId}`);
+    return res.data;
+  } catch (err) {
+    handleError(err);
+  }
+};
+
+export const approveUser = async (userId, note) => {
+  try {
+    const res = await API.post(`/admin/approve-user/${userId}`, { note });
+    return res.data;
+  } catch (err) {
+    handleError(err);
+  }
+};
+
 // ========== ADMIN AUDIT LOGS ==========
 export const getAuditLogs = async () => { try { const res = await API.get('/admin/audit-logs'); return res.data; } catch (err) { handleError(err); } };
 
