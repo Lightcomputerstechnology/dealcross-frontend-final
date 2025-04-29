@@ -24,8 +24,4 @@ const DocsViewer = ({ filePath }) => {
   );
 };
 
-DocsViewer.propTypes = {
-  filePath: PropTypes.string.isRequired,
-};
-
 export default DocsViewer;
