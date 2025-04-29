@@ -14,15 +14,15 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist',
-    sourcemap: false,
-    minify: 'esbuild',
+    sourcemap: true, // ✅ enables better stack trace
+    minify: false,   // ✅ disable to see readable error lines
     commonjsOptions: {
       include: [/node_modules/, /react-csv/], // ✅ explicitly include
     },
   },
   define: {
     'process.env': {},
-    __REACT_DEVTOOLS_GLOBAL_HOOK__: 'true', // ✅ added for meaningful console errors
+    __REACT_DEVTOOLS_GLOBAL_HOOK__: 'true', // ✅ show devtool-based errors
   },
   envPrefix: 'VITE_',
 });
