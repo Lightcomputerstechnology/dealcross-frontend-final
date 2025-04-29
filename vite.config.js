@@ -5,20 +5,20 @@ import path from 'path';
 export default defineConfig({
   plugins: [react()],
   resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-    },
+    alias: { '@': path.resolve(__dirname, './src') },
   },
-  server: {
-    port: 5173,
-    open: true,
+
+  // ensure prop-types is pre-bundled
+  optimizeDeps: {
+    include: ['prop-types']
   },
+
   build: {
     outDir: 'dist',
     sourcemap: true,
   },
   define: {
-    'process.env': {},
+    'process.env': {}
   },
   envPrefix: 'VITE_',
 });
