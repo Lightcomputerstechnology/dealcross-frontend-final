@@ -1,3 +1,5 @@
+// File: src/components/MetricsCard.jsx
+
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -15,7 +17,10 @@ const MetricsCard = ({ type, value, timestamp }) => {
 
 MetricsCard.propTypes = {
   type: PropTypes.string.isRequired,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]).isRequired,
   timestamp: PropTypes.string.isRequired,
 };
 
