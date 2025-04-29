@@ -1,7 +1,6 @@
 // File: src/components/ui/Badge.jsx
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 const Badge = ({ color = 'blue', children }) => {
