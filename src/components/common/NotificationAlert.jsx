@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
 
 const colorMap = {
   success: 'bg-green-600 text-white border-green-400',
