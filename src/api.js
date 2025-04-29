@@ -99,4 +99,14 @@ export const upgradeSubscriptionCrypto = async (plan, cryptoType) => { try { con
 // ========== ADMIN ==========
 export const getAuditLogs = async () => { try { const res = await API.get('/admin/audit-logs'); return res.data; } catch (err) { handleError(err); } };
 
+// ========== ADMIN METRICS ==========
+export const getAdminMetrics = async () => {
+  try {
+    const res = await API.get('/admin-metrics');
+    return res.data;
+  } catch (err) {
+    handleError(err);
+  }
+};
+
 export default API;
