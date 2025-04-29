@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { CSVLink } from 'react-csv';
 
 const FraudList = ({ loading, fraudReports }) => {
