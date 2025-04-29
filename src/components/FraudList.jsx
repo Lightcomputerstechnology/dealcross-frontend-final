@@ -1,3 +1,4 @@
+// src/components/admin/FraudList.jsx
 import React, { useState } from 'react';
 import { CSVLink } from 'react-csv';
 
@@ -67,16 +68,6 @@ const FraudList = ({ loading, fraudReports }) => {
       )}
     </div>
   );
-};
-
-FraudList.propTypes = {
-  loading: PropTypes.bool.isRequired,
-  fraudReports: PropTypes.arrayOf(
-    PropTypes.shape({
-      message: PropTypes.string.isRequired,
-      timestamp: PropTypes.string.isRequired,
-    })
-  ).isRequired,
 };
 
 export default FraudList;
