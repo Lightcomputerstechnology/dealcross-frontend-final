@@ -1,9 +1,8 @@
 // File: src/components/MetricsCard.jsx
-
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const MetricsCard = ({ type, value, timestamp }) => {
+function MetricsCard({ type, value, timestamp }) {
   return (
     <div className="bg-gray-800 p-4 rounded-lg shadow-md hover:shadow-xl transition duration-300 text-center">
       <p className="text-sm text-gray-400 uppercase tracking-wide">{type}</p>
@@ -13,7 +12,7 @@ const MetricsCard = ({ type, value, timestamp }) => {
       </p>
     </div>
   );
-};
+}
 
 MetricsCard.propTypes = {
   type: PropTypes.string.isRequired,
