@@ -35,11 +35,4 @@ const NotificationAlert = ({ type = 'info', message = '', onClose, duration = 40
   );
 };
 
-NotificationAlert.propTypes = {
-  type: PropTypes.oneOf(['success', 'error', 'info', 'warning']),
-  message: PropTypes.string.isRequired,
-  onClose: PropTypes.func,
-  duration: PropTypes.number,
-};
-
 export default NotificationAlert;
