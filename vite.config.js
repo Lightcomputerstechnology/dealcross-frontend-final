@@ -9,13 +9,16 @@ export default defineConfig({
     alias: { '@': path.resolve(__dirname, './src') },
   },
   optimizeDeps: {
-    include: ['react-csv'], // ✅ Force react-csv to be bundled
+    include: ['react-csv'], // ✅ include explicitly
     exclude: ['react-feather', 'prop-types'],
   },
   build: {
     outDir: 'dist',
     sourcemap: false,
     minify: 'esbuild',
+    commonjsOptions: {
+      include: [/node_modules/, /react-csv/], // ✅ force inclusion for build
+    },
   },
   define: {
     'process.env': {},
