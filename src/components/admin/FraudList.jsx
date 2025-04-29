@@ -17,7 +17,9 @@ const FraudList = ({ loading, fraudReports }) => {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h4 className="text-sm font-medium">Recent Alerts (Page {page} of {totalPages})</h4>
+        <h4 className="text-sm font-medium">
+          Recent Alerts (Page {page} of {totalPages})
+        </h4>
         {fraudReports.length > 0 && (
           <CSVLink
             data={fraudReports}
