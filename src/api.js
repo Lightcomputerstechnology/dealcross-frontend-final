@@ -40,6 +40,14 @@ export const getWalletHistory = async () => { try { const res = await API.get('/
 
 // ========== DEALS ==========
 export const getMyDeals = async () => { try { const res = await API.get('/deals/tracker'); return res.data.data; } catch (err) { handleError(err); } };
+export const getConfirmedPairing = async () => {
+  try {
+    const res = await API.get('/deals/pairing/confirmed');
+    return res.data;
+  } catch (err) {
+    handleError(err);
+  }
+};
 
 // ========== NEW (FIX) DEAL ACTIONS ==========
 export const fundDeal = async (dealId) => { 
