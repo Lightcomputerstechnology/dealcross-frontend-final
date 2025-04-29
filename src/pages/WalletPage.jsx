@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
-import { getMyWalletSummary } from '@/api';  // ✅ New function for /wallet/my-wallet
+import { getWalletSummary } from '@/api';  // ✅ New function for /wallet/my-wallet
 import { toast } from 'react-hot-toast';
 import useAuthRedirect from '@/hooks/useAuthRedirect';
 import { FiAlertCircle } from 'react-icons/fi';
