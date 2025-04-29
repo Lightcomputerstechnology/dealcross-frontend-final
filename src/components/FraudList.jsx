@@ -1,5 +1,4 @@
 // src/components/admin/FraudList.jsx
-export default FraudList;
 import React, { useState } from 'react';
 import { CSVLink } from 'react-csv';
 
@@ -48,7 +47,6 @@ const FraudList = ({ loading, fraudReports }) => {
         </ul>
       )}
 
-      {/* Pagination controls */}
       {fraudReports.length > perPage && (
         <div className="flex justify-end gap-2 pt-2 text-xs">
           <button
