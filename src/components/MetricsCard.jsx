@@ -1,4 +1,3 @@
-// File: src/components/MetricsCard.jsx
 import React from 'react';
 import PropTypes from 'prop-types';
 
